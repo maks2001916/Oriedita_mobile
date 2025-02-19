@@ -1,5 +1,7 @@
 package com.example.oriedita
 
+import android.app.Activity.RESULT_OK
+import android.content.Intent
 import android.icu.util.Calendar
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -179,3 +181,20 @@ fun getTime(): String {
 fun Preview() {
 
 }
+
+val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
+    addCategory(Intent.CATEGORY_OPENABLE)
+    type = "application/json" // или другой MIME-тип  
+}
+startActivityForResult(intent, REQUEST_CODE_OPEN_FILE)
+
+// Обработка результата  
+override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    if (requestCode == REQUEST_CODE_OPEN_FILE && resultCode == RESULT_OK) {
+        data?.data?.let { uri ->
+            contentResolver.openInputStream(uri)?.use { stream ->
+                viewModel.loadProject(stream)
+            }
+        }
+    }
+}  

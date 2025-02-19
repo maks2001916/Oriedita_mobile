@@ -21,4 +21,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "Oriedita"
 include(":app")
- 
+include(":oriedita_core")
