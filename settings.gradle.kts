@@ -20,5 +20,8 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "Oriedita"
-include(":app")
-include(":oriedita_core")
+include(":oriedita")
+include(":origami")
+include(":oriedita-ui")
+include(":oriedita-data")
+include(":oriedita-common")
