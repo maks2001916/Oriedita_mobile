@@ -1,5 +1,5 @@
 plugins {
-    alias(libs.plugins.or)
+    alias(libs.plugins.oriedita.origami)
     alias(libs.plugins.kotlin.android)
 }
 
