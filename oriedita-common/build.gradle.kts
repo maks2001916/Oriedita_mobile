@@ -1,5 +1,5 @@
 plugins {
-    alias(libs.plugins.android.application)
+    alias(libs.plugins.or)
     alias(libs.plugins.kotlin.android)
 }
 
@@ -8,7 +8,6 @@ android {
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.example.oriedita_common"
         minSdk = 24
         targetSdk = 35
         versionCode = 1

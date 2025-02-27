@@ -10,8 +10,11 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/app" />
-            <option value="$PROJECT_DIR$/core" />
+            <option value="$PROJECT_DIR$/oriedita" />
+            <option value="$PROJECT_DIR$/oriedita-common" />
+            <option value="$PROJECT_DIR$/oriedita-data" />
+            <option value="$PROJECT_DIR$/oriedita-ui" />
+            <option value="$PROJECT_DIR$/origami" />
           </set>
         </option>
         <option name="resolveExternalAnnotations" value="false" />

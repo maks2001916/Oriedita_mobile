@@ -11,6 +11,7 @@ composeBom = "2025.02.00"
 identityDoctypesJvm = "202411.1"
 appcompat = "1.7.0"
 material = "1.12.0"
+origami-library = "1.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -30,6 +31,8 @@ androidx-material3 = { group = "androidx.compose.material3", name = "material3" 
 identity-doctypes-jvm = { group = "com.android.identity", name = "identity-doctypes-jvm", version.ref = "identityDoctypesJvm" }
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+oriedita-origami = { group = "com.example.oriedita.editor", name = "origami", version.ref = "origami-library" }  # Ключевое изменение!
+
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
