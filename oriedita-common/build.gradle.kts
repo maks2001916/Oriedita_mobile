@@ -1,6 +1,6 @@
 plugins {
-    alias(libs.plugins.oriedita.origami)
-    alias(libs.plugins.kotlin.android)
+    id("com.android.library")
+    id("org.jetbrains.kotlin.android")
 }
 
 android {
@@ -8,10 +8,9 @@ android {
     compileSdk = 35
 
     defaultConfig {
+        namespace = "com.example.oriedita_common"
         minSdk = 24
         targetSdk = 35
-        versionCode = 1
-        versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -43,7 +42,4 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
-    implementation(":oriedita-data")
-    implementation(":oriedita-ui")
-    implementation(":origami")
 }

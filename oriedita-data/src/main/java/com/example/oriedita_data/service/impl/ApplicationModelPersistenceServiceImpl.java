@@ -1,4 +1,4 @@
-package oriedita.editor.service.impl;
+package com.example.oriedita_data.service.impl;
 
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;

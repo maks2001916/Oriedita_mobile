@@ -1,4 +1,4 @@
-package oriedita.editor.tools;
+package com.example.oriedita_common.editor.tools;
 
 import org.tinylog.Logger;
 

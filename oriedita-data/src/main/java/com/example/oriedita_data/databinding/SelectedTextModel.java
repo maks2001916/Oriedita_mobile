@@ -1,4 +1,4 @@
-package oriedita.editor.databinding;
+package com.example.oriedita_data.databinding;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.enterprise.context.ApplicationScoped;

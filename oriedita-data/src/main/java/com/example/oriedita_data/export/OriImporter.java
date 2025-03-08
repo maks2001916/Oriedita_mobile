@@ -1,4 +1,4 @@
-package oriedita.editor.export;
+package com.example.oriedita_data.export;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.enterprise.context.ApplicationScoped;

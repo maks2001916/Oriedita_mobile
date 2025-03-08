@@ -1,4 +1,4 @@
-package oriedita.editor.save;
+package com.example.oriedita_data.save;
 
 public class SaveProvider {
     public static Save createInstance() {

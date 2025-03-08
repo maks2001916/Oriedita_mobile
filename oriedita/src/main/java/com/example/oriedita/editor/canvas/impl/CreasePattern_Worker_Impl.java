@@ -1,8 +1,23 @@
 package com.example.oriedita.editor.canvas.impl;
 
 import org.tinylog.Logger;
-import com.example.oriedita.editor.
-import oriedita.editor.Colors;
+import com.example.oriedita_data.Colors;
+import com.example.oriedita_data.canvas.CreasePattern_Worker;
+import com.example.oriedita_data.canvas.OperationFrame;
+import com.example.oriedita_data.canvas.TextWorker;
+import com.example.oriedita_data.databinding.AngleSystemModel;
+import com.example.oriedita_data.databinding.ApplicationModel;
+import com.example.oriedita_data.databinding.CanvasModel;
+import com.example.oriedita_data.databinding.FileModel;
+import com.example.oriedita_data.databinding.FoldedFigureModel;
+import com.example.oriedita_data.databinding.GridModel;
+import com.example.oriedita_data.databinding.SelectedTextModel;
+import com.example.oriedita_data.drawing.Grid;
+import com.example.oriedita_common.editor.drawing.tools.Camera;
+import com.example.oriedita_common.editor.canvas.FoldLineAdditionalInputMode;
+import com.example.oriedita_common.editor.canvas.LineStyle;
+import com.example.oriedita_common.editor.canvas.MouseMode;
+
 import oriedita.editor.canvas.CreasePattern_Worker;
 import oriedita.editor.canvas.FoldLineAdditionalInputMode;
 import oriedita.editor.canvas.LineStyle;
@@ -46,6 +61,7 @@ import origami.crease_pattern.worker.foldlineset.InsideToAux;
 import origami.crease_pattern.worker.foldlineset.OrganizeCircles;
 
 import java.awt.BasicStroke;
+import android
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;

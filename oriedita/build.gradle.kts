@@ -58,8 +58,7 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
-    implementation(":oriedita-common")
-    implementation(":oriedita-data")
-    implementation(":oriedita-ui")
-    implementation(":origami")
+    implementation(project(":origami"))
+    implementation(project(":oriedita-common"))
+    implementation(project(":oriedita-data"))
 }

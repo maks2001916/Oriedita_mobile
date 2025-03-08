@@ -1,4 +1,4 @@
-package oriedita.editor;
+package com.example.oriedita_data;
 
 public class Animations {
     public static final String ZOOM_CP = "zoom_cp";

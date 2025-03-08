@@ -1,4 +1,4 @@
-package oriedita.editor;
+package com.example.oriedita_data;
 
 import java.awt.Color;
 import java.util.HashMap;

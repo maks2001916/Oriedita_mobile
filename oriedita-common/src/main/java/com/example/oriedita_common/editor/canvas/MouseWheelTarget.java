@@ -1,4 +1,4 @@
-package oriedita.editor.canvas;
+package com.example.oriedita_common.editor.canvas;
 
 public enum MouseWheelTarget {
     CREASE_PATTERN_0,

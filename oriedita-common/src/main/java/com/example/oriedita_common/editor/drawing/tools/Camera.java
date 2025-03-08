@@ -1,4 +1,4 @@
-package oriedita.editor.drawing.tools;
+package com.example.oriedita_common.editor.drawing.tools;
 
 import origami.crease_pattern.elements.Circle;
 import origami.crease_pattern.elements.LineSegment;

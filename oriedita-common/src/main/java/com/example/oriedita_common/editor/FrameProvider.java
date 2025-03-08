@@ -1,4 +1,4 @@
-package oriedita.editor;
+package com.example.oriedita_common.editor;
 
 import javax.swing.JFrame;
 

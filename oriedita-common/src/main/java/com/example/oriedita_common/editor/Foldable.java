@@ -1,4 +1,4 @@
-package oriedita.editor;
+package com.example.oriedita_common.editor;
 
 import oriedita.editor.drawing.tools.Camera;
 import origami.crease_pattern.FoldingException;

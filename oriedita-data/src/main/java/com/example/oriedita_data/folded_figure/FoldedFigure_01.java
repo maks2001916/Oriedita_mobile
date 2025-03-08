@@ -1,4 +1,4 @@
-package oriedita.editor.folded_figure;
+package com.example.oriedita_data.folded_figure;
 
 import oriedita.editor.databinding.FoldedFigureModel;
 import origami.folding.FoldedFigure;

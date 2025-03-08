@@ -1,4 +1,4 @@
-package oriedita.editor.save;
+package com.example.oriedita_data.save;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;

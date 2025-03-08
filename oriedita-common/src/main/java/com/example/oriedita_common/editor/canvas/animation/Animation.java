@@ -1,4 +1,4 @@
-package oriedita.editor.canvas.animation;
+package com.example.oriedita_common.editor.canvas.animation;
 
 import java.util.function.Consumer;
 

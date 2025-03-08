@@ -1,4 +1,4 @@
-package oriedita.editor.service;
+package com.example.oriedita_common.editor.service;
 
 import javax.swing.AbstractButton;
 import javax.swing.JLabel;

@@ -6,17 +6,11 @@ plugins {
 android {
     namespace = "com.example.oriedita_core"
     compileSdk = 35
-
-    defaultConfig {
-        applicationId = "com.example.origami"
-        minSdk = 24
-        targetSdk = 35
-        versionCode = 1
-        versionName = "1.0"
-
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        defaultConfig {
+            minSdk = 24
+            targetSdk = 35
+            testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
-
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -31,9 +25,7 @@ android {
         targetCompatibility = JavaVersion.VERSION_17
     }
 }
-
 dependencies {
-
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
     testImplementation(libs.junit)

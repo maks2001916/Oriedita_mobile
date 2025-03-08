@@ -1,4 +1,4 @@
-package oriedita.editor.canvas;
+package com.example.oriedita_data.canvas;
 
 import oriedita.editor.databinding.AngleSystemModel;
 import oriedita.editor.databinding.ApplicationModel;

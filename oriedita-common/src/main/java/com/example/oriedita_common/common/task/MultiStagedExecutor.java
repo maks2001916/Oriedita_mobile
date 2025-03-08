@@ -1,4 +1,4 @@
-package oriedita.common.task;
+package com.example.oriedita_common.common.task;
 
 import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;

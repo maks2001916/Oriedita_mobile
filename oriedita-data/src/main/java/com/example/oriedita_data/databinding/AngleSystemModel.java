@@ -1,4 +1,4 @@
-package oriedita.editor.databinding;
+package com.example.oriedita_data.databinding;
 
 
 import jakarta.enterprise.context.ApplicationScoped;

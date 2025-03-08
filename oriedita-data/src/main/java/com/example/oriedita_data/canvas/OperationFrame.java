@@ -1,4 +1,4 @@
-package oriedita.editor.canvas;
+package com.example.oriedita_data.canvas;
 
 import origami.crease_pattern.elements.Rectangle;
 import origami.crease_pattern.elements.Point;

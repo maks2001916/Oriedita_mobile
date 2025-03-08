@@ -1,4 +1,4 @@
-package oriedita.editor.canvas;
+package com.example.oriedita_common.editor.canvas;
 
 public enum FoldLineAdditionalInputMode {
     POLY_LINE_0,

@@ -1,4 +1,4 @@
-package oriedita.editor.canvas.animation;
+package com.example.oriedita_common.editor.canvas.animation;
 
 public class EaseOutInterpolation implements Interpolation {
 

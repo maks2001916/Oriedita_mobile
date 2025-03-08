@@ -1,4 +1,4 @@
-package oriedita.editor.export.api;
+package com.example.oriedita_data.export.api;
 
 import oriedita.editor.save.Save;
 

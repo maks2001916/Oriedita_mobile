@@ -1,4 +1,4 @@
-package oriedita.editor.service;
+package com.example.oriedita_data.service;
 
 import oriedita.editor.exception.FileReadingException;
 import oriedita.editor.save.Save;

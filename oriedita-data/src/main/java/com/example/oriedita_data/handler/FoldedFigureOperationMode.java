@@ -1,4 +1,4 @@
-package oriedita.editor.handler;
+package com.example.oriedita_data.handler;
 
 public enum FoldedFigureOperationMode {
     MODE_1,

@@ -1,4 +1,4 @@
-package oriedita.editor.service;
+package com.example.oriedita_common.editor.service;
 
 import java.util.zip.ZipInputStream;
 

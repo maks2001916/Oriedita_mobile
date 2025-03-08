@@ -1,4 +1,4 @@
-package oriedita.editor.export;
+package com.example.oriedita_data.export;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import oriedita.editor.save.Save;

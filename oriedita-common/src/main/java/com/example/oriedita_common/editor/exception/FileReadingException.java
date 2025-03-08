@@ -1,4 +1,4 @@
-package oriedita.editor.exception;
+package com.example.oriedita_common.editor.exception;
 
 public class FileReadingException extends Exception {
     public FileReadingException(Throwable cause) {

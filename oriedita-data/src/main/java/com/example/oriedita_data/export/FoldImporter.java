@@ -1,4 +1,4 @@
-package oriedita.editor.export;
+package com.example.oriedita_data.export;
 
 import fold.io.CustomFoldReader;
 import fold.model.Edge;

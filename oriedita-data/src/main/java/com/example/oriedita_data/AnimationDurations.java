@@ -1,4 +1,4 @@
-package oriedita.editor;
+package com.example.oriedita_data;
 
 public class AnimationDurations {
     public static final double ZOOM = 0.12;

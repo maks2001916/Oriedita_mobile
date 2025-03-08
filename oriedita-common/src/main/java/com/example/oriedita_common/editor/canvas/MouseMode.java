@@ -1,4 +1,4 @@
-package oriedita.editor.canvas;
+package com.example.oriedita_common.editor.canvas;
 
 public enum MouseMode {
     DRAW_CREASE_FREE_1(1),

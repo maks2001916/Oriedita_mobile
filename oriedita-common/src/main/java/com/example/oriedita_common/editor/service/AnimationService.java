@@ -1,4 +1,4 @@
-package oriedita.editor.service;
+package com.example.oriedita_common.editor.service;
 
 import oriedita.editor.canvas.animation.Interpolation;
 import origami.crease_pattern.elements.Point;

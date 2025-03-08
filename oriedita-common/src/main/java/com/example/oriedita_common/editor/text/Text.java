@@ -1,4 +1,4 @@
-package oriedita.editor.text;
+package com.example.oriedita_common.editor.text;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import origami.crease_pattern.elements.Point;
