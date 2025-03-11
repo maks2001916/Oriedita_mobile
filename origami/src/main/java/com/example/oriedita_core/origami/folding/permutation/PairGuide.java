@@ -1,4 +1,4 @@
-package com.example.oriedita_core.origami.crease_pattern.folding.permutation;
+package com.example.oriedita_core.origami.folding.permutation;
 
 import java.util.ArrayList;
 

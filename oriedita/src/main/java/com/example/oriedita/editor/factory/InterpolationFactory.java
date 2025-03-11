@@ -1,4 +1,4 @@
-package oriedita.editor.factory;
+package com.example.oriedita.editor.factory;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.inject.Produces;

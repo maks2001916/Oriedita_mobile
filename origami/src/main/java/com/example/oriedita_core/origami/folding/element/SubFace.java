@@ -1,14 +1,14 @@
-package com.example.oriedita_core.origami.crease_pattern.folding.element;
+package com.example.oriedita_core.origami.folding.element;
 
-import com.example.oriedita_core.origami.crease_pattern.folding.HierarchyList;
-import com.example.oriedita_core.origami.crease_pattern.folding.algorithm.AdditionalEstimationAlgorithm;
-import com.example.oriedita_core.origami.crease_pattern.folding.algorithm.InferenceFailureException;
-import com.example.oriedita_core.origami.crease_pattern.folding.constraint.CustomConstraint;
-import com.example.oriedita_core.origami.crease_pattern.folding.permutation.ChainPermutationGenerator;
-import com.example.oriedita_core.origami.crease_pattern.folding.permutation.PermutationGenerator;
-import com.example.oriedita_core.origami.crease_pattern.folding.permutation.combination.CombinationGenerator;
-import com.example.oriedita_core.origami.crease_pattern.folding.util.EquivalenceCondition;
-import com.example.oriedita_core.origami.crease_pattern.folding.util.IBulletinBoard;
+import com.example.oriedita_core.origami.folding.HierarchyList;
+import com.example.oriedita_core.origami.folding.algorithm.AdditionalEstimationAlgorithm;
+import com.example.oriedita_core.origami.folding.algorithm.InferenceFailureException;
+import com.example.oriedita_core.origami.folding.constraint.CustomConstraint;
+import com.example.oriedita_core.origami.folding.permutation.ChainPermutationGenerator;
+import com.example.oriedita_core.origami.folding.permutation.PermutationGenerator;
+import com.example.oriedita_core.origami.folding.permutation.combination.CombinationGenerator;
+import com.example.oriedita_core.origami.folding.util.EquivalenceCondition;
+import com.example.oriedita_core.origami.folding.util.IBulletinBoard;
 
 import java.util.ArrayList;
 import java.util.Comparator;

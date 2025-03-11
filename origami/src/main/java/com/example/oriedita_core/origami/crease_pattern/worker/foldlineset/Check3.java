@@ -1,13 +1,13 @@
 package com.example.oriedita_core.origami.crease_pattern.worker.foldlineset;
 
-import com.example.oriedita_core.origami.crease_pattern.Epsilon;
+import com.example.oriedita_core.origami.Epsilon;
 import com.example.oriedita_core.origami.crease_pattern.FoldLineSet;
 import com.example.oriedita_core.origami.crease_pattern.OritaCalc;
 import com.example.oriedita_core.origami.crease_pattern.elements.LineColor;
 import com.example.oriedita_core.origami.crease_pattern.elements.LineSegment;
 import com.example.oriedita_core.origami.crease_pattern.elements.Point;
-import com.example.oriedita_core.origami.crease_pattern.folding.util.SortingBox;
-import com.example.oriedita_core.origami.crease_pattern.folding.util.WeightedValue;
+import com.example.oriedita_core.origami.folding.util.SortingBox;
+import com.example.oriedita_core.origami.folding.util.WeightedValue;
 
 public class Check3 {
     //Check the number of lines around the vertex

@@ -1,4 +1,4 @@
-package com.example.oriedita_core.origami.crease_pattern.data.symmetricMatrix;
+package com.example.oriedita_core.origami.data.symmetricMatrix;
 
 /**
  * This is the base class of 1-based symmetric matrix.

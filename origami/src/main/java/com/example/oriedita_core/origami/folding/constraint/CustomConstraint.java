@@ -1,4 +1,4 @@
-package com.example.oriedita_core.origami.crease_pattern.folding.constraint;
+package com.example.oriedita_core.origami.folding.constraint;
 
 import com.example.oriedita_core.origami.crease_pattern.elements.Point;
 

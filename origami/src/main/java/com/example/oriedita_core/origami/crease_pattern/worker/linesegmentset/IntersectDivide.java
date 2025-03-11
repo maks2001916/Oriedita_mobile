@@ -5,8 +5,8 @@ import com.example.oriedita_core.origami.crease_pattern.OritaCalc;
 import com.example.oriedita_core.origami.crease_pattern.elements.LineColor;
 import com.example.oriedita_core.origami.crease_pattern.elements.LineSegment;
 import com.example.oriedita_core.origami.crease_pattern.elements.Point;
-import com.example.oriedita_core.origami.crease_pattern.data.quadTree.QuadTree;
-import com.example.oriedita_core.origami.crease_pattern.data.quadTree.adapter.LineSegmentSetLineAdapter;
+import com.example.oriedita_core.origami.data.quadTree.QuadTree;
+import com.example.oriedita_core.origami.data.quadTree.adapter.LineSegmentSetLineAdapter;
 
 public class IntersectDivide {
     /**

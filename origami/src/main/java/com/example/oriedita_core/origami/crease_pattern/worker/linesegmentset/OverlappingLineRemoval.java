@@ -1,14 +1,14 @@
 package com.example.oriedita_core.origami.crease_pattern.worker.linesegmentset;
 
-import com.example.oriedita_core.origami.crease_pattern.Epsilon;
+import com.example.oriedita_core.origami.Epsilon;
 import com.example.oriedita_core.origami.crease_pattern.LineSegmentSet;
 import com.example.oriedita_core.origami.crease_pattern.OritaCalc;
 import com.example.oriedita_core.origami.crease_pattern.elements.LineSegment;
 import com.example.oriedita_core.origami.crease_pattern.elements.Point;
-import com.example.oriedita_core.origami.crease_pattern.data.quadTree.QuadTree;
-import com.example.oriedita_core.origami.crease_pattern.data.quadTree.adapter.LineSegmentEndPointAdapter;
-import com.example.oriedita_core.origami.crease_pattern.data.quadTree.collector.EndPointCollector;
-import com.example.oriedita_core.origami.crease_pattern.data.quadTree.collector.QuadTreeCollector;
+import com.example.oriedita_core.origami.data.quadTree.QuadTree;
+import com.example.oriedita_core.origami.data.quadTree.adapter.LineSegmentEndPointAdapter;
+import com.example.oriedita_core.origami.data.quadTree.collector.EndPointCollector;
+import com.example.oriedita_core.origami.data.quadTree.collector.QuadTreeCollector;
 
 import java.util.ArrayList;
 import java.util.List;

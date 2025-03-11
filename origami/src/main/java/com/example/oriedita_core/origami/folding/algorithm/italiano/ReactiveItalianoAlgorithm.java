@@ -1,7 +1,7 @@
-package com.example.oriedita_core.origami.crease_pattern.folding.algorithm.italiano;
+package com.example.oriedita_core.origami.folding.algorithm.italiano;
 
-import com.example.oriedita_core.origami.crease_pattern.data.StackArray;
-import com.example.oriedita_core.origami.crease_pattern.folding.algorithm.AdditionalEstimationAlgorithm;
+import com.example.oriedita_core.origami.data.StackArray;
+import com.example.oriedita_core.origami.folding.algorithm.AdditionalEstimationAlgorithm;
 
 /**
  * ReactiveItalianoAlgorithm writes changes to a centralized StackArray, so that

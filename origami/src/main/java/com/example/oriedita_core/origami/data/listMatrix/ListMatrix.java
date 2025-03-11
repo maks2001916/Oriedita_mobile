@@ -1,7 +1,7 @@
-package com.example.oriedita_core.origami.crease_pattern.data.listMatrix;
+package com.example.oriedita_core.origami.data.listMatrix;
 
-import com.example.oriedita_core.origami.crease_pattern.data.tree.AVLTree;
-import com.example.oriedita_core.origami.crease_pattern.data.tree.BST;
+import com.example.oriedita_core.origami.data.tree.AVLTree;
+import com.example.oriedita_core.origami.data.tree.BST;
 
 import java.util.ArrayList;
 import java.util.Iterator;

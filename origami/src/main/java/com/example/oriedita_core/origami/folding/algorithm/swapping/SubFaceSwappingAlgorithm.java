@@ -1,6 +1,6 @@
-package com.example.oriedita_core.origami.crease_pattern.folding.algorithm.swapping;
+package com.example.oriedita_core.origami.folding.algorithm.swapping;
 
-import com.example.oriedita_core.origami.crease_pattern.folding.element.SubFace;
+import com.example.oriedita_core.origami.folding.element.SubFace;
 import android.util.Log;
 
 /**

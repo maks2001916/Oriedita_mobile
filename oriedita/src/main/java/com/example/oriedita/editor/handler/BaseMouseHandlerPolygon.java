@@ -1,4 +1,4 @@
-package oriedita.editor.handler;
+package com.example.oriedita.editor.handler;
 
 import origami.crease_pattern.elements.LineColor;
 import origami.crease_pattern.elements.LineSegment;

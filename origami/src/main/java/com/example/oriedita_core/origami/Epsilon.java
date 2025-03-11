@@ -1,6 +1,6 @@
-package com.example.oriedita_core.origami.crease_pattern;
+package com.example.oriedita_core.origami;
 
-import origami.crease_pattern.OritaCalc;
+import com.example.oriedita_core.origami.crease_pattern.OritaCalc;
 
 /**
  * This class organizes all epsilon constants used throughout the source code.

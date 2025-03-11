@@ -8,9 +8,9 @@ import com.example.oriedita_core.origami.crease_pattern.elements.LineSegment;
 import com.example.oriedita_core.origami.crease_pattern.elements.Point;
 import com.example.oriedita_core.origami.crease_pattern.elements.Point_p;
 import com.example.oriedita_core.origami.crease_pattern.elements.Polygon;
-import com.example.oriedita_core.origami.crease_pattern.data.ListArray;
-import com.example.oriedita_core.origami.crease_pattern.data.save.PointSave;
-import com.example.oriedita_core.origami.crease_pattern.folding.element.Face;
+import com.example.oriedita_core.origami.data.ListArray;
+import com.example.oriedita_core.origami.data.save.PointSave;
+import com.example.oriedita_core.origami.folding.element.Face;
 
 import java.io.Serializable;
 import java.util.ArrayList;

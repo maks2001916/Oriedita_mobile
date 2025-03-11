@@ -1,6 +1,6 @@
-package com.example.oriedita_core.origami.crease_pattern.folding.algorithm.italiano;
+package com.example.oriedita_core.origami.folding.algorithm.italiano;
 
-import com.example.oriedita_core.origami.crease_pattern.folding.HierarchyList;
+import com.example.oriedita_core.origami.folding.HierarchyList;
 
 import java.util.HashMap;
 import java.util.Map;

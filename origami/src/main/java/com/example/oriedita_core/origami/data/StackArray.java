@@ -1,4 +1,4 @@
-package com.example.oriedita_core.origami.crease_pattern.data;
+package com.example.oriedita_core.origami.data;
 
 import java.util.Iterator;
 

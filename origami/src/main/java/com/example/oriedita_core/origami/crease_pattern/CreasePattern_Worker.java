@@ -1,20 +1,21 @@
 package com.example.oriedita_core.origami.crease_pattern;
 
-import oriedita.editor.databinding.AngleSystemModel;
-import oriedita.editor.databinding.ApplicationModel;
-import oriedita.editor.databinding.CanvasModel;
-import oriedita.editor.databinding.GridModel;
-import oriedita.editor.drawing.Grid;
-import oriedita.editor.drawing.tools.Camera;
-import origami.crease_pattern.CustomLineTypes;
-import oriedita.editor.save.Save;
-import origami.crease_pattern.FoldLineSet;
-import origami.crease_pattern.LineSegmentSet;
-import origami.crease_pattern.element.Circle;
-import origami.crease_pattern.element.LineColor;
-import origami.crease_pattern.element.LineSegment;
-import origami.crease_pattern.element.Point;
+import com.example.oriedita_data.databinding.AngleSystemModel;
+import com.example.oriedita_data.databinding.ApplicationModel;
+import com.example.oriedita_data.databinding.CanvasModel;
+import com.example.oriedita_data.databinding.GridModel;
+import com.example.oriedita_data.drawing.Grid;
+import com.example.oriedita_common.editor.drawing.tools.Camera;
+import com.example.oriedita_core.origami.crease_pattern.CustomLineTypes;
+import com.example.oriedita_data.save.Save;
+import com.example.oriedita_core.origami.crease_pattern.FoldLineSet;
+import com.example.oriedita_core.origami.crease_pattern.LineSegmentSet;
+import com.example.oriedita_core.origami.crease_pattern.elements.Circle;
+import com.example.oriedita_core.origami.crease_pattern.elements.LineColor;
+import com.example.oriedita_core.origami.crease_pattern.elements.LineSegment;
+import com.example.oriedita_core.origami.crease_pattern.elements.Point;
 
+import android.graphics.Color;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.geom.GeneralPath;

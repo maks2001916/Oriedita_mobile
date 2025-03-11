@@ -1,4 +1,4 @@
-package com.example.oriedita_core.origami.crease_pattern.folding.permutation;
+package com.example.oriedita_core.origami.folding.permutation;
 
 /**
  * This is a much more efficient permutation generator than the original

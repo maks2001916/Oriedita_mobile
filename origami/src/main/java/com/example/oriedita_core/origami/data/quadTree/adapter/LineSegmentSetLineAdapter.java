@@ -1,7 +1,7 @@
-package com.example.oriedita_core.origami.crease_pattern.data.quadTree.adapter;
+package com.example.oriedita_core.origami.data.quadTree.adapter;
 
 import com.example.oriedita_core.origami.crease_pattern.LineSegmentSet;
-import com.example.oriedita_core.origami.crease_pattern.data.quadTree.QuadTreeItem;
+import com.example.oriedita_core.origami.data.quadTree.QuadTreeItem;
 
 /**
  * LineSegmentSetLineAdapter is a {@link LineSegmentSetAdapter} of which items

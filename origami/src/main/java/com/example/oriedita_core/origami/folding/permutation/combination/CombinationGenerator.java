@@ -1,13 +1,13 @@
-package com.example.oriedita_core.origami.crease_pattern.folding.permutation.combination;
+package com.example.oriedita_core.origami.folding.permutation.combination;
 
-import com.example.oriedita_core.origami.crease_pattern.folding.HierarchyList;
-import com.example.oriedita_core.origami.crease_pattern.folding.algorithm.InferenceFailureException;
-import com.example.oriedita_core.origami.crease_pattern.folding.algorithm.italiano.ReductionItalianoAlgorithm;
-import com.example.oriedita_core.origami.crease_pattern.folding.algorithm.swapping.SwappingAlgorithm;
-import com.example.oriedita_core.origami.crease_pattern.folding.element.SubFace;
-import com.example.oriedita_core.origami.crease_pattern.folding.permutation.ChainPermutationGenerator;
-import com.example.oriedita_core.origami.crease_pattern.folding.permutation.PermutationGenerator;
-import com.example.oriedita_core.origami.crease_pattern.folding.util.EquivalenceCondition;
+import com.example.oriedita_core.origami.folding.HierarchyList;
+import com.example.oriedita_core.origami.folding.algorithm.InferenceFailureException;
+import com.example.oriedita_core.origami.folding.algorithm.italiano.ReductionItalianoAlgorithm;
+import com.example.oriedita_core.origami.folding.algorithm.swapping.SwappingAlgorithm;
+import com.example.oriedita_core.origami.folding.element.SubFace;
+import com.example.oriedita_core.origami.folding.permutation.ChainPermutationGenerator;
+import com.example.oriedita_core.origami.folding.permutation.PermutationGenerator;
+import com.example.oriedita_core.origami.folding.util.EquivalenceCondition;
 
 import java.util.ArrayList;
 import java.util.List;

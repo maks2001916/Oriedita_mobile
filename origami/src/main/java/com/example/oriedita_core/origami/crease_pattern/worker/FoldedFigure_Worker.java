@@ -1,13 +1,13 @@
 package com.example.oriedita_core.origami.crease_pattern.worker;
 
 import android.util.Log;
-import com.example.oriedita_core.origami.crease_pattern.folding.HierarchyList;
-import com.example.oriedita_core.origami.crease_pattern.folding.algorithm.AdditionalEstimationAlgorithm;
-import com.example.oriedita_core.origami.crease_pattern.folding.algorithm.swapping.SubFaceSwappingAlgorithm;
-import com.example.oriedita_core.origami.crease_pattern.folding.element.SubFace;
-import com.example.oriedita_core.origami.crease_pattern.folding.util.EquivalenceCondition;
-import com.example.oriedita_core.origami.crease_pattern.folding.util.IBulletinBoard;
-import com.example.oriedita_core.origami.crease_pattern.folding.util.SortingBox;
+import com.example.oriedita_core.origami.folding.HierarchyList;
+import com.example.oriedita_core.origami.folding.algorithm.AdditionalEstimationAlgorithm;
+import com.example.oriedita_core.origami.folding.algorithm.swapping.SubFaceSwappingAlgorithm;
+import com.example.oriedita_core.origami.folding.element.SubFace;
+import com.example.oriedita_core.origami.folding.util.EquivalenceCondition;
+import com.example.oriedita_core.origami.folding.util.IBulletinBoard;
+import com.example.oriedita_core.origami.folding.util.SortingBox;
 
 
 /**

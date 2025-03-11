@@ -1,7 +1,7 @@
-package com.example.oriedita_core.origami.crease_pattern.folding.permutation.combination;
+package com.example.oriedita_core.origami.folding.permutation.combination;
 
-import com.example.oriedita_core.origami.crease_pattern.folding.HierarchyList;
-import com.example.oriedita_core.origami.crease_pattern.folding.algorithm.italiano.TraceableItalianoAlgorithm;
+import com.example.oriedita_core.origami.folding.HierarchyList;
+import com.example.oriedita_core.origami.folding.algorithm.italiano.TraceableItalianoAlgorithm;
 
 /**
  * TernaryConstraint only have two possible combinations: a-b-d, or b-d-a. Here

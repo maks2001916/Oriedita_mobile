@@ -1,6 +1,6 @@
-package com.example.oriedita_core.origami.crease_pattern.data.quadTree.collector;
+package com.example.oriedita_core.origami.data.quadTree.collector;
 
-import com.example.oriedita_core.origami.crease_pattern.data.quadTree.QuadTree.Node;
+import com.example.oriedita_core.origami.data.quadTree.QuadTree.Node;
 
 public abstract class RecursiveCollector implements QuadTreeCollector {
 

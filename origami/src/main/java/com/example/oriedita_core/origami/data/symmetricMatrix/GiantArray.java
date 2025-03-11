@@ -1,4 +1,4 @@
-package com.example.oriedita_core.origami.crease_pattern.data.symmetricMatrix;
+package com.example.oriedita_core.origami.data.symmetricMatrix;
 
 import java.util.ArrayList;
 import java.util.List;

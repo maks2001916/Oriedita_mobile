@@ -1,15 +1,15 @@
-package com.example.oriedita_core.origami.crease_pattern.folding.algorithm;
+package com.example.oriedita_core.origami.folding.algorithm;
 
 import android.util.Log;
 import com.example.oriedita_core.origami.crease_pattern.worker.FoldedFigure_Worker.HierarchyListStatus;
-import com.example.oriedita_core.origami.crease_pattern.data.StackArray;
-import com.example.oriedita_core.origami.crease_pattern.data.listMatrix.PseudoListMatrix;
-import com.example.oriedita_core.origami.crease_pattern.folding.HierarchyList;
-import com.example.oriedita_core.origami.crease_pattern.folding.algorithm.italiano.ItalianoAlgorithm;
-import com.example.oriedita_core.origami.crease_pattern.folding.algorithm.italiano.ReactiveItalianoAlgorithm;
-import com.example.oriedita_core.origami.crease_pattern.folding.element.SubFace;
-import com.example.oriedita_core.origami.crease_pattern.folding.util.EquivalenceCondition;
-import com.example.oriedita_core.origami.crease_pattern.folding.util.IBulletinBoard;
+import com.example.oriedita_core.origami.data.StackArray;
+import com.example.oriedita_core.origami.data.listMatrix.PseudoListMatrix;
+import com.example.oriedita_core.origami.folding.HierarchyList;
+import com.example.oriedita_core.origami.folding.algorithm.italiano.ItalianoAlgorithm;
+import com.example.oriedita_core.origami.folding.algorithm.italiano.ReactiveItalianoAlgorithm;
+import com.example.oriedita_core.origami.folding.element.SubFace;
+import com.example.oriedita_core.origami.folding.util.EquivalenceCondition;
+import com.example.oriedita_core.origami.folding.util.IBulletinBoard;
 
 import java.util.Iterator;
 

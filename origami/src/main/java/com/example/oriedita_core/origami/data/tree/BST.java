@@ -1,4 +1,4 @@
-package com.example.oriedita_core.origami.crease_pattern.data.tree;
+package com.example.oriedita_core.origami.data.tree;
 
 /**
  * BST stands for Binary Search Tree.

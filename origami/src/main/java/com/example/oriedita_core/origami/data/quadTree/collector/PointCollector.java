@@ -2,7 +2,7 @@ package com.example.oriedita_core.origami.data.quadTree.collector;
 
 import com.example.oriedita_core.origami.crease_pattern.elements.Point;
 import com.example.oriedita_core.origami.data.quadTree.QuadTree.Node;
-import com.example.oriedita_core.origami.crease_pattern.data.quadTree.adapter.QuadTreeAdapter;
+import com.example.oriedita_core.origami.data.quadTree.adapter.QuadTreeAdapter;
 import com.example.oriedita_core.origami.data.quadTree.collector.*;
 
 /**

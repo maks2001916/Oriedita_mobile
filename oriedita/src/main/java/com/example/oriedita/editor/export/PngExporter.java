@@ -1,4 +1,4 @@
-package oriedita.editor.export;
+package com.example.oriedita.editor.export;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;

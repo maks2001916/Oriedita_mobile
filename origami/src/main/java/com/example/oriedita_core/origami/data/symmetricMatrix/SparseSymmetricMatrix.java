@@ -1,4 +1,4 @@
-package com.example.oriedita_core.origami.crease_pattern.data.symmetricMatrix;
+package com.example.oriedita_core.origami.data.symmetricMatrix;
 
 /**
  * SparseSymmetricMatrix is for the largest of CPs, like Senbazuru. The idea of

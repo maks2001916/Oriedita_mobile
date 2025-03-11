@@ -1,11 +1,11 @@
 package com.example.oriedita_core.origami.data.quadTree;
 
 import com.example.oriedita_core.origami.crease_pattern.elements.Point;
-import com.example.oriedita_core.origami.crease_pattern.data.quadTree.adapter.QuadTreeAdapter;
-import com.example.oriedita_core.origami.crease_pattern.data.quadTree.collector.CollisionCollector;
-import com.example.oriedita_core.origami.crease_pattern.data.quadTree.collector.QuadTreeCollector;
-import com.example.oriedita_core.origami.crease_pattern.data.quadTree.comparator.QuadTreeComparator;
-import com.example.oriedita_core.origami.crease_pattern.data.quadTree.comparator.ShrinkComparator;
+import com.example.oriedita_core.origami.data.quadTree.adapter.QuadTreeAdapter;
+import com.example.oriedita_core.origami.data.quadTree.collector.CollisionCollector;
+import com.example.oriedita_core.origami.data.quadTree.collector.QuadTreeCollector;
+import com.example.oriedita_core.origami.data.quadTree.comparator.QuadTreeComparator;
+import com.example.oriedita_core.origami.data.quadTree.comparator.ShrinkComparator;
 
 import java.util.ArrayList;
 

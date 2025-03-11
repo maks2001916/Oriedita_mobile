@@ -1,8 +1,8 @@
-package com.example.oriedita_core.origami.crease_pattern.folding.algorithm;
+package com.example.oriedita_core.origami.folding.algorithm;
 
-import com.example.oriedita_core.origami.crease_pattern.data.listMatrix.ListMatrix;
-import com.example.oriedita_core.origami.crease_pattern.folding.HierarchyList;
-import com.example.oriedita_core.origami.crease_pattern.folding.element.SubFace;
+import com.example.oriedita_core.origami.data.listMatrix.ListMatrix;
+import com.example.oriedita_core.origami.folding.HierarchyList;
+import com.example.oriedita_core.origami.folding.element.SubFace;
 
 /**
  * This class improves the implementation of the original {@link SubFace}

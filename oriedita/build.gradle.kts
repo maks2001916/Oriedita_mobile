@@ -61,4 +61,5 @@ dependencies {
     implementation(project(":origami"))
     implementation(project(":oriedita-common"))
     implementation(project(":oriedita-data"))
+    implementation(project(":oriedita-ui"))
 }

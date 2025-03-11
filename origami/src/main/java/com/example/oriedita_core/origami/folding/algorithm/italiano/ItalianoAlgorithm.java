@@ -1,4 +1,4 @@
-package com.example.oriedita_core.origami.crease_pattern.folding.algorithm.italiano;
+package com.example.oriedita_core.origami.folding.algorithm.italiano;
 
 import java.util.ArrayDeque;
 

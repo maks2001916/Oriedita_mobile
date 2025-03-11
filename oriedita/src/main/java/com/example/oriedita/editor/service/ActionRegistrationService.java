@@ -1,4 +1,4 @@
-package oriedita.editor.service;
+package com.example.oriedita.editor.service;
 
 import com.formdev.flatlaf.FlatLaf;
 import jakarta.enterprise.context.ApplicationScoped;

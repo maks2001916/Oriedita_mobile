@@ -1,4 +1,4 @@
-package oriedita.editor.service.impl;
+package com.example.oriedita.editor.service.impl;
 
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;

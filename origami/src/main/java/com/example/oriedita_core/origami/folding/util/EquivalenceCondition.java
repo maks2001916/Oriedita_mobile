@@ -1,4 +1,4 @@
-package com.example.oriedita_core.origami.crease_pattern.folding.util;
+package com.example.oriedita_core.origami.folding.util;
 
 //This class is used to record and utilize the relationship hierarchyList[a][b] = hierarchyList[c][d] in the hierarchy list.
 public class EquivalenceCondition {

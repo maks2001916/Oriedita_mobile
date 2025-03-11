@@ -1,6 +1,6 @@
-package com.example.oriedita_core.origami.crease_pattern.data.quadTree.comparator;
+package com.example.oriedita_core.origami.data.quadTree.comparator;
 
-import com.example.oriedita_core.origami.crease_pattern.data.quadTree.QuadTree.Node;
+import com.example.oriedita_core.origami.data.quadTree.QuadTree.Node;
 
 /**
  * ExpandComparator is the opposite of ShrinkComparator, and would work better

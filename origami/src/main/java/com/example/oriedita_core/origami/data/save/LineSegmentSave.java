@@ -1,4 +1,4 @@
-package com.example.oriedita_core.origami.crease_pattern.data.save;
+package com.example.oriedita_core.origami.data.save;
 
 import com.example.oriedita_core.origami.crease_pattern.elements.Circle;
 import com.example.oriedita_core.origami.crease_pattern.elements.LineSegment;

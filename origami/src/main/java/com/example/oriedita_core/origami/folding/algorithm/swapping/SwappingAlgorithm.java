@@ -1,4 +1,4 @@
-package com.example.oriedita_core.origami.crease_pattern.folding.algorithm.swapping;
+package com.example.oriedita_core.origami.folding.algorithm.swapping;
 
 import java.util.Arrays;
 import java.util.HashSet;

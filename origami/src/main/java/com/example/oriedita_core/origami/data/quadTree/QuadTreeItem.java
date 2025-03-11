@@ -1,6 +1,6 @@
 package com.example.oriedita_core.origami.data.quadTree;
 
-import com.example.oriedita_core.origami.crease_pattern.Epsilon;
+import com.example.oriedita_core.origami.Epsilon;
 import com.example.oriedita_core.origami.crease_pattern.elements.Point;
 
 public class QuadTreeItem {

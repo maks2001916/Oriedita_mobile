@@ -1,6 +1,6 @@
-package com.example.oriedita_core.origami.crease_pattern.data.listMatrix;
+package com.example.oriedita_core.origami.data.listMatrix;
 
-import com.example.oriedita_core.origami.crease_pattern.folding.algorithm.AdditionalEstimationAlgorithm;
+import com.example.oriedita_core.origami.folding.algorithm.AdditionalEstimationAlgorithm;
 
 import java.util.HashMap;
 import java.util.Iterator;

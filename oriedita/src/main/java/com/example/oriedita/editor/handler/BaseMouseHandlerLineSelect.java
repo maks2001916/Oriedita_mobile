@@ -1,4 +1,4 @@
-package oriedita.editor.handler;
+package com.example.oriedita.editor.handler;
 
 import oriedita.editor.databinding.AngleSystemModel;
 import oriedita.editor.tools.SnappingUtil;

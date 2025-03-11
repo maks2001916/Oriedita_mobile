@@ -2,7 +2,7 @@ package com.example.oriedita_core.origami.crease_pattern.elements;
 
 import android.graphics.Color;
 
-import com.example.oriedita_core.origami.crease_pattern.Epsilon;
+import com.example.oriedita_core.origami.Epsilon;
 
 import java.io.Serializable;
 

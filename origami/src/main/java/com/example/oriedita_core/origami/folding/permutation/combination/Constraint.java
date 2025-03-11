@@ -1,7 +1,7 @@
-package com.example.oriedita_core.origami.crease_pattern.folding.permutation.combination;
+package com.example.oriedita_core.origami.folding.permutation.combination;
 
-import com.example.oriedita_core.origami.crease_pattern.folding.algorithm.italiano.TraceableItalianoAlgorithm;
-import com.example.oriedita_core.origami.crease_pattern.folding.util.EquivalenceCondition;
+import com.example.oriedita_core.origami.folding.algorithm.italiano.TraceableItalianoAlgorithm;
+import com.example.oriedita_core.origami.folding.util.EquivalenceCondition;
 
 /**
  * Constraint classes are essentially {@link EquivalenceCondition}s with

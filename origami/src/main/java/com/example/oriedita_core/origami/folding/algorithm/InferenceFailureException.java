@@ -1,4 +1,4 @@
-package com.example.oriedita_core.origami.crease_pattern.folding.algorithm;
+package com.example.oriedita_core.origami.folding.algorithm;
 
 public class InferenceFailureException extends Exception {
     final int i;

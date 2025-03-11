@@ -1,4 +1,4 @@
-package oriedita.editor.task;
+package com.example.oriedita.editor.task;
 
 import jakarta.inject.Inject;
 import jakarta.inject.Named;

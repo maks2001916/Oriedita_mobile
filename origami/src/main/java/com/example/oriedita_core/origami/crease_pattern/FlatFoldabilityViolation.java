@@ -1,6 +1,6 @@
 package com.example.oriedita_core.origami.crease_pattern;
 
-import origami.crease_pattern.element.Point;
+import com.example.oriedita_core.origami.crease_pattern.elements.Point;
 
 public class FlatFoldabilityViolation {
     private final Rule violatedRule;

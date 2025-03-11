@@ -1,8 +1,8 @@
-package com.example.oriedita_core.origami.crease_pattern.folding;
+package com.example.oriedita_core.origami.folding;
 
-import com.example.oriedita_core.origami.crease_pattern.data.symmetricMatrix.SymmetricMatrix;
-import com.example.oriedita_core.origami.crease_pattern.folding.constraint.CustomConstraint;
-import com.example.oriedita_core.origami.crease_pattern.folding.util.EquivalenceCondition;
+import com.example.oriedita_core.origami.data.symmetricMatrix.SymmetricMatrix;
+import com.example.oriedita_core.origami.folding.constraint.CustomConstraint;
+import com.example.oriedita_core.origami.folding.util.EquivalenceCondition;
 
 import java.util.Collections;
 import java.util.Comparator;

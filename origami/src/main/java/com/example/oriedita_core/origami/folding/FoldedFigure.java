@@ -1,4 +1,4 @@
-package com.example.oriedita_core.origami.crease_pattern.folding;
+package com.example.oriedita_core.origami.folding;
 
 import android.util.Log;
 import com.example.oriedita_core.origami.crease_pattern.FoldingException;
@@ -7,7 +7,7 @@ import com.example.oriedita_core.origami.crease_pattern.worker.FoldedFigure_Conf
 import com.example.oriedita_core.origami.crease_pattern.worker.FoldedFigure_Worker;
 import com.example.oriedita_core.origami.crease_pattern.worker.LineSegmentSetWorker;
 import com.example.oriedita_core.origami.crease_pattern.worker.WireFrame_Worker;
-import com.example.oriedita_core.origami.crease_pattern.folding.util.IBulletinBoard;
+import com.example.oriedita_core.origami.folding.util.IBulletinBoard;
 
 public class FoldedFigure {
     public FoldedFigure_Worker foldedFigure_worker;

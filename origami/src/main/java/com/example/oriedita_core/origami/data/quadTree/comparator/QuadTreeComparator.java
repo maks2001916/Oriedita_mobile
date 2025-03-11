@@ -1,9 +1,9 @@
-package com.example.oriedita_core.origami.crease_pattern.data.quadTree.comparator;
+package com.example.oriedita_core.origami.data.quadTree.comparator;
 
-import com.example.oriedita_core.origami.crease_pattern.Epsilon;
-import com.example.oriedita_core.origami.crease_pattern.data.quadTree.QuadTree;
-import com.example.oriedita_core.origami.crease_pattern.data.quadTree.QuadTree.Node;
-import com.example.oriedita_core.origami.crease_pattern.data.quadTree.QuadTreeItem;
+import com.example.oriedita_core.origami.Epsilon;
+import com.example.oriedita_core.origami.data.quadTree.QuadTree;
+import com.example.oriedita_core.origami.data.quadTree.QuadTree.Node;
+import com.example.oriedita_core.origami.data.quadTree.QuadTreeItem;
 
 /**
  * QuadTreeComparator describes how should {@link QuadTree} decide if a node

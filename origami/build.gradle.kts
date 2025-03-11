@@ -31,4 +31,9 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
+    implementation(project(":oriedita"))
+    implementation(project(":oriedita-data"))
+    implementation(project(":oriedita-common"))
+    implementation(project(":oriedita-ui"))
 }

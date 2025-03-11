@@ -1,4 +1,4 @@
-package oriedita.editor.task;
+package com.example.oriedita.editor.task;
 
 import org.tinylog.Logger;
 import oriedita.editor.databinding.CanvasModel;

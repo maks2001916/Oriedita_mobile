@@ -1,11 +1,12 @@
 package com.example.oriedita_core.origami.crease_pattern;
 
+import com.example.oriedita_core.origami.Epsilon;
 import com.example.oriedita_core.origami.crease_pattern.elements.LineColor;
 import com.example.oriedita_core.origami.crease_pattern.elements.LineSegment;
 import com.example.oriedita_core.origami.crease_pattern.elements.Point;
-import origami.data.quadTree.QuadTree;
-import origami.data.quadTree.adapter.PointLineMapAdapter;
-import origami.data.quadTree.collector.PointCollector;
+import com.example.oriedita_core.origami.data.quadTree.QuadTree;
+import com.example.oriedita_core.origami.data.quadTree.adapter.PointLineMapAdapter;
+import com.example.oriedita_core.origami.data.quadTree.collector.PointCollector;
 
 import java.util.ArrayList;
 import java.util.Collections;
