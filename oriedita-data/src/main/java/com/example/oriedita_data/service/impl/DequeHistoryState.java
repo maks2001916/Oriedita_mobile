@@ -1,11 +1,11 @@
 package com.example.oriedita_data.service.impl;
 
+import android.util.Log;
+import com.example.oriedita_data.save.Save;
+import com.example.oriedita_data.save.SaveProvider;
+import com.example.oriedita_data.service.HistoryState;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
-import org.tinylog.Logger;
-import oriedita.editor.save.Save;
-import oriedita.editor.save.SaveProvider;
-import oriedita.editor.service.HistoryState;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;

@@ -1,7 +1,6 @@
 package com.example.oriedita_data.save;
 
-
-import oriedita.editor.text.Text;
+import com.example.oriedita_common.editor.text.Text;
 
 import java.util.List;
 

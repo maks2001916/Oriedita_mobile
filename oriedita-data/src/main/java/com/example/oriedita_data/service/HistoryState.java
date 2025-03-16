@@ -1,6 +1,6 @@
 package com.example.oriedita_data.service;
 
-import oriedita.editor.save.Save;
+import com.example.oriedita_data.save.Save;
 
 import java.beans.PropertyChangeListener;
 

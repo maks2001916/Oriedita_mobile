@@ -1,15 +1,15 @@
 package com.example.oriedita_data.service.impl;
 
+import android.util.Log;
+import com.example.oriedita_common.editor.FrameProvider;
+import com.example.oriedita_data.databinding.ApplicationModel;
+import com.example.oriedita_data.json.DefaultObjectMapper;
+import com.example.oriedita_common.editor.service.ApplicationModelPersistenceService;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
-import org.tinylog.Logger;
-import oriedita.editor.FrameProvider;
-import oriedita.editor.databinding.ApplicationModel;
-import oriedita.editor.json.DefaultObjectMapper;
-import oriedita.editor.service.ApplicationModelPersistenceService;
 
 import javax.swing.JOptionPane;
 import java.io.File;

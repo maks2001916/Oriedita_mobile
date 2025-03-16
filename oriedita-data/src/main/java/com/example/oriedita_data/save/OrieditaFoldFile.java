@@ -1,11 +1,11 @@
 package com.example.oriedita_data.save;
 
-import fold.custom.CustomListField;
-import fold.model.FoldFile;
-import oriedita.editor.save.fold.MapCircleAdapter;
-import oriedita.editor.save.fold.MapTextAdapter;
-import oriedita.editor.text.Text;
-import origami.crease_pattern.elements.Circle;
+import com.example.oriedita_data.save.fold.MapCircleAdapter;
+import com.example.oriedita_data.save.fold.MapTextAdapter;
+import com.example.oriedita_common.editor.text.Text;
+import com.example.oriedita_core.origami.crease_pattern.elements.Circle;
+import com.example.oriedita_core.origami.folding.fold.custom.CustomListField;
+import com.example.oriedita_core.origami.folding.fold.model.FoldFile;
 
 import java.util.List;
 

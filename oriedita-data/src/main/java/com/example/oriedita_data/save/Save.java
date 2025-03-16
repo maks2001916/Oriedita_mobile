@@ -3,12 +3,13 @@ package com.example.oriedita_data.save;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import oriedita.editor.databinding.ApplicationModel;
-import oriedita.editor.databinding.CanvasModel;
-import oriedita.editor.databinding.FoldedFigureModel;
-import oriedita.editor.databinding.GridModel;
-import oriedita.editor.drawing.tools.Camera;
-import origami.data.save.LineSegmentSave;
-import origami.data.save.PointSave;
+import com.example.oriedita_data.databinding.ApplicationModel;
+import com.example.oriedita_data.databinding.CanvasModel;
+import com.example.oriedita_data.databinding.FoldedFigureModel;
+import com.example.oriedita_data.databinding.GridModel;
+import com.example.oriedita_common.editor.drawing.tools.Camera;
+import com.example.oriedita_core.origami.data.save.LineSegmentSave;
+import com.example.oriedita_core.origami.data.save.PointSave;
 
 import java.io.Serializable;
 
