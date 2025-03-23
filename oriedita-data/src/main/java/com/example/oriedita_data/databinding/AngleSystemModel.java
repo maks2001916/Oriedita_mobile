@@ -1,13 +1,12 @@
 package com.example.oriedita_data.databinding;
 
-
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
-
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
-@ApplicationScoped
+import javax.inject.Singleton;
+import javax.inject.Inject;
+
+@Singleton
 public class AngleSystemModel {
     private double angleA;
     private double angleB;

@@ -1,9 +1,8 @@
 package com.example.oriedita_data.save;
 
+import com.example.oriedita_data.databinding.ApplicationModel;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import oriedita.editor.databinding.ApplicationModel;
-import com.example.oriedita_data.databinding.ApplicationModel;
 import com.example.oriedita_data.databinding.CanvasModel;
 import com.example.oriedita_data.databinding.FoldedFigureModel;
 import com.example.oriedita_data.databinding.GridModel;

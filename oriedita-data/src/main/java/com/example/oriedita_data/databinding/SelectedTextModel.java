@@ -1,15 +1,16 @@
 package com.example.oriedita_data.databinding;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
-import org.tinylog.Logger;
-import oriedita.editor.text.Text;
+import android.util.Log;
+import com.example.oriedita_common.editor.text.Text;
+import com.google.gson.annotations.Expose;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
-@ApplicationScoped
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
+@Singleton
 public class SelectedTextModel {
 
     private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
@@ -43,14 +44,14 @@ public class SelectedTextModel {
         setDirty(false);
     }
 
-    @JsonIgnore
+    @Expose(serialize = false, deserialize = false)
     public void setDirty(boolean dirty) {
         boolean oldDirty = this.dirty;
         if (dirty && !oldDirty) {
-            Logger.info("text dirty");
+            Log.i("TAG","text dirty");
         }
         if (!dirty && oldDirty) {
-            Logger.info("text clean");
+            Log.i("TAG","text clean");
         }
         this.dirty = dirty;
         pcs.firePropertyChange("dirty", !dirty, dirty); // should always trigger a PropertyChangeEvent
@@ -85,7 +86,7 @@ public class SelectedTextModel {
         this.pcs.removePropertyChangeListener(listener);
     }
 
-    @JsonIgnore
+    @Expose(serialize = false, deserialize = false)
     public boolean isDirty() {
         return dirty;
     }

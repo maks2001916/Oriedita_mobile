@@ -1,19 +1,20 @@
 package com.example.oriedita_data.databinding;
 
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
-import oriedita.editor.canvas.FoldLineAdditionalInputMode;
-import oriedita.editor.canvas.MouseMode;
-import oriedita.editor.canvas.MouseWheelTarget;
-import oriedita.editor.handler.FoldedFigureOperationMode;
-import origami.crease_pattern.elements.LineColor;
+import com.example.oriedita_common.editor.canvas.FoldLineAdditionalInputMode;
+import com.example.oriedita_common.editor.canvas.MouseMode;
+import com.example.oriedita_common.editor.canvas.MouseWheelTarget;
+import com.example.oriedita_data.handler.FoldedFigureOperationMode;
+import com.example.oriedita_core.origami.crease_pattern.elements.LineColor;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-@ApplicationScoped
+import javax.inject.Singleton;
+import javax.inject.Inject;
+
+@Singleton
 public class CanvasModel implements Serializable {
     private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
     private LineColor lineColor;

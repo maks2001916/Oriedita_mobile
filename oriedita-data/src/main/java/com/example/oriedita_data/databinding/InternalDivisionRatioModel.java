@@ -1,11 +1,12 @@
 package com.example.oriedita_data.databinding;
 
 
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
-import oriedita.editor.AbstractModel;
+import javax.inject.Singleton;
+import javax.inject.Inject;
 
-@ApplicationScoped
+import com.example.oriedita_common.editor.AbstractModel;
+
+@Singleton
 public class InternalDivisionRatioModel extends AbstractModel {
     private final MeasuresModel measuresModel;
     private double internalDivisionRatioA;

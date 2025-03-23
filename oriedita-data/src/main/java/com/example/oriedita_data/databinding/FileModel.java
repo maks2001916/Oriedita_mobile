@@ -1,16 +1,16 @@
 package com.example.oriedita_data.databinding;
 
-
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
-import oriedita.editor.tools.ResourceUtil;
+import com.example.oriedita_common.editor.tools.ResourceUtil;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.io.File;
 import java.io.Serializable;
 
-@ApplicationScoped
+import javax.inject.Singleton;
+import javax.inject.Inject;
+
+@Singleton
 public class FileModel implements Serializable {
     private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
 

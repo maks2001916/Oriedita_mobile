@@ -1,13 +1,14 @@
 package com.example.oriedita_data.drawing;
 
-import oriedita.editor.databinding.ApplicationModel;
-import oriedita.editor.databinding.GridModel;
-import oriedita.editor.drawing.tools.Camera;
-import origami.Epsilon;
-import origami.crease_pattern.OritaCalc;
-import origami.crease_pattern.elements.LineSegment;
-import origami.crease_pattern.elements.Point;
+import com.example.oriedita_data.databinding.ApplicationModel;
+import com.example.oriedita_data.databinding.GridModel;
+import com.example.oriedita_common.editor.drawing.tools.Camera;
+import com.example.oriedita_core.origami.Epsilon;
+import com.example.oriedita_core.origami.crease_pattern.OritaCalc;
+import com.example.oriedita_core.origami.crease_pattern.elements.LineSegment;
+import com.example.oriedita_core.origami.crease_pattern.elements.Point;
 
+import android.graphics.Color;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
@@ -57,8 +58,8 @@ public class Grid {
         int verticalScaleInterval = 5;
         int verticalScalePosition = 0;
 
-        Color grid_color;//格子線の色
-        Color gridScaleColor;//格子目盛り線の色
+        int grid_color;//格子線の色
+        int gridScaleColor;//格子目盛り線の色
 
         int gridLineWidth = 1;//Grid line width
 
@@ -273,11 +274,11 @@ public class Grid {
         return (int) Math.ceil(b_index_max);
     }
 
-    public void setGridColor(Color color0) {
+    public void setGridColor(int color0) {
         grid_color = color0;
     }
 
-    public void setGridScaleColor(Color color0) {
+    public void setGridScaleColor(int color0) {
         gridScaleColor = color0;
     }
 
@@ -352,7 +353,8 @@ public class Grid {
             offsetY += adjustedGridSize;
         }
         int alpha = Math.min(255, (int) ( (1-minGridUnitSize/(s_tv.determineLength()*step)) * 255 * 2));
-        Color c = new Color(grid_color.getRed(), grid_color.getGreen(), grid_color.getRed(), alpha);
+
+        int c = Color.argb(alpha, Color.red(grid_color), Color.green(grid_color), Color.red(grid_color));
         for (int i = grid_screen_a_min - offsetX; i <= grid_screen_a_max; i+= halfStep) {
             // draw vertical grid lines
             s_ob = new LineSegment(d_grid_ax * i + d_grid_bx * grid_screen_b_min + okx0,

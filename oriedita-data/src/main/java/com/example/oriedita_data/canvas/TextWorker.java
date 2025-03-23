@@ -1,38 +1,50 @@
 package com.example.oriedita_data.canvas;
 
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
-import oriedita.editor.drawing.tools.Camera;
-import oriedita.editor.save.TextSave;
-import oriedita.editor.text.Text;
-import origami.crease_pattern.elements.Point;
+
+import com.example.oriedita_common.editor.drawing.tools.Camera;
+import com.example.oriedita_data.save.TextSave;
+import com.example.oriedita_common.editor.text.Text;
+import com.example.oriedita_core.origami.crease_pattern.elements.Point;
+
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Typeface;
 
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Singleton;
+import javax.inject.Inject;
+
 /**
  * Allows displaying text on the canvas
  */
-@ApplicationScoped
+@Singleton
 public class TextWorker {
     private final List<Text> texts;
+    private final Paint textPaint;
 
     @Inject
     public TextWorker() {
         this.texts = new ArrayList<>();
+        this.textPaint = new Paint();
+        textPaint.setColor(Color.BLACK);
+        textPaint.setTextSize(16f);
+        textPaint.setTypeface(Typeface.DEFAULT);
     }
 
-    public void draw(Graphics2D g2, Camera camera) {
-        Text.setGraphics(g2);
+    public void draw(Canvas canvas, Camera camera) {
+        Text.setGraphics(canvas);
         for (Text text : texts) {
-            Point textPos = camera.object2TV(text.getPos());
-            int height = g2.getFontMetrics().getHeight();
+            Point textPos = camera.ob(text.getPos());
+            int height = canvas.getFontMetrics().getHeight();
             int textY = (int) textPos.getY();
 
             for (String line : text.getText().split("\n")) {
-                g2.drawString(line, (int) textPos.getX(), textY);
+                canvas.drawString(line, (int) textPos.getX(), textY);
                 textY += height;
             }
         }

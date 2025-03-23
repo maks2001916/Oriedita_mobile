@@ -1,14 +1,16 @@
 package com.example.oriedita_data.databinding;
 
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
-import org.tinylog.Logger;
-import origami.crease_pattern.OritaCalc;
+
+import android.util.Log;
+import javax.inject.Inject;
+import javax.inject.Singleton;
+import com.example.oriedita_core.origami.crease_pattern.OritaCalc;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
-@ApplicationScoped
+
+@Singleton
 public class CameraModel {
     private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
     private double rotation;
@@ -60,7 +62,8 @@ public class CameraModel {
 
     public void zoomIn(double zoomSpeed) {
         zoomBy(-1, zoomSpeed);
-        Logger.info("zoom in");
+        Log.i("TAG", "zoom in");
+        Log.i("TAG", "зум +");
     }
 
     public void zoomBy(double value, double zoomSpeed) {

@@ -1,8 +1,8 @@
 package com.example.oriedita_data.save.fold;
 
-import fold.custom.Adapter;
-import origami.crease_pattern.elements.Circle;
-import origami.crease_pattern.elements.LineColor;
+import com.example.oriedita_core.origami.folding.fold.custom.Adapter;
+import com.example.oriedita_core.origami.crease_pattern.elements.Circle;
+import com.example.oriedita_core.origami.crease_pattern.elements.LineColor;
 
 import java.util.Arrays;
 import java.util.HashMap;

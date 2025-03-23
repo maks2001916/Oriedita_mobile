@@ -1,21 +1,22 @@
 package com.example.oriedita_data.databinding;
 
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
-import origami.crease_pattern.elements.Rectangle;
-import origami.crease_pattern.elements.Point;
-import origami.crease_pattern.elements.Polygon;
+import com.example.oriedita_core.origami.crease_pattern.elements.Rectangle;
+import com.example.oriedita_core.origami.crease_pattern.elements.Point;
+import com.example.oriedita_core.origami.crease_pattern.elements.Polygon;
 
-import java.awt.Image;
+import android.graphics.drawable.Drawable;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
-@ApplicationScoped
+import javax.inject.Singleton;
+import javax.inject.Inject;
+
+@Singleton
 public class BackgroundModel {
     private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
     private boolean displayBackground;
     private boolean lockBackground;
-    private Image backgroundImage;
+    private Drawable backgroundImage;
     private Rectangle backgroundPosition;
 
     @Inject
@@ -23,12 +24,12 @@ public class BackgroundModel {
         reset();
     }
 
-    public Image getBackgroundImage() {
+    public Drawable getBackgroundImage() {
         return backgroundImage;
     }
 
-    public void setBackgroundImage(Image backgroundImage) {
-        Image oldBackgroundImage = this.backgroundImage;
+    public void setBackgroundImage(Drawable backgroundImage) {
+        Drawable oldBackgroundImage = this.backgroundImage;
         this.backgroundImage = backgroundImage;
         this.pcs.firePropertyChange("backgroundImage", oldBackgroundImage, backgroundImage);
     }

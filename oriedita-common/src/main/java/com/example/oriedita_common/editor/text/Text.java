@@ -1,7 +1,7 @@
 package com.example.oriedita_common.editor.text;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import origami.crease_pattern.elements.Point;
+import com.example.oriedita_core.origami.crease_pattern.elements.Point;
 
 import java.awt.Graphics;
 import java.awt.Rectangle;

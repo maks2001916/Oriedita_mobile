@@ -32,6 +32,9 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
+    implementation(libs.hilt.android)
+    implementation("com.google.code.gson:gson:2.10.1")
+
     implementation(project(":oriedita-common"))
     implementation(project(":origami"))
 }

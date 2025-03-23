@@ -1,13 +1,15 @@
 package com.example.oriedita_data.databinding;
 
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
-import oriedita.editor.tools.StringOp;
+import com.example.oriedita_common.editor.tools.StringOp;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
-@ApplicationScoped
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
+
+@Singleton
 public class MeasuresModel {
     private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
     private double measuredLength1;

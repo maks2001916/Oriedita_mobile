@@ -1,11 +1,11 @@
 package com.example.oriedita_data.databinding;
 
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
-import oriedita.editor.Colors;
-import oriedita.editor.canvas.LineStyle;
-import origami.crease_pattern.CustomLineTypes;
+import com.example.oriedita_data.Colors;
+import com.example.oriedita_common.editor.canvas.LineStyle;
+import com.example.oriedita_core.origami.crease_pattern.CustomLineTypes;
 
+import android.graphics.Color;
+import android.graphics.Point;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Frame;
@@ -18,10 +18,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.inject.Singleton;
+import javax.inject.Inject;
+
 /**
  * This model is saved to disk and restored when the application starts.
  */
-@ApplicationScoped
+@Singleton
 public class ApplicationModel implements Serializable {
     private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
     private boolean displayPointSpotlight;
@@ -47,7 +50,7 @@ public class ApplicationModel implements Serializable {
     private LineStyle lineStyle;
     private boolean antiAlias;
     private boolean mouseWheelMovesCreasePattern;
-    private Color circleCustomizedColor;
+    private int circleCustomizedColor;
     private boolean selectPersistent;
     private boolean check4Enabled;
     private boolean ckOEnabled;
@@ -60,12 +63,12 @@ public class ApplicationModel implements Serializable {
     private int windowState;
     private Point windowPosition;
     private String laf;
-    private Dimension windowSize;
+    private Point windowSize;
     private List<File> recentFileList;
     private double minGridUnitSize;
     private boolean showInvisibleTextWarning;
-    private Color gridColor;
-    private Color gridScaleColor;
+    private int gridColor;
+    private int gridScaleColor;
     private int gridLineWidth;
     private boolean displayNumbers;
     private boolean foldWarning;
@@ -338,12 +341,12 @@ public class ApplicationModel implements Serializable {
         }
     }
 
-    public Dimension getWindowSize() {
+    public Point getWindowSize() {
         return windowSize;
     }
 
-    public void setWindowSize(Dimension windowSize) {
-        Dimension oldWindowSize = this.windowSize;
+    public void setWindowSize(Point windowSize) {
+        Point oldWindowSize = this.windowSize;
         this.windowSize = windowSize;
         this.pcs.firePropertyChange("windowSize", oldWindowSize, windowSize);
     }
@@ -413,7 +416,7 @@ public class ApplicationModel implements Serializable {
         displayLeftPanel = true;
         displayRightPanel = true;
 
-        circleCustomizedColor = new Color(100, 200, 200);
+        circleCustomizedColor = Color.rgb(100, 200, 200);
 
         selectPersistent = false;
         numPolygonCorners = 5;
@@ -424,6 +427,7 @@ public class ApplicationModel implements Serializable {
         cpExportWarning = false;
 
         windowPosition = null;
+        //заменить на view или аналог из jetpack compose
         windowState = Frame.NORMAL;
         windowSize = null;
 
@@ -534,12 +538,12 @@ public class ApplicationModel implements Serializable {
         this.pcs.firePropertyChange("selectPersistent", oldSelectPersistent, selectPersistent);
     }
 
-    public Color getCircleCustomizedColor() {
+    public int getCircleCustomizedColor() {
         return circleCustomizedColor;
     }
 
-    public void setCircleCustomizedColor(Color circleCustomizedColor) {
-        Color oldCircleCustomizedColor = this.circleCustomizedColor;
+    public void setCircleCustomizedColor(int circleCustomizedColor) {
+        int oldCircleCustomizedColor = this.circleCustomizedColor;
         this.circleCustomizedColor = circleCustomizedColor;
         this.pcs.firePropertyChange("circleCustomizedColor", oldCircleCustomizedColor, circleCustomizedColor);
     }
@@ -913,23 +917,23 @@ public class ApplicationModel implements Serializable {
     }
 
 
-    public Color getGridColor() {
+    public int getGridColor() {
         return gridColor;
     }
 
-    public void setGridColor(Color newGridColor) {
-        Color oldGridColor = this.gridColor;
+    public void setGridColor(int newGridColor) {
+        int oldGridColor = this.gridColor;
         this.gridColor = newGridColor;
 
         this.pcs.firePropertyChange("gridColor", oldGridColor, newGridColor);
     }
 
-    public Color getGridScaleColor() {
+    public int getGridScaleColor() {
         return gridScaleColor;
     }
 
-    public void setGridScaleColor(Color newGridScaleColor) {
-        Color oldGridScaleColor = this.gridScaleColor;
+    public void setGridScaleColor(int newGridScaleColor) {
+        int oldGridScaleColor = this.gridScaleColor;
         this.gridScaleColor = newGridScaleColor;
         this.pcs.firePropertyChange("gridScaleColor", oldGridScaleColor, newGridScaleColor);
     }

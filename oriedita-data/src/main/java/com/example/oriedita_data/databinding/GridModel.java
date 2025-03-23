@@ -1,14 +1,15 @@
 package com.example.oriedita_data.databinding;
 
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
-import origami.Epsilon;
+import com.example.oriedita_core.origami.Epsilon;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
 
-@ApplicationScoped
+import javax.inject.Singleton;
+import javax.inject.Inject;
+
+@Singleton
 public class GridModel implements Serializable {
     private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
     private int intervalGridSize;

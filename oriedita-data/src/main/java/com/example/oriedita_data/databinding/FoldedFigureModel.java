@@ -1,20 +1,21 @@
 package com.example.oriedita_data.databinding;
 
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
-import origami.folding.FoldedFigure;
+import com.example.oriedita_core.origami.folding.FoldedFigure;
 
-import java.awt.Color;
+import android.graphics.Color;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
 
-@ApplicationScoped
+import javax.inject.Singleton;
+import javax.inject.Inject;
+
+@Singleton
 public class FoldedFigureModel implements Serializable {
     private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
-    private Color frontColor;
-    private Color backColor;
-    private Color lineColor;
+    private int frontColor;
+    private int backColor;
+    private int lineColor;
     private double scale;
     private double rotation;
     private boolean antiAlias;
@@ -87,9 +88,9 @@ public class FoldedFigureModel implements Serializable {
         displayShadows = false;
         state = FoldedFigure.State.FRONT_0;
 
-        frontColor = new Color(255, 255, 50);
-        backColor = new Color(233, 233, 233);
-        lineColor = Color.black;
+        frontColor = Color.rgb(255, 255, 50);
+        backColor = Color.rgb(233, 233, 233);
+        lineColor = Color.BLACK;
 
         transparencyColor = false;
 
@@ -112,32 +113,32 @@ public class FoldedFigureModel implements Serializable {
         } else { return false; }
     }
 
-    public Color getFrontColor() {
+    public int getFrontColor() {
         return frontColor;
     }
 
-    public void setFrontColor(Color frontColor) {
-        Color oldFrontColor = this.frontColor;
+    public void setFrontColor(int frontColor) {
+        int oldFrontColor = this.frontColor;
         this.frontColor = frontColor;
         this.pcs.firePropertyChange("frontColor", oldFrontColor, frontColor);
     }
 
-    public Color getBackColor() {
+    public int getBackColor() {
         return backColor;
     }
 
-    public void setBackColor(Color backColor) {
-        Color oldFrontColor = this.backColor;
+    public void setBackColor(int backColor) {
+        int oldFrontColor = this.backColor;
         this.backColor = backColor;
         this.pcs.firePropertyChange("backColor", oldFrontColor, backColor);
     }
 
-    public Color getLineColor() {
+    public int getLineColor() {
         return lineColor;
     }
 
-    public void setLineColor(Color lineColor) {
-        Color oldFrontColor = this.lineColor;
+    public void setLineColor(int lineColor) {
+        int oldFrontColor = this.lineColor;
         this.lineColor = lineColor;
         this.pcs.firePropertyChange("lineColor", oldFrontColor, lineColor);
     }

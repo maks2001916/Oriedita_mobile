@@ -1,7 +1,7 @@
 package com.example.oriedita_data.save.fold;
 
-import fold.custom.Adapter;
-import oriedita.editor.text.Text;
+import com.example.oriedita_core.origami.folding.fold.custom.Adapter;
+import com.example.oriedita_common.editor.text.Text;
 
 import java.util.Arrays;
 import java.util.HashMap;

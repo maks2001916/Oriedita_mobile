@@ -1,8 +1,8 @@
 package com.example.oriedita_data.canvas;
 
-import origami.crease_pattern.elements.Rectangle;
-import origami.crease_pattern.elements.Point;
-import origami.crease_pattern.elements.Polygon;
+import com.example.oriedita_core.origami.crease_pattern.elements.Rectangle;
+import com.example.oriedita_core.origami.crease_pattern.elements.Point;
+import com.example.oriedita_core.origami.crease_pattern.elements.Polygon;
 
 public class OperationFrame {
     private final Rectangle rect;
