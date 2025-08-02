@@ -152,9 +152,9 @@ public class FoldLineSet {
         e.setCustomized(customized);
     }
 
-    public void setCircleCustomizedColor(int i, Color c0) {
+    public void setCircleCustomizedColor(int i, int color) {
         Circle e = circles.get(i);
-        e.setCustomizedColor(c0);
+        e.setCustomizedColor(color);
     }
 
     //Enter the activity of the i-th line segment
@@ -720,7 +720,7 @@ public class FoldLineSet {
     }
 
     //--------------------------------
-    public boolean change_property_in_4kakukei(Polygon p, Color sen_tokutyuu_color) {//Change properties such as the color of circles and auxiliary live lines inside a quadrangle
+    public boolean change_property_in_4kakukei(Polygon p, int sen_tokutyuu_color) {//Change properties such as the color of circles and auxiliary live lines inside a quadrangle
         boolean i_r = false;
 
         for (int i = 1; i <= total; i++) {
@@ -1811,7 +1811,7 @@ public class FoldLineSet {
                 i_decision = true;
             }
 
-            Logger.info("i_lineSegment_intersection_decision=" + i_lineSegment_intersection_decision + "---tyouten_syuui_sensuu_for_del_V(q,r)_" + vertex_syuui_numLines_for_del_V(q, r));
+            Log.i("FoldLineSet","i_lineSegment_intersection_decision=" + i_lineSegment_intersection_decision + "---tyouten_syuui_sensuu_for_del_V(q,r)_" + vertex_syuui_numLines_for_del_V(q, r));
             if (!i_decision) {
                 return false;
             }
