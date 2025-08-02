@@ -18,9 +18,7 @@ import com.example.oriedita_core.origami.data.save.LineSegmentSave;
 import com.example.oriedita_core.origami.folding.util.SortingBox;
 
 import android.graphics.Color;
-import java.awt.Color;
-import java.awt.geom.GeneralPath;
-import java.awt.geom.Line2D;
+import android.graphics.Path;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
@@ -2188,13 +2186,12 @@ public class FoldLineSet {
         }
     }
 
-    public void select_lasso(GeneralPath gp, String selectMode) {
+    public void select_lasso(Path path, String selectMode) {
         boolean isContained;
 
         for (int i = 1; i <= total; i++){
             LineSegment s = lineSegments.get(i);
-            isContained = OritaCalc.isSegmentContainedInGeneralPath(gp,
-                    new Line2D.Double(s.determineAX(), s.determineAY(), s.determineBX(), s.determineBY()));
+            isContained = OritaCalc.isSegmentContainedInGeneralPath(path, s);
 
             if(isContained) {
                 if(selectMode.equals("select")){

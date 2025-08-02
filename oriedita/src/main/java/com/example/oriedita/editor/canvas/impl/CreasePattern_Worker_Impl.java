@@ -1,7 +1,11 @@
 package com.example.oriedita.editor.canvas.impl;
 
-import org.tinylog.Logger;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.Color;
+import android.graphics.Path;
 import android.util.Log;
+
 import com.example.oriedita_data.Colors;
 import com.example.oriedita_data.canvas.CreasePattern_Worker;
 import com.example.oriedita_data.canvas.OperationFrame;
@@ -19,7 +23,6 @@ import com.example.oriedita_data.save.SaveProvider;
 import com.example.oriedita_data.service.HistoryState;
 import com.example.oriedita_common.editor.drawing.tools.Camera;
 import com.example.oriedita_common.editor.canvas.FoldLineAdditionalInputMode;
-import com.example.oriedita_common.editor.canvas.LineStyle;
 import com.example.oriedita_common.editor.canvas.MouseMode;
 import com.example.oriedita_common.editor.service.TaskExecutorService;
 import com.example.oriedita_ui.drawing.tools.DrawingUtil;
@@ -45,12 +48,7 @@ import com.example.oriedita_core.origami.crease_pattern.worker.foldlineset.Fix2;
 import com.example.oriedita_core.origami.crease_pattern.worker.foldlineset.InsideToAux;
 import com.example.oriedita_core.origami.crease_pattern.worker.foldlineset.OrganizeCircles;
 
-import android.graphics.Color;
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.geom.GeneralPath;
+
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -85,7 +83,7 @@ public class CreasePattern_Worker_Impl implements CreasePattern_Worker {
     /**
      * Temporary GeneralPath when drawing.
      */
-    private final GeneralPath linePath = new GeneralPath();
+    private final Path linePath = new Path();
     /**
      * Temporary circles when drawing.
      */
@@ -102,7 +100,7 @@ public class CreasePattern_Worker_Impl implements CreasePattern_Worker {
     private LineColor lineColor;//Line segment color
     private LineColor auxLineColor = LineColor.ORANGE_4;//Auxiliary line color
     private boolean gridInputAssist = false;//1 if you use the input assist function for fine grid display, 0 if you do not use it
-    private Color customCircleColor;//Stores custom colors for circles and auxiliary hot lines
+    private int customCircleColor;//Stores custom colors for circles and auxiliary hot lines
     private FoldLineAdditionalInputMode i_foldLine_additional = FoldLineAdditionalInputMode.POLY_LINE_0;//= 0 is polygonal line input = 1 is auxiliary line input mode (when inputting a line segment, these two). When deleting a line segment, the value becomes as follows. = 0 is the deletion of the polygonal line, = 1 is the deletion of the auxiliary picture line, = 2 is the deletion of the black line, = 3 is the deletion of the auxiliary live line, = 4 is the folding line, the auxiliary live line and the auxiliary picture line.
     private final FoldLineSet auxLines;    //Store auxiliary lines
     private int foldLineDividingNumber = 1;
@@ -445,65 +443,66 @@ public class CreasePattern_Worker_Impl implements CreasePattern_Worker {
     //Drawing the basic branch
     //------------------------------------------------------------------------------
     @Override
-    public void drawWithCamera(Graphics g, boolean displayComments, boolean displayCpLines, boolean displayAuxLines, boolean displayAuxLiveLines, float lineWidth, LineStyle lineStyle, float f_h_WireframeLineWidth, int p0x_max, int p0y_max, boolean i_mejirusi_display, boolean hideOperationFrame) {//引数はカメラ設定、線幅、画面X幅、画面y高さ
-        Graphics2D g2 = (Graphics2D) g;
+    public void drawWithCamera(Canvas canvas, Paint paint, boolean displayComments, boolean displayCpLines, boolean displayAuxLines, boolean displayAuxLiveLines, float lineWidth, int p0x_max, int p0y_max, boolean i_mejirusi_display, boolean hideOperationFrame) {//引数はカメラ設定、線幅、画面X幅、画面y高さ
+        paint.setStrokeWidth(lineWidth);
+        paint.setStyle(Paint.Style.STROKE);
+        paint.setColor(Color.BLACK);
 
         //Drawing grid lines
-        grid.draw(g, camera, p0x_max, p0y_max, gridInputAssist, applicationModel.getMinGridUnitSize());
-
-        BasicStroke BStroke = new BasicStroke(1.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER);
-        g2.setStroke(BStroke);//Line thickness and shape of the end of the line
+        grid.draw(canvas, camera, p0x_max, p0y_max, gridInputAssist, applicationModel.getMinGridUnitSize());
 
         //Drawing auxiliary strokes (non-interfering with polygonal lines)
         if (displayAuxLiveLines) {
-            g2.setStroke(new BasicStroke(f_h_WireframeLineWidth, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER));//Line thickness and shape of the end of the line
+            paint.setStrokeWidth(lineWidth);
             for (var as : auxLines.getLineSegmentsIterable()) {
-                DrawingUtil.drawAuxLiveLine(g, as, camera, lineWidth, pointSize, f_h_WireframeLineWidth);
+                DrawingUtil.drawAuxLiveLine(canvas, as, camera, lineWidth, pointSize, lineWidth);
             }
         }
 
         //check結果の表示
 
-        g2.setStroke(new BasicStroke(15.0f, BasicStroke.CAP_ROUND, BasicStroke.JOIN_MITER));//線の太さや線の末端の形状、ここでは折線の端点の線の形状の指定
+        paint.setStrokeWidth(15.0f);
+        paint.setColor(Color.BLACK);
 
         //Check1Senbには0番目からsize()-1番目までデータが入っている
         if (check1) {
             for (LineSegment s_temp : foldLineSet.getCheck1LineSegments()) {
-                DrawingUtil.pointingAt1(g, camera.object2TV(s_temp));
+                DrawingUtil.pointingAt1(canvas, camera.object2TV(s_temp));
             }
         }
 
         if (check2) {
             for (LineSegment s_temp : foldLineSet.getCheck2LineSegments()) {
-                DrawingUtil.pointingAt2(g, camera.object2TV(s_temp));
+                DrawingUtil.pointingAt2(canvas, camera.object2TV(s_temp));
             }
         }
 
-        g2.setStroke(new BasicStroke(2.0f, BasicStroke.CAP_ROUND, BasicStroke.JOIN_MITER));//線の太さや線の末端の形状、ここでは折線の端点の線の形状の指定
+        paint.setStrokeWidth(2.0f);
+        paint.setColor(Color.BLACK);
 
 
         //Check4Senbには0番目からsize()-1番目までデータが入っている
         //Logger.info("foldLineSet.check4_size() = "+foldLineSet.check4_size());
         if (check4) {
             for (FlatFoldabilityViolation violation : foldLineSet.getViolations()) {
-                DrawingUtil.drawViolation(g2, camera.object2TV(violation.getPoint()), violation,
+                DrawingUtil.drawViolation(canvas, camera.object2TV(violation.getPoint()), violation,
                         applicationModel.getCheck4ColorTransparency(), applicationModel.getAdvancedCheck4Display());
             }
 
             if (displayComments) {
 
                 if (camvTaskExecutor.isTaskRunning()) {
-                    g.setColor(Colors.get(Color.orange));
-                    g.drawString("... cAMV Errors", p0x_max - 100, 10);
+                    paint.setColor(Colors.get(Color.MAGENTA)); //orange
+                    canvas.drawText("... cAMV Errors", p0x_max - 100, 10, paint);
                 } else {
                     int numErrors = foldLineSet.getViolations().size();
                     if (numErrors == 0) {
-                        g.setColor(Colors.get(Color.green));
+                        paint.setColor(Colors.get(Color.GREEN));
                     } else {
-                        g.setColor(Colors.get(Color.red));
+                        paint.setColor(Colors.get(Color.RED));
                     }
 
-                    g.drawString(numErrors + " cAMV Errors", p0x_max - 100, 10);
+                    canvas.drawText(numErrors + " cAMV Errors", p0x_max - 100, 10, paint);
                 }
             }
         }
@@ -512,28 +511,28 @@ public class CreasePattern_Worker_Impl implements CreasePattern_Worker {
         //Check3Senbには0番目からsize()-1番目までデータが入っている
         if (check3) {
             for (LineSegment s_temp : foldLineSet.getCheck3LineSegments()) {
-                DrawingUtil.pointingAt3(g, camera.object2TV(s_temp));
+                DrawingUtil.pointingAt3(canvas, camera.object2TV(s_temp));
             }
         }
 
         //Draw the center of the camera with a cross
         if (i_mejirusi_display) {
-            DrawingUtil.cross(g, camera.object2TV(camera.getCameraPosition()), 5.0, 2.0, LineColor.CYAN_3);
+            DrawingUtil.cross(canvas, camera.object2TV(camera.getCameraPosition()), 5.0, 2.0, LineColor.CYAN_3);
         }
 
         //円を描く　
         if (displayAuxLines) {
             for (Circle circle : foldLineSet.getCircles()) {
-                DrawingUtil.drawCircle(g, circle, camera, lineWidth, pointSize);
+                DrawingUtil.drawCircle(canvas, circle, camera, lineWidth, pointSize);
             }
         }
 
         var lines = foldLineSet.getLineSegmentsCollection();
         //selectの描画
-        g2.setStroke(new BasicStroke(lineWidth * 2.0f + 2.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER));//基本指定A　　線の太さや線の末端の形状
+        paint.setStrokeWidth(lineWidth * 2.0f + 2.0f);
         for (var s : lines) {
             if (s.getSelected() == 2) {
-                DrawingUtil.drawSelectLine(g, s, camera);
+                DrawingUtil.drawSelectLine(canvas, s, camera);
             }
         }
 
@@ -542,27 +541,27 @@ public class CreasePattern_Worker_Impl implements CreasePattern_Worker {
         if (displayAuxLines) {
             for (var s : lines) {
                 if (s.getColor() == LineColor.CYAN_3) {
-                    DrawingUtil.drawAuxLine(g, s, camera, lineWidth, pointSize, useRounded);
+                    DrawingUtil.drawAuxLine(canvas, s, camera, lineWidth, pointSize, useRounded);
                 }
             }
         }
 
         //展開図の描画  補助活線以外の折線
         if (displayCpLines) {
-            g.setColor(Colors.get(Color.black));
+            paint.setColor(Colors.get(Color.BLACK));
             for (var s : lines) {
                 if (s.getColor() != LineColor.CYAN_3 && s.getColor() != LineColor.RED_1 && s.getColor() != LineColor.BLACK_0) {
-                    DrawingUtil.drawCpLine(g, s, camera, lineStyle, lineWidth, pointSize, p0x_max, p0y_max, useRounded);
+                    DrawingUtil.drawCpLine(canvas, s, camera, lineStyle, lineWidth, pointSize, p0x_max, p0y_max, useRounded);
                 }
             }
             for (var s : lines) {
                 if (s.getColor() == LineColor.RED_1) {
-                    DrawingUtil.drawCpLine(g, s, camera, lineStyle, lineWidth, pointSize, p0x_max, p0y_max, useRounded);
+                    DrawingUtil.drawCpLine(canvas, s, camera, lineStyle, lineWidth, pointSize, p0x_max, p0y_max, useRounded);
                 }
             }
             for (var s : lines) {
                 if (s.getColor() == LineColor.BLACK_0) {
-                    DrawingUtil.drawCpLine(g, s, camera, lineStyle, lineWidth, pointSize, p0x_max, p0y_max, useRounded);
+                    DrawingUtil.drawCpLine(canvas, s, camera, lineStyle, lineWidth, pointSize, p0x_max, p0y_max, useRounded);
                 }
             }
         }
@@ -584,31 +583,31 @@ public class CreasePattern_Worker_Impl implements CreasePattern_Worker {
 
         if (!hideOperationFrame && ((canvasModel.getMouseMode() != MouseMode.OPERATION_FRAME_CREATE_61) || (lineStep.size() == 4))) {
             for (LineSegment s : lineStep) {
-                DrawingUtil.drawLineStep(g, s, camera, lineWidth, gridInputAssist);
+                DrawingUtil.drawLineStep(canvas, s, camera, lineWidth, gridInputAssist);
             }
         }
 
-        g.setColor(Color.MAGENTA);
-        DrawingUtil.drawCurve(g, camera.object2TV(linePath), lineWidth);
+        paint.setColor(Color.MAGENTA);
+        DrawingUtil.drawCurve(canvas, camera.object2TV(linePath), lineWidth);
 
         //候補入力時の候補を描く//Logger.info("_");
-        g2.setStroke(new BasicStroke(lineWidth + 0.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER));//基本指定A
+        paint.setStrokeWidth(lineWidth + 0.0f);
 
         for (LineSegment s : lineCandidate) {
-            DrawingUtil.drawLineCandidate(g, s, camera, pointSize);
+            DrawingUtil.drawLineCandidate(canvas, s, camera, pointSize);
         }
 
-        g.setColor(Colors.get(Color.black));
+        paint.setColor(Colors.get(Color.BLACK));
 
         for (Circle c : circleStep) {
-            DrawingUtil.drawCircleStep(g, c, camera);
+            DrawingUtil.drawCircleStep(canvas, c, camera);
         }
 
-        g.setColor(Colors.get(Color.black));
+        paint.setColor(Colors.get(Color.BLACK));
 
         if (displayComments) {
-            g.drawString(text_cp_setumei, 10, 55);
-            textWorker.draw(g2, camera);
+            canvas.drawText(text_cp_setumei, 10, 55, paint);
+            textWorker.draw(canvas, camera);
         }
     }
 
@@ -913,7 +912,7 @@ public class CreasePattern_Worker_Impl implements CreasePattern_Worker {
                 record();
             }
         } catch (InterruptedException e) {
-            Logger.info("v_del_all aborted");
+            Log.i("CreasePattern_Worker","v_del_all aborted");
         }
     }
 
@@ -926,7 +925,7 @@ public class CreasePattern_Worker_Impl implements CreasePattern_Worker {
                 record();
             }
         } catch (InterruptedException e) {
-            Logger.info("v_del_all_cc aborted");
+            Log.i("CreasePattern_Worker","v_del_all_cc aborted");
         }
     }
 
@@ -1094,7 +1093,7 @@ public class CreasePattern_Worker_Impl implements CreasePattern_Worker {
     }
 
     @Override
-    public GeneralPath getLinePath() {
+    public Path getLinePath() {
         return linePath;
     }
 
@@ -1235,11 +1234,11 @@ public class CreasePattern_Worker_Impl implements CreasePattern_Worker {
     }
 
     @Override
-    public Color getCustomCircleColor() {
+    public int getCustomCircleColor() {
         return customCircleColor;
     }
 
-    public void setCustomCircleColor(Color c0) {
+    public void setCustomCircleColor(int c0) {
         customCircleColor = c0;
     }
 

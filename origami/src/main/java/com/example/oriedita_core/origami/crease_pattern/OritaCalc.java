@@ -1,14 +1,15 @@
 package com.example.oriedita_core.origami.crease_pattern;
 
+import com.example.oriedita_core.origami.Epsilon;
 import com.example.oriedita_core.origami.crease_pattern.elements.Circle;
 import com.example.oriedita_core.origami.crease_pattern.elements.LineSegment;
 import com.example.oriedita_core.origami.crease_pattern.elements.Point;
 import com.example.oriedita_core.origami.crease_pattern.elements.StraightLine;
 
-import java.awt.geom.GeneralPath;
-import java.awt.geom.Line2D;
-import java.awt.geom.PathIterator;
-import java.awt.geom.Point2D;
+import android.graphics.Path;
+import android.graphics.PathMeasure;
+import android.graphics.PointF;
+import android.graphics.Region;
 
 /**
  * Static utilities for calculations.
@@ -793,37 +794,88 @@ public class OritaCalc {
     }
 
     /**
-     * Check if a line segment is fully contained inside a GeneralPath.
-     * @param path a GeneralPath
+     * Check if a line segment is fully contained inside an Android Path.
+     * @param path an Android Path
      * @param lineSegment a target line segment
      * @return if the line is fully contained
      */
-    public static boolean isSegmentContainedInGeneralPath(GeneralPath path, Line2D lineSegment) {
-        if (!path.contains(lineSegment.getP1()) || !path.contains(lineSegment.getP2())) return false;
+    public static boolean isSegmentContainedInGeneralPath(Path path, LineSegment lineSegment) {
+        // Проверяем входные параметры
+        if (path == null || lineSegment == null) {
+            return false;
+        }
+        
+        // Проверяем, содержатся ли конечные точки линии внутри пути
+        if (!isPointInPath(path, lineSegment.getA()) || 
+            !isPointInPath(path, lineSegment.getB())) {
+            return false;
+        }
 
-        PathIterator pathIterator = path.getPathIterator(null);
-        double[] coords = new double[2];
-        Point2D.Double lastPoint;
-        Point2D.Double currentPoint = new Point2D.Double();
+        // Используем PathMeasure для анализа пути
+        PathMeasure pathMeasure = new PathMeasure(path, false);
+        float[] coords = new float[2];
+        PointF lastPoint = new PointF();
+        PointF currentPoint = new PointF();
+        boolean firstPoint = true;
 
-        while (!pathIterator.isDone()) {
-            int segmentType = pathIterator.currentSegment(coords);
-            switch (segmentType) {
-                case PathIterator.SEG_MOVETO:
-                    currentPoint.setLocation(coords[0], coords[1]);
-                    break;
-                case PathIterator.SEG_LINETO:
-                    lastPoint = (Point2D.Double) currentPoint.clone();
-                    currentPoint.setLocation(coords[0], coords[1]);
-                    Line2D pathSegment = new Line2D.Double(lastPoint, currentPoint);
-                    if (lineSegment.intersectsLine(pathSegment)) return false;
-                    break;
-                case PathIterator.SEG_CLOSE: break;
+        while (pathMeasure.nextContour()) {
+            float length = pathMeasure.getLength();
+            float distance = 0;
+            
+            while (distance < length) {
+                boolean success = pathMeasure.getPosTan(distance, coords, null);
+                if (!success) break;
+                
+                if (firstPoint) {
+                    currentPoint.set(coords[0], coords[1]);
+                    firstPoint = false;
+                } else {
+                    lastPoint.set(currentPoint.x, currentPoint.y);
+                    currentPoint.set(coords[0], coords[1]);
+                    
+                    // Проверяем пересечение с сегментом пути
+                    if (linesIntersect(
+                            lineSegment.getA().getX(), lineSegment.getA().getY(),
+                            lineSegment.getB().getX(), lineSegment.getB().getY(),
+                            lastPoint.x, lastPoint.y,
+                            currentPoint.x, currentPoint.y)) {
+                        return false;
+                    }
+                }
+                
+                distance += 1.0f; // Шаг для обхода пути
             }
-            pathIterator.next();
         }
 
         return true;
+    }
+
+    /**
+     * Проверяет, находится ли точка внутри пути
+     */
+    private static boolean isPointInPath(Path path, Point point) {
+        // Создаем временный путь для проверки точки
+        Path tempPath = new Path(path);
+        Region region = new Region();
+        region.setPath(tempPath, new Region(
+            Integer.MIN_VALUE, Integer.MIN_VALUE, 
+            Integer.MAX_VALUE, Integer.MAX_VALUE));
+        
+        return region.contains((int)point.getX(), (int)point.getY());
+    }
+
+    /**
+     * Проверяет пересечение двух линий
+     */
+    private static boolean linesIntersect(double x1, double y1, double x2, double y2,
+                                        double x3, double y3, double x4, double y4) {
+        double det = (x1 - x2) * (y3 - y4) - (y1 - y2) * (x3 - x4);
+        if (Math.abs(det) < Epsilon.UNKNOWN_1EN7) return false; // Параллельные линии
+        
+        double t = ((x1 - x3) * (y3 - y4) - (y1 - y3) * (x3 - x4)) / det;
+        double u = -((x1 - x2) * (y1 - y3) - (y1 - y2) * (x1 - x3)) / det;
+        
+        return t >= 0 && t <= 1 && u >= 0 && u <= 1;
     }
 
     //A function that moves a line segment in parallel to the side (returns a new line segment without changing the original line segment)
