@@ -1,8 +1,5 @@
 package com.example.oriedita.editor.service.impl;
 
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
-import jakarta.inject.Named;
 import oriedita.editor.canvas.animation.Animation;
 import oriedita.editor.canvas.animation.Interpolation;
 import oriedita.editor.databinding.ApplicationModel;
@@ -17,16 +14,13 @@ import java.util.function.Consumer;
 import java.util.function.Supplier;
 import java.util.function.UnaryOperator;
 
-@ApplicationScoped
 public class AnimationServiceImpl implements AnimationService {
     ApplicationModel applicationModel;
     private final Map<String, Animation> animations;
     private boolean isAnimating;
     private final Interpolation defaultInterpolation;
 
-    @Inject
     public AnimationServiceImpl(ApplicationModel applicationModel,
-                                @Named("default_animation_interpolation") Interpolation defaultInterpolation) {
         this.applicationModel = applicationModel;
         this.defaultInterpolation = defaultInterpolation;
         animations = new HashMap<>();

@@ -1,7 +1,5 @@
 package com.example.oriedita.editor.handler;
 
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
 import oriedita.editor.canvas.MouseMode;
 import origami.Epsilon;
 import origami.crease_pattern.OritaCalc;
@@ -10,12 +8,10 @@ import origami.crease_pattern.elements.LineSegment;
 import origami.crease_pattern.elements.Point;
 import origami.crease_pattern.elements.StraightLine;
 
-@ApplicationScoped
 @Handles(MouseMode.FISH_BONE_DRAW_33)
 public class MouseHandlerFishBoneDraw extends BaseMouseHandlerInputRestricted {
     private final MouseHandlerDrawCreaseRestricted mouseHandlerDrawCreaseRestricted;
 
-    @Inject
     public MouseHandlerFishBoneDraw(@Handles(MouseMode.DRAW_CREASE_RESTRICTED_11) MouseHandlerDrawCreaseRestricted mouseHandlerDrawCreaseRestricted) {
         this.mouseHandlerDrawCreaseRestricted = mouseHandlerDrawCreaseRestricted;
     }

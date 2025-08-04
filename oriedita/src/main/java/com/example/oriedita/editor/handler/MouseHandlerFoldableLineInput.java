@@ -1,9 +1,7 @@
 package com.example.oriedita.editor.handler;
 
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
 import org.tinylog.Logger;
-import oriedita.editor.canvas.CreasePattern_Worker;
+import com.example.oriedita_data.canvas.CreasePattern_Worker;
 import oriedita.editor.canvas.MouseMode;
 import origami.Epsilon;
 import origami.crease_pattern.OritaCalc;
@@ -12,13 +10,11 @@ import origami.crease_pattern.elements.LineSegment;
 import origami.crease_pattern.elements.Point;
 import origami.folding.util.SortingBox;
 
-@ApplicationScoped
 @Handles(MouseMode.FOLDABLE_LINE_INPUT_39)
 public class MouseHandlerFoldableLineInput extends BaseMouseHandlerInputRestricted {
 
     CreasePattern_Worker.FourPointStep i_step_for_copy_4p = CreasePattern_Worker.FourPointStep.STEP_0;
 
-    @Inject
     public MouseHandlerFoldableLineInput() {
     }
 

@@ -1,7 +1,5 @@
 package com.example.oriedita.editor.handler;
 
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
 import oriedita.editor.canvas.MouseMode;
 import oriedita.editor.canvas.TextWorker;
 import oriedita.editor.databinding.ApplicationModel;
@@ -18,7 +16,6 @@ import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
 import java.util.EnumSet;
 
-@ApplicationScoped
 @Handles(MouseMode.TEXT)
 public class MouseHandlerText extends BaseMouseHandlerBoxSelect {
     private final SelectedTextModel textModel;
@@ -30,7 +27,6 @@ public class MouseHandlerText extends BaseMouseHandlerBoxSelect {
 
     private int mouseButton;
 
-    @Inject
     public MouseHandlerText(SelectedTextModel textModel,
                             TextWorker textWorker, ApplicationModel applicationModel) {
         this.textModel = textModel;

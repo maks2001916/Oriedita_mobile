@@ -1,6 +1,5 @@
 package com.example.oriedita_data.export;
 
-import jakarta.enterprise.context.ApplicationScoped;
 import org.tinylog.Logger;
 import oriedita.editor.canvas.LineStyle;
 import oriedita.editor.databinding.ApplicationModel;
@@ -28,7 +27,6 @@ import java.util.StringTokenizer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-@ApplicationScoped
 public class OrhImporter implements FileImporter {
     @Override
     public boolean supports(File filename) {

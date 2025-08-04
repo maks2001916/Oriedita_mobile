@@ -1,7 +1,5 @@
 package com.example.oriedita_ui.action;
 
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
 import oriedita.editor.Canvas;
 import oriedita.editor.databinding.BackgroundModel;
 import oriedita.editor.drawing.tools.Background_camera;
@@ -9,17 +7,12 @@ import oriedita.editor.service.FileSaveService;
 
 import java.awt.event.ActionEvent;
 
-@ApplicationScoped
 @ActionHandler(ActionType.readBackgroundAction)
 public class ReadBackgroundAction extends AbstractOrieditaAction {
-    @Inject
     FileSaveService fileSaveService;
-    @Inject
     Canvas canvas;
-    @Inject
     BackgroundModel backgroundModel;
 
-    @Inject
     public ReadBackgroundAction() {
     }
 

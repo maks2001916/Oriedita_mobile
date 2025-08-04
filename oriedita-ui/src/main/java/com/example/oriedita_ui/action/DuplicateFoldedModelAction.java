@@ -1,8 +1,5 @@
 package com.example.oriedita_ui.action;
 
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
-import jakarta.inject.Named;
 import oriedita.editor.Foldable;
 import oriedita.editor.databinding.FoldedFiguresList;
 import oriedita.editor.drawing.tools.Camera;
@@ -11,17 +8,11 @@ import origami.crease_pattern.LineSegmentSet;
 import origami.folding.FoldedFigure;
 import java.awt.event.ActionEvent;
 
-@ApplicationScoped
 @ActionHandler(ActionType.duplicateFoldedModelAction)
 public class DuplicateFoldedModelAction extends AbstractOrieditaAction {
-    @Inject
     FoldingService foldingService;
-    @Inject
     FoldedFiguresList foldedFiguresList;
-    @Inject
-    @Named("creasePatternCamera")
     Camera creasePatternCamera;
-    @Inject
     public DuplicateFoldedModelAction(){}
 
     @Override

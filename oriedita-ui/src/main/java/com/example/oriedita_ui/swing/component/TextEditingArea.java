@@ -1,6 +1,6 @@
 package oriedita.editor.swing.component;
 
-import oriedita.editor.canvas.CreasePattern_Worker;
+import com.example.oriedita_data.canvas.CreasePattern_Worker;
 import oriedita.editor.canvas.MouseMode;
 import oriedita.editor.canvas.TextWorker;
 import oriedita.editor.databinding.CameraModel;

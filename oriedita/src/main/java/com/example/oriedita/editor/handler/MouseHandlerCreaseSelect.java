@@ -1,10 +1,7 @@
 package com.example.oriedita.editor.handler;
 
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
-import jakarta.inject.Named;
 import org.tinylog.Logger;
-import oriedita.editor.canvas.CreasePattern_Worker;
+import com.example.oriedita_data.canvas.CreasePattern_Worker;
 import oriedita.editor.canvas.MouseMode;
 import oriedita.editor.databinding.CanvasModel;
 import origami.Epsilon;
@@ -12,7 +9,6 @@ import origami.crease_pattern.elements.Point;
 
 import java.awt.event.MouseEvent;
 
-@ApplicationScoped
 @Handles(MouseMode.CREASE_SELECT_19)
 public class MouseHandlerCreaseSelect extends BaseMouseHandlerBoxSelect {
     private final MouseHandlerCreaseMove4p mouseHandlerCreaseMove4p;
@@ -24,9 +20,7 @@ public class MouseHandlerCreaseSelect extends BaseMouseHandlerBoxSelect {
     private final CreasePattern_Worker d;
     private boolean tripleClick;
 
-    @Inject
     public MouseHandlerCreaseSelect(
-            @Named("mainCreasePattern_Worker") CreasePattern_Worker d,
             CanvasModel canvasModel,
             @Handles(MouseMode.CREASE_MOVE_4P_31) MouseHandlerCreaseMove4p mouseHandlerCreaseMove4p,
             @Handles(MouseMode.CREASE_COPY_4P_32) MouseHandlerCreaseCopy4p mouseHandlerCreaseCopy4p,

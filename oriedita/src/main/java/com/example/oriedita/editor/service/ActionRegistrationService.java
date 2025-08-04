@@ -1,9 +1,6 @@
 package com.example.oriedita.editor.service;
 
 import com.formdev.flatlaf.FlatLaf;
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
-import jakarta.inject.Named;
 import oriedita.editor.AnimationDurations;
 import oriedita.editor.Animations;
 import oriedita.editor.Canvas;
@@ -12,7 +9,7 @@ import oriedita.editor.FrameProvider;
 import oriedita.editor.action.ActionService;
 import oriedita.editor.action.ActionType;
 import oriedita.editor.action.LambdaAction;
-import oriedita.editor.canvas.CreasePattern_Worker;
+import com.example.oriedita_data.canvas.CreasePattern_Worker;
 import oriedita.editor.canvas.FoldLineAdditionalInputMode;
 import oriedita.editor.canvas.MouseMode;
 import oriedita.editor.databinding.AngleSystemModel;
@@ -36,43 +33,24 @@ import java.awt.Color;
 import java.util.HashMap;
 import java.util.Map;
 
-@ApplicationScoped
 public class ActionRegistrationService {
-    @Inject
     ActionFactory actionFactory;
-    @Inject
     CanvasModel canvasModel;
-    @Inject
     ApplicationModel applicationModel;
-    @Inject
     GridModel gridModel;
-    @Inject
     FrameProvider frameProvider;
-    @Inject
     AngleSystemModel angleSystemModel;
-    @Inject
     FoldedFigureModel foldedFigureModel;
-    @Inject
     BackgroundModel backgroundModel;
-    @Inject
-    @Named("mainCreasePattern_Worker")
     CreasePattern_Worker mainCreasePatternWorker;
-    @Inject
     AnimationService animationService;
-    @Inject
     FileSaveService fileSaveService;
-    @Inject
     FoldingService foldingService;
-    @Inject
     FoldedFiguresList foldedFiguresList;
-    @Inject
     CameraModel cameraModel;
-    @Inject
     ButtonService buttonService;
-    @Inject
     Canvas canvas;
 
-    @Inject ActionService actionService;
 
     public void registerActionsInitial() {
         // setMouseMode actions

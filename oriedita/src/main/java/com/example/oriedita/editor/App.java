@@ -1,13 +1,10 @@
 package oriedita.editor;
 
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
-import jakarta.inject.Named;
 import jico.Ico;
 import jico.ImageReadException;
 import org.tinylog.Logger;
 import oriedita.common.task.MultiStagedExecutor;
-import oriedita.editor.canvas.CreasePattern_Worker;
+import com.example.oriedita_data.canvas.CreasePattern_Worker;
 import oriedita.editor.databinding.AngleSystemModel;
 import oriedita.editor.databinding.ApplicationModel;
 import oriedita.editor.databinding.BackgroundModel;
@@ -57,7 +54,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Queue;
 
-@ApplicationScoped
 public class App {
     private final ApplicationModel applicationModel;
     private final CanvasModel canvasModel;
@@ -86,7 +82,6 @@ public class App {
     // オフスクリーン
     FrameProvider frameProvider;
 
-    @Inject
     public App(
             FrameProvider frameProvider,
             LookAndFeelService lookAndFeelService,
@@ -95,7 +90,6 @@ public class App {
             FoldedFigureModel foldedFigureModel,
             FileModel fileModel,
             FoldedFiguresList foldedFiguresList,
-            @Named("mainCreasePattern_Worker") CreasePattern_Worker mainCreasePatternWorker,
             Canvas canvas,
             HelpDialog explanation,
             ButtonService buttonService,

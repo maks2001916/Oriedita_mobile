@@ -1,7 +1,6 @@
 package com.example.oriedita_ui.action;
 
-import jakarta.inject.Named;
-import oriedita.editor.canvas.CreasePattern_Worker;
+import com.example.oriedita_data.canvas.CreasePattern_Worker;
 import oriedita.editor.canvas.MouseMode;
 import oriedita.editor.databinding.CanvasModel;
 import oriedita.editor.service.ButtonService;
@@ -15,7 +14,6 @@ public class SetMouseModeWithAfterColorAndUnselectAction extends AbstractOriedit
     private final MouseMode mouseMode;
 
     public SetMouseModeWithAfterColorAndUnselectAction(CanvasModel canvasModel,
-                                                       @Named("mainCreasePattern_Worker") CreasePattern_Worker mainCreasePatternWorker,
                                                        ButtonService buttonService,
                                                        MouseMode mouseMode){
         this.canvasModel = canvasModel;

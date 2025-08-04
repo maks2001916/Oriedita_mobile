@@ -1,7 +1,5 @@
 package com.example.oriedita.editor.handler;
 
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
 import org.tinylog.Logger;
 import oriedita.editor.canvas.MouseMode;
 import oriedita.editor.databinding.CanvasModel;
@@ -15,7 +13,6 @@ import origami.folding.FoldedFigure;
 
 import java.util.EnumSet;
 
-@ApplicationScoped
 @Handles(MouseMode.MODIFY_CALCULATED_SHAPE_101)
 public class MouseHandlerModifyCalculatedShape implements MouseModeHandler {
     private final FoldingService foldingService;
@@ -28,7 +25,6 @@ public class MouseHandlerModifyCalculatedShape implements MouseModeHandler {
     private PointSelection i_point_selection = PointSelection.NONE_0;//Both wireFrame_worker1 and wireFrame_worker2 are not selected (situation i_point_selection = 0), wireFrame_worker1 is selected and wireFrame_worker2 is not selected (situation i_point_selection = 1), and the vertex is wireFrame_worker2 selected (situation i_point_selection = 2).
     private FoldedFigure_Drawer selectedFigure;
 
-    @Inject
     public MouseHandlerModifyCalculatedShape(FoldingService foldingService, CanvasModel canvasModel, FoldedFiguresList foldedFiguresList) {
         this.foldingService = foldingService;
         this.canvasModel = canvasModel;

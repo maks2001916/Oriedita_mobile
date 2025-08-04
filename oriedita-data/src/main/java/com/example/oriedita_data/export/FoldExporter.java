@@ -7,8 +7,6 @@ import fold.model.FoldEdgeAssignment;
 import fold.model.FoldFile;
 import fold.model.FoldFrame;
 import fold.model.Vertex;
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
 import oriedita.editor.export.api.FileExporter;
 import oriedita.editor.save.OrieditaFoldFile;
 import oriedita.editor.save.Save;
@@ -25,9 +23,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-@ApplicationScoped
 public class FoldExporter implements FileExporter {
-    @Inject
     public FoldExporter() {
     }
 

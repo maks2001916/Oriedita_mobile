@@ -1,6 +1,5 @@
 package com.example.oriedita_ui.action;
 
-import jakarta.inject.Qualifier;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;

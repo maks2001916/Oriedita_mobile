@@ -1,9 +1,6 @@
 package com.example.oriedita.editor.export;
 
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
-import jakarta.inject.Named;
-import oriedita.editor.canvas.CreasePattern_Worker;
+import com.example.oriedita_data.canvas.CreasePattern_Worker;
 import oriedita.editor.canvas.LineStyle;
 import oriedita.editor.databinding.FoldedFiguresList;
 import oriedita.editor.drawing.FoldedFigure_Drawer;
@@ -36,14 +33,11 @@ import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Locale;
 
-@ApplicationScoped
 public class SvgExporter implements FileExporter {
     private final CreasePattern_Worker mainCreasePatternWorker;
     private final FoldedFiguresList foldedFiguresList;
 
-    @Inject
     public SvgExporter(
-            @Named("mainCreasePattern_Worker") CreasePattern_Worker mainCreasePatternWorker,
             FoldedFiguresList foldedFiguresList
     ) {
         this.mainCreasePatternWorker = mainCreasePatternWorker;

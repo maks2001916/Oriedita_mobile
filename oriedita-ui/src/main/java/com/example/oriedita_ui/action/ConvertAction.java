@@ -1,7 +1,5 @@
 package com.example.oriedita_ui.action;
 
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
 import oriedita.editor.FrameProvider;
 import oriedita.editor.databinding.ApplicationModel;
 import oriedita.editor.export.CpExporter;
@@ -30,18 +28,14 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Arrays;
 
-@ApplicationScoped
 @ActionHandler(ActionType.convertAction)
 public class ConvertAction extends AbstractOrieditaAction{
-    @Inject
     FrameProvider frameProvider;
-    @Inject
     ApplicationModel applicationModel;
     private String selectedOption;
     List<String> allowedExtensions = Arrays.asList(".cp", ".ori", ".orh", ".fold");
     String[] options = {"Crease Pattern (.cp)", "Ori (.ori)", "Orihime (.orh)", "FOLD (.fold)"};
 
-    @Inject
     public ConvertAction(){}
 
     @Override

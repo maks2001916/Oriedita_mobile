@@ -1,12 +1,5 @@
 package com.example.oriedita_data.canvas;
 
-import com.example.oriedita_data.databinding.AngleSystemModel;
-import com.example.oriedita_data.databinding.ApplicationModel;
-import com.example.oriedita_data.databinding.CanvasModel;
-import com.example.oriedita_data.databinding.GridModel;
-import com.example.oriedita_data.drawing.Grid;
-import com.example.oriedita_common.editor.drawing.tools.Camera;
-import com.example.oriedita_data.save.Save;
 import com.example.oriedita_core.origami.crease_pattern.CustomLineTypes;
 import com.example.oriedita_core.origami.crease_pattern.FoldLineSet;
 import com.example.oriedita_core.origami.crease_pattern.LineSegmentSet;
@@ -14,11 +7,15 @@ import com.example.oriedita_core.origami.crease_pattern.elements.Circle;
 import com.example.oriedita_core.origami.crease_pattern.elements.LineColor;
 import com.example.oriedita_core.origami.crease_pattern.elements.LineSegment;
 import com.example.oriedita_core.origami.crease_pattern.elements.Point;
+import com.example.oriedita_data.save.Save;
+import com.example.oriedita_common.editor.canvas.FoldLineAdditionalInputMode;
+import com.example.oriedita_common.editor.canvas.LineStyle;
+import com.example.oriedita_common.editor.drawing.tools.Camera;
+import com.example.oriedita_data.databinding.ApplicationModel;
+import com.example.oriedita_data.databinding.CanvasModel;
+import com.example.oriedita_data.databinding.GridModel;
+import com.example.oriedita_data.drawing.Grid;
 
-
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.geom.GeneralPath;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.List;
@@ -82,7 +79,7 @@ public interface CreasePattern_Worker {
     //------------------------------------------------------------------------------
     //Drawing the basic branch
     //------------------------------------------------------------------------------
-    void drawWithCamera(Graphics g, boolean displayComments, boolean displayCpLines, boolean displayAuxLines, boolean displayAuxLiveLines, float lineWidth, LineStyle lineStyle, float f_h_WireframeLineWidth, int p0x_max, int p0y_max, boolean i_mejirusi_display, boolean hideOperationFrame);
+    void drawWithCamera(android.graphics.Canvas canvas, android.graphics.Paint paint, boolean displayComments, boolean displayCpLines, boolean displayAuxLines, boolean displayAuxLiveLines, float lineWidth, LineStyle lineStyle, float f_h_WireframeLineWidth, int p0x_max, int p0y_max, boolean i_mejirusi_display, boolean hideOperationFrame);
 
     void resetCircleStep();
 
@@ -211,15 +208,15 @@ public interface CreasePattern_Worker {
 
     void setData(CanvasModel data);
 
-    void setData(AngleSystemModel angleSystemModel);
+    void setData(com.example.oriedita_data.databinding.AngleSystemModel angleSystemModel);
 
     Point getCameraPosition();
 
     void selectConnected(Point p);
 
-    java.util.List<LineSegment> getLineStep();
+    List<LineSegment> getLineStep();
 
-    GeneralPath getLinePath();
+    android.graphics.Path getLinePath();
 
     Camera getCamera();
 
@@ -255,7 +252,7 @@ public interface CreasePattern_Worker {
 
     int getNumPolygonCorners();
 
-    Color getCustomCircleColor();
+    int getCustomCircleColor();
 
     CanvasModel.SelectionOperationMode getI_select_mode();
 

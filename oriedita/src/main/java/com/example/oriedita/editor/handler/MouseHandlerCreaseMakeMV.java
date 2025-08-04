@@ -1,7 +1,5 @@
 package com.example.oriedita.editor.handler;
 
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
 import oriedita.editor.canvas.MouseMode;
 import origami.Epsilon;
 import origami.crease_pattern.OritaCalc;
@@ -10,12 +8,10 @@ import origami.crease_pattern.elements.LineSegment;
 import origami.crease_pattern.elements.Point;
 import origami.folding.util.SortingBox;
 
-@ApplicationScoped
 @Handles(MouseMode.CREASE_MAKE_MV_34)
 public class MouseHandlerCreaseMakeMV extends BaseMouseHandlerInputRestricted {
     private final MouseHandlerDrawCreaseRestricted mouseHandlerDrawCreaseRestricted;
 
-    @Inject
     public MouseHandlerCreaseMakeMV(@Handles(MouseMode.DRAW_CREASE_RESTRICTED_11) MouseHandlerDrawCreaseRestricted mouseHandlerDrawCreaseRestricted) {
         this.mouseHandlerDrawCreaseRestricted = mouseHandlerDrawCreaseRestricted;
     }

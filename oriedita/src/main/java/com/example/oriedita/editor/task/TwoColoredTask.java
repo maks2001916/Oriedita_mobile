@@ -1,7 +1,5 @@
 package com.example.oriedita.editor.task;
 
-import jakarta.inject.Inject;
-import jakarta.inject.Named;
 import org.tinylog.Logger;
 import oriedita.editor.Foldable;
 import oriedita.editor.databinding.CanvasModel;
@@ -17,8 +15,6 @@ public class TwoColoredTask implements OrieditaTask {
     private final FoldingService foldingService;
     private final CanvasModel canvasModel;
 
-    @Inject
-    public TwoColoredTask(BulletinBoard bulletinBoard, @Named("creasePatternCamera") Camera creasePatternCamera, FoldingService foldingService, CanvasModel canvasModel) {
         this.bulletinBoard = bulletinBoard;
         this.creasePatternCamera = creasePatternCamera;
         this.foldingService = foldingService;

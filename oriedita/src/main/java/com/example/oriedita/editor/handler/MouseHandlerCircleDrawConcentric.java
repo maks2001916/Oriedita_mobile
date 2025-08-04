@@ -1,7 +1,5 @@
 package com.example.oriedita.editor.handler;
 
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
 import oriedita.editor.canvas.MouseMode;
 import oriedita.editor.drawing.tools.Camera;
 import oriedita.editor.drawing.tools.MouseHandlerDrawingHelper;
@@ -14,14 +12,12 @@ import origami.crease_pattern.elements.Point;
 
 import java.awt.Graphics2D;
 
-@ApplicationScoped
 @Handles(MouseMode.CIRCLE_DRAW_CONCENTRIC_48)
 public class MouseHandlerCircleDrawConcentric extends BaseMouseHandler {
     private LineSegment radiusDifference;
     private Circle originalCircle;
     private Circle newCircle;
 
-    @Inject
     public MouseHandlerCircleDrawConcentric() {
     }
 

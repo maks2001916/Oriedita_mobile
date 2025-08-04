@@ -1,12 +1,7 @@
 package com.example.oriedita_ui;
 
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.enterprise.inject.Any;
-import jakarta.enterprise.inject.Instance;
-import jakarta.inject.Inject;
-import jakarta.inject.Named;
 import org.tinylog.Logger;
-import oriedita.editor.canvas.CreasePattern_Worker;
+import com.example.oriedita_data.canvas.CreasePattern_Worker;
 import oriedita.editor.canvas.FoldLineAdditionalInputMode;
 import oriedita.editor.canvas.MouseMode;
 import oriedita.editor.canvas.MouseWheelTarget;
@@ -53,6 +48,7 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
@@ -60,7 +56,6 @@ import java.util.Set;
 /**
  * Panel in the center of the main view.
  */
-@ApplicationScoped
 public class Canvas implements MouseListener, MouseMotionListener, MouseWheelListener {
 
     private final CreasePattern_Worker mainCreasePatternWorker;
@@ -71,7 +66,7 @@ public class Canvas implements MouseListener, MouseMotionListener, MouseWheelLis
     private final CameraModel creasePatternCameraModel;
     private final FoldedFigureModel foldedFigureModel;
     private final GridModel gridModel;
-    private final Instance<MouseModeHandler> handlerList;
+    private final List<MouseModeHandler> handlerList;
     private final AngleSystemModel angleSystemModel;
     private final FoldedFigureCanvasSelectService foldedFigureCanvasSelectService;
     private final CanvasModel canvasModel;
@@ -114,11 +109,8 @@ public class Canvas implements MouseListener, MouseMotionListener, MouseWheelLis
         return canvasUI;
     }
 
-    @Inject
-    public Canvas(@Named("creasePatternCamera") Camera creasePatternCamera,
                   FrameProvider frameProvider,
-                  @Named("mainCreasePattern_Worker") CreasePattern_Worker mainCreasePatternWorker,
-                  Instance<CanvasUI> canvasUIProvider,
+                  CanvasUI canvasUI,
                   FoldedFiguresList foldedFiguresList,
                   BackgroundModel backgroundModel,
                   BulletinBoard bulletinBoard,
@@ -126,15 +118,13 @@ public class Canvas implements MouseListener, MouseMotionListener, MouseWheelLis
                   CameraModel creasePatternCameraModel,
                   FoldedFigureModel foldedFigureModel,
                   GridModel gridModel,
-                  @Any Instance<MouseModeHandler> handlerList,
                   AngleSystemModel angleSystemModel,
                   FoldedFigureCanvasSelectService foldedFigureCanvasSelectService,
-                  @Any CanvasModel canvasModel,
                   TextWorker textWorker,
                   SelectedTextModel textModel,
                   AnimationService animationService,
                   ButtonService buttonService) {
-        this.canvasUI = canvasUIProvider.get();
+        this.canvasUI = canvasUI;
         this.creasePatternCamera = creasePatternCamera;
         this.frameProvider = frameProvider;
         this.mainCreasePatternWorker = mainCreasePatternWorker;

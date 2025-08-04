@@ -1,17 +1,13 @@
 package com.example.oriedita.editor.handler;
 
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
 import oriedita.editor.canvas.FoldLineAdditionalInputMode;
 import oriedita.editor.canvas.MouseMode;
 import origami.Epsilon;
 import origami.crease_pattern.elements.LineSegment;
 import origami.crease_pattern.elements.Point;
 
-@ApplicationScoped
 @Handles(MouseMode.DRAW_CREASE_FREE_1)
 public class MouseHandlerDrawCreaseFree extends BaseMouseHandler {
-    @Inject
     public MouseHandlerDrawCreaseFree() {
     }
 

@@ -1,8 +1,6 @@
 package com.example.oriedita_data.export;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
 import oriedita.editor.FrameProvider;
 import oriedita.editor.export.api.FileImporter;
 import oriedita.editor.json.DefaultObjectMapper;
@@ -15,12 +13,10 @@ import javax.swing.JOptionPane;
 import java.io.File;
 import java.io.IOException;
 
-@ApplicationScoped
 public class OriImporter implements FileImporter {
     private final FrameProvider frame;
     private boolean askOnUnknownFormat = true;
 
-    @Inject
     public OriImporter(
             FrameProvider frame
     ) {

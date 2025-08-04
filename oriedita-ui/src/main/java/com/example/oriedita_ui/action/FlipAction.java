@@ -1,7 +1,5 @@
 package com.example.oriedita_ui.action;
 
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
 import oriedita.editor.canvas.MouseMode;
 import oriedita.editor.databinding.CanvasModel;
 import oriedita.editor.databinding.FoldedFigureModel;
@@ -11,17 +9,12 @@ import origami.folding.FoldedFigure;
 
 import java.awt.event.ActionEvent;
 
-@ApplicationScoped
 @ActionHandler(ActionType.flipAction)
 public class FlipAction extends AbstractOrieditaAction {
-    @Inject
     FoldedFiguresList foldedFiguresList;
-    @Inject
     FoldedFigureModel foldedFigureModel;
-    @Inject
     CanvasModel canvasModel;
 
-    @Inject
     public FlipAction() {
 
     }

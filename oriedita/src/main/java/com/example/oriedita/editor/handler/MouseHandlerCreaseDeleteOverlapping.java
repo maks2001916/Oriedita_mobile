@@ -1,19 +1,15 @@
 package com.example.oriedita.editor.handler;
 
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
 import oriedita.editor.canvas.MouseMode;
 import origami.Epsilon;
 import origami.crease_pattern.elements.LineColor;
 import origami.crease_pattern.elements.LineSegment;
 import origami.crease_pattern.elements.Point;
 
-@ApplicationScoped
 @Handles(MouseMode.CREASE_DELETE_OVERLAPPING_64)
 public class MouseHandlerCreaseDeleteOverlapping extends BaseMouseHandlerInputRestricted {
     private final MouseHandlerDrawCreaseRestricted mouseHandlerDrawCreaseRestricted;
 
-    @Inject
     public MouseHandlerCreaseDeleteOverlapping(@Handles(MouseMode.DRAW_CREASE_RESTRICTED_11) MouseHandlerDrawCreaseRestricted mouseHandlerDrawCreaseRestricted) {
         this.mouseHandlerDrawCreaseRestricted = mouseHandlerDrawCreaseRestricted;
     }

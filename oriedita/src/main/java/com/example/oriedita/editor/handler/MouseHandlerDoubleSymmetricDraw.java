@@ -1,7 +1,5 @@
 package com.example.oriedita.editor.handler;
 
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
 import org.tinylog.Logger;
 import oriedita.editor.canvas.MouseMode;
 import origami.Epsilon;
@@ -9,12 +7,10 @@ import origami.crease_pattern.OritaCalc;
 import origami.crease_pattern.elements.LineSegment;
 import origami.crease_pattern.elements.Point;
 
-@ApplicationScoped
 @Handles(MouseMode.DOUBLE_SYMMETRIC_DRAW_35)
 public class MouseHandlerDoubleSymmetricDraw extends BaseMouseHandlerInputRestricted {
     private final MouseHandlerDrawCreaseRestricted mouseHandlerDrawCreaseRestricted;
 
-    @Inject
     public MouseHandlerDoubleSymmetricDraw(@Handles(MouseMode.DRAW_CREASE_RESTRICTED_11) MouseHandlerDrawCreaseRestricted mouseHandlerDrawCreaseRestricted) {
         this.mouseHandlerDrawCreaseRestricted = mouseHandlerDrawCreaseRestricted;
     }

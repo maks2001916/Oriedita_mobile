@@ -1,18 +1,14 @@
 package com.example.oriedita.editor.handler;
 
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
 import oriedita.editor.canvas.MouseMode;
 import origami.crease_pattern.elements.LineColor;
 import origami.crease_pattern.elements.LineSegment;
 import origami.crease_pattern.elements.Point;
 
-@ApplicationScoped
 @Handles(MouseMode.CREASE_ADVANCE_TYPE_30)
 public class MouseHandlerCreaseAdvanceType extends BaseMouseHandler {
     LineSegment lineSegment;
 
-    @Inject
     public MouseHandlerCreaseAdvanceType() {
     }
 

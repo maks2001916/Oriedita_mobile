@@ -6,7 +6,6 @@ import com.example.oriedita_core.origami.crease_pattern.CustomLineTypes;
 
 import android.graphics.Color;
 import android.graphics.Point;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.Point;
@@ -96,7 +95,6 @@ public class ApplicationModel implements Serializable {
         - if included in preference window: add property to restorePrefDefaults
      */
 
-    @Inject
     public ApplicationModel() {
         reset();
     }

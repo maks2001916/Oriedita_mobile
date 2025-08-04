@@ -1,10 +1,7 @@
 package com.example.oriedita_ui;
 
-import jakarta.enterprise.context.Dependent;
-import jakarta.inject.Inject;
-import jakarta.inject.Named;
 import org.tinylog.Logger;
-import oriedita.editor.canvas.CreasePattern_Worker;
+import com.example.oriedita_data.canvas.CreasePattern_Worker;
 import oriedita.editor.canvas.LineStyle;
 import oriedita.editor.canvas.MouseMode;
 import oriedita.editor.databinding.ApplicationModel;
@@ -84,13 +81,9 @@ public class CanvasUI extends JPanel {
     private float lineWidth;
     private float auxLineWidth;
 
-    @Inject
     public CanvasUI(
-            @Named("creasePatternCamera") Camera creasePatternCamera,
-            @Named("foldingExecutor") TaskExecutorService foldingExecutor,
             BackgroundModel backgroundModel,
             CanvasModel canvasModel,
-            @Named("mainCreasePattern_Worker") CreasePattern_Worker mainCreasePatternWorker,
             AnimationService animationService,
             ApplicationModel applicationModel,
             BulletinBoard bulletinBoard,
@@ -187,7 +180,7 @@ public class CanvasUI extends JPanel {
         // バッファー画面のクリア
         bufferGraphics.clearRect(0, 0, dim.width, dim.height);
 
-        bufferGraphics.setColor(Colors.get(Color.black));
+        bufferGraphics.setColor(Colors.get(android.graphics.Color.BLACK));
         //描画したい内容は以下に書くことVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV
 
         //カメラのセット
@@ -253,7 +246,7 @@ public class CanvasUI extends JPanel {
         }
         if (displayComments) {
             //展開図情報の文字表示
-            bufferGraphics.setColor(Colors.get(Color.black));
+            bufferGraphics.setColor(Colors.get(android.graphics.Color.BLACK));
 
             bufferGraphics.drawString(String.format("mouse= ( %.2f, %.2f )", mousePosition.getX(), mousePosition.getY()), 10, 10); //この表示内容はvoid kekka_syoriで決められる。
 
@@ -316,7 +309,7 @@ public class CanvasUI extends JPanel {
         //Central indicator
         if (displayPointOffset) {
             g2.setStroke(new BasicStroke(1.0f));
-            g2.setColor(Colors.get(Color.black));
+            g2.setColor(Colors.get(android.graphics.Color.BLACK));
             g2.drawLine((int) (mousePositionOnCanvas.getX()), (int) (mousePositionOnCanvas.getY()),
                     (int) (mousePositionOnCanvas.getX() + d_width), (int) (mousePositionOnCanvas.getY() + d_width)); //直線
         }

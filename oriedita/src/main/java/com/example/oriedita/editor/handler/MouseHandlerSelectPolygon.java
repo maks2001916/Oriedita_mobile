@@ -1,15 +1,11 @@
 package com.example.oriedita.editor.handler;
 
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
 import oriedita.editor.canvas.MouseMode;
 import origami.crease_pattern.elements.LineSegment;
 import origami.crease_pattern.elements.Polygon;
 
-@ApplicationScoped
 @Handles(MouseMode.SELECT_POLYGON_66)
 public class MouseHandlerSelectPolygon extends BaseMouseHandlerPolygon {
-    @Inject
     public MouseHandlerSelectPolygon() {}
 
     @Override

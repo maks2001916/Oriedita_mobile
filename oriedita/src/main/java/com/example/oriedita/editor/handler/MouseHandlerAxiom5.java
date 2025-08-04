@@ -1,7 +1,5 @@
 package com.example.oriedita.editor.handler;
 
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 import oriedita.editor.canvas.MouseMode;
@@ -12,10 +10,8 @@ import origami.crease_pattern.elements.LineSegment;
 import origami.crease_pattern.elements.Point;
 import origami.crease_pattern.elements.StraightLine;
 
-@ApplicationScoped
 @Handles(MouseMode.AXIOM_5)
 public class MouseHandlerAxiom5 extends BaseMouseHandlerInputRestricted{
-    @Inject
     public MouseHandlerAxiom5() {
     }
 

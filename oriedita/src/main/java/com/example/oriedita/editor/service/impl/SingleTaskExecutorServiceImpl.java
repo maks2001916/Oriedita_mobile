@@ -1,6 +1,5 @@
 package com.example.oriedita.editor.service.impl;
 
-import jakarta.enterprise.context.ApplicationScoped;
 import oriedita.editor.service.TaskExecutorService;
 import oriedita.editor.task.OrieditaTask;
 
@@ -12,7 +11,6 @@ import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
-@ApplicationScoped
 public class SingleTaskExecutorServiceImpl implements TaskExecutorService {
     private final ExecutorService pool;
     private static Future<?> currentTask = CompletableFuture.completedFuture(null);

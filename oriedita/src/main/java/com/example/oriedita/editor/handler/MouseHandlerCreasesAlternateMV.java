@@ -1,7 +1,5 @@
 package com.example.oriedita.editor.handler;
 
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
 import org.tinylog.Logger;
 import oriedita.editor.canvas.MouseMode;
 import origami.Epsilon;
@@ -11,12 +9,10 @@ import origami.crease_pattern.elements.LineSegment;
 import origami.crease_pattern.elements.Point;
 import origami.folding.util.SortingBox;
 
-@ApplicationScoped
 @Handles(MouseMode.CREASES_ALTERNATE_MV_36)
 public class MouseHandlerCreasesAlternateMV extends BaseMouseHandlerInputRestricted {
     private final MouseHandlerLineSegmentRatioSet mouseHandlerLineSegmentRatioSet;
 
-    @Inject
     public MouseHandlerCreasesAlternateMV(@Handles(MouseMode.LINE_SEGMENT_RATIO_SET_28) MouseHandlerLineSegmentRatioSet mouseHandlerLineSegmentRatioSet) {
         this.mouseHandlerLineSegmentRatioSet = mouseHandlerLineSegmentRatioSet;
     }

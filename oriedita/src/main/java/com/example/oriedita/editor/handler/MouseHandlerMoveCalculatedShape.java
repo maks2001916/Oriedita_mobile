@@ -1,8 +1,5 @@
 package com.example.oriedita.editor.handler;
 
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
-import jakarta.inject.Named;
 import oriedita.editor.canvas.MouseMode;
 import oriedita.editor.databinding.CanvasModel;
 import oriedita.editor.databinding.FoldedFiguresList;
@@ -13,7 +10,6 @@ import origami.crease_pattern.elements.Point;
 
 import java.util.EnumSet;
 
-@ApplicationScoped
 @Handles(MouseMode.MOVE_CALCULATED_SHAPE_102)
 public class MouseHandlerMoveCalculatedShape implements MouseModeHandler {
     private Point mouse_temp0 = new Point();//マウスの動作対応時に、一時的に使うTen
@@ -23,9 +19,7 @@ public class MouseHandlerMoveCalculatedShape implements MouseModeHandler {
     private final FoldedFigureCanvasSelectService foldedFigureCanvasSelectService;
     private final CanvasModel canvasModel;
 
-    @Inject
     public MouseHandlerMoveCalculatedShape(FoldedFiguresList foldedFiguresList,
-                                           @Named("creasePatternCamera") Camera creasePatternCamera,
                                            FoldedFigureCanvasSelectService foldedFigureCanvasSelectService,
                                            CanvasModel canvasModel) {
         this.foldedFiguresList = foldedFiguresList;

@@ -1,9 +1,6 @@
 package com.example.oriedita.editor.handler;
 
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
-import jakarta.inject.Named;
-import oriedita.editor.canvas.CreasePattern_Worker;
+import com.example.oriedita_data.canvas.CreasePattern_Worker;
 import oriedita.editor.canvas.MouseMode;
 import oriedita.editor.databinding.FoldedFiguresList;
 import oriedita.editor.drawing.FoldedFigure_Drawer;
@@ -20,7 +17,6 @@ import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
 
-@ApplicationScoped
 @Handles(MouseMode.ADD_FOLDING_CONSTRAINT)
 public class MouseHandlerAddFoldingConstraints implements MouseModeHandler {
     private final FoldedFiguresList foldedFiguresList;
@@ -31,8 +27,6 @@ public class MouseHandlerAddFoldingConstraints implements MouseModeHandler {
         return EnumSet.of(Feature.BUTTON_1, Feature.BUTTON_3);
     }
 
-    @Inject
-    public MouseHandlerAddFoldingConstraints(FoldedFiguresList foldedFiguresList, @Named("mainCreasePattern_Worker") CreasePattern_Worker drawingWorker) {
         this.foldedFiguresList = foldedFiguresList;
         this.drawingWorker = drawingWorker;
     }

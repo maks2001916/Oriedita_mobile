@@ -1,7 +1,5 @@
 package com.example.oriedita.editor.handler;
 
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
 import oriedita.editor.canvas.MouseMode;
 import oriedita.editor.databinding.ApplicationModel;
 import origami.Epsilon;
@@ -10,13 +8,11 @@ import origami.crease_pattern.elements.LineColor;
 import origami.crease_pattern.elements.LineSegment;
 import origami.crease_pattern.elements.Point;
 
-@ApplicationScoped
 @Handles(MouseMode.REPLACE_LINE_TYPE_SELECT_72)
 public class MouseHandlerReplaceTypeSelect extends BaseMouseHandlerBoxSelect {
 
     private final ApplicationModel applicationModel;
 
-    @Inject
     public MouseHandlerReplaceTypeSelect(ApplicationModel applicationModel) {
         this.applicationModel = applicationModel;
     }

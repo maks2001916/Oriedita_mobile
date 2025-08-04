@@ -1,19 +1,14 @@
 package com.example.oriedita_ui.swing.component;
 
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
 import com.example.oriedita_data.Colors;
 import com.example.oriedita_core.origami.folding.util.IBulletinBoard;
 
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import android.graphics.Color;
-import android.graphics.Paint;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.util.ArrayList;
 
-@ApplicationScoped
 public class BulletinBoard implements IBulletinBoard {
 
     int ix0 = 10;//X coordinate of the upper left corner of the bulletin board
@@ -33,7 +28,6 @@ public class BulletinBoard implements IBulletinBoard {
 
     java.util.List<ChangeListener> listener;
 
-    @Inject
     public BulletinBoard() {
         listener = new ArrayList<>();
     }

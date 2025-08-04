@@ -2,16 +2,12 @@ package oriedita.editor.swing;
 
 import com.formdev.flatlaf.FlatDarkLaf;
 import com.formdev.flatlaf.FlatLaf;
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.enterprise.inject.Any;
-import jakarta.inject.Inject;
-import jakarta.inject.Named;
 import org.tinylog.Logger;
 import oriedita.editor.AnimationDurations;
 import oriedita.editor.Animations;
 import oriedita.editor.Colors;
 import oriedita.editor.FrameProvider;
-import oriedita.editor.canvas.CreasePattern_Worker;
+import com.example.oriedita_data.canvas.CreasePattern_Worker;
 import oriedita.editor.canvas.MouseMode;
 import oriedita.editor.databinding.ApplicationModel;
 import oriedita.editor.databinding.CameraModel;
@@ -52,7 +48,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
-@ApplicationScoped
 public class AppMenuBar {
     private final FrameProvider frameProvider;
     private final TaskExecutorService foldingExecutor;
@@ -112,17 +107,13 @@ public class AppMenuBar {
     private final AnimationService animationService;
     private final CameraModel creasePatternCameraModel;
     private final Camera camera;
-    @Inject
     public AppMenuBar(
             FrameProvider frameProvider,
-            @Named("foldingExecutor") TaskExecutorService foldingExecutor,
             ApplicationModel applicationModel,
             LookAndFeelService lookAndFeelService,
             FileSaveService fileSaveService,
             ButtonService buttonService,
-            @Any CanvasModel canvasModel,
             FileModel fileModel,
-            @Named("mainCreasePattern_Worker") CreasePattern_Worker mainCreasePatternWorker,
             FoldedFigureModel foldedFigureModel,
             ResetService resetService,
             FoldedFiguresList foldedFiguresList,

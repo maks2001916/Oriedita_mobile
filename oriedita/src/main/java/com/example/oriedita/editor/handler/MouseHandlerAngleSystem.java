@@ -1,7 +1,5 @@
 package com.example.oriedita.editor.handler;
 
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
 import oriedita.editor.canvas.MouseMode;
 import oriedita.editor.databinding.AngleSystemModel;
 import oriedita.editor.drawing.tools.Camera;
@@ -18,7 +16,6 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
-@ApplicationScoped
 @Handles(MouseMode.ANGLE_SYSTEM_16)
 public class MouseHandlerAngleSystem extends BaseMouseHandlerInputRestricted {
     private final AngleSystemModel angleSystemModel;
@@ -40,7 +37,6 @@ public class MouseHandlerAngleSystem extends BaseMouseHandlerInputRestricted {
         SELECT_LENGTH
     }
 
-    @Inject
     public MouseHandlerAngleSystem(AngleSystemModel angleSystemModel) {
         this.angleSystemModel = angleSystemModel;
     }

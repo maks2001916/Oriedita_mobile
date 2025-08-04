@@ -19,7 +19,6 @@ public class MeasuresModel {
     private double measuredAngle3;
 
 
-    @Inject
     public MeasuresModel() {
         reset();
     }

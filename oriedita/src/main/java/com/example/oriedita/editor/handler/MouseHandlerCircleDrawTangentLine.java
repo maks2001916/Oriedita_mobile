@@ -1,7 +1,5 @@
 package com.example.oriedita.editor.handler;
 
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
 import oriedita.editor.canvas.MouseMode;
 import origami.Epsilon;
 import origami.crease_pattern.OritaCalc;
@@ -11,12 +9,10 @@ import origami.crease_pattern.elements.LineSegment;
 import origami.crease_pattern.elements.Point;
 import origami.crease_pattern.elements.StraightLine;
 
-@ApplicationScoped
 @Handles(MouseMode.CIRCLE_DRAW_TANGENT_LINE_45)
 public class MouseHandlerCircleDrawTangentLine extends BaseMouseHandler {
     Circle closest_circumference = new Circle(100000.0, 100000.0, 10.0, LineColor.PURPLE_8); //Circle with the circumference closest to the mouse
 
-    @Inject
     public MouseHandlerCircleDrawTangentLine() {
     }
 

@@ -1,10 +1,7 @@
 package com.example.oriedita_ui.action;
 
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
-import jakarta.inject.Named;
 import org.tinylog.Logger;
-import oriedita.editor.canvas.CreasePattern_Worker;
+import com.example.oriedita_data.canvas.CreasePattern_Worker;
 import oriedita.editor.databinding.ApplicationModel;
 import oriedita.editor.service.FoldingService;
 import origami.crease_pattern.worker.foldlineset.Check4;
@@ -14,17 +11,12 @@ import javax.swing.JCheckBox;
 import javax.swing.JOptionPane;
 import java.awt.event.ActionEvent;
 
-@ApplicationScoped
 @ActionHandler(ActionType.foldAction)
 public class FoldAction extends AbstractOrieditaAction {
-    @Inject
     FoldingService foldingService;
-    @Inject
     ApplicationModel applicationModel;
-    @Inject @Named("mainCreasePattern_Worker")
     CreasePattern_Worker mainCreasePatternWorker;
 
-    @Inject
     public FoldAction() {
     }
 

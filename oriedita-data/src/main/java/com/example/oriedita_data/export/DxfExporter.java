@@ -1,6 +1,5 @@
 package com.example.oriedita_data.export;
 
-import jakarta.enterprise.context.ApplicationScoped;
 import oriedita.editor.save.Save;
 import oriedita.editor.export.api.FileExporter;
 import origami.crease_pattern.elements.LineColor;
@@ -13,7 +12,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 
-@ApplicationScoped
 public class DxfExporter implements FileExporter {
 
     @Override

@@ -1,7 +1,5 @@
 package com.example.oriedita.editor.handler;
 
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
 import oriedita.editor.canvas.FoldLineAdditionalInputMode;
 import oriedita.editor.canvas.MouseMode;
 import origami.Epsilon;
@@ -10,7 +8,6 @@ import origami.crease_pattern.elements.LineSegment;
 import origami.crease_pattern.elements.Point;
 import origami.folding.util.SortingBox;
 
-@ApplicationScoped
 @Handles(MouseMode.FOLDABLE_LINE_DRAW_71)
 public class MouseHandlerFoldableLineDraw extends BaseMouseHandler {
     private final MouseHandlerDrawCreaseFree mouseHandlerDrawCreaseFree;
@@ -20,7 +17,6 @@ public class MouseHandlerFoldableLineDraw extends BaseMouseHandler {
     Point moyori_point_memo = new Point();
     Point closest_point;
 
-    @Inject
     public MouseHandlerFoldableLineDraw(
             @Handles(MouseMode.DRAW_CREASE_FREE_1) MouseHandlerDrawCreaseFree mouseHandlerDrawCreaseFree,
             @Handles(MouseMode.VERTEX_MAKE_ANGULARLY_FLAT_FOLDABLE_38) MouseHandlerVertexMakeAngularlyFlatFoldable mouseHandlerVertexMakeAngularlyFlatFoldable

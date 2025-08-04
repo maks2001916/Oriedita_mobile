@@ -1,6 +1,5 @@
 package com.example.oriedita_ui.handler;
 
-import jakarta.inject.Qualifier;
 import oriedita.editor.canvas.MouseMode;
 
 import java.lang.annotation.Documented;

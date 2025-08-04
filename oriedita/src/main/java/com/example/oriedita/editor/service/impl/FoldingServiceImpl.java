@@ -1,12 +1,9 @@
 package com.example.oriedita.editor.service.impl;
 
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
-import jakarta.inject.Named;
 import org.tinylog.Logger;
 import oriedita.editor.Foldable;
 import oriedita.editor.FrameProvider;
-import oriedita.editor.canvas.CreasePattern_Worker;
+import com.example.oriedita_data.canvas.CreasePattern_Worker;
 import oriedita.editor.databinding.ApplicationModel;
 import oriedita.editor.databinding.CanvasModel;
 import oriedita.editor.databinding.FoldedFigureModel;
@@ -27,7 +24,6 @@ import origami.folding.FoldedFigure;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
-@ApplicationScoped
 public class FoldingServiceImpl implements FoldingService {
     private final BulletinBoard bulletinBoard;
     private final CanvasModel canvasModel;
@@ -43,16 +39,11 @@ public class FoldingServiceImpl implements FoldingService {
     private LineSegmentSet lineSegmentsForFolding;//折畳み予測の最初に、ts1.Senbunsyuugou2Tensyuugou(lineSegmentsForFolding)として使う。　Ss0は、mainDrawingWorker.get_for_oritatami()かes1.get_for_select_oritatami()で得る。
     private LineSegmentSet lastFold;
 
-    @Inject
     public FoldingServiceImpl(BulletinBoard bulletinBoard,
                               CanvasModel canvasModel,
                               FrameProvider frame,
-                              @Named("creasePatternCamera") Camera creasePatternCamera,
-                              @Named("backupCreasePattern_Worker") CreasePattern_Worker backupCreasePatternWorker,
-                              @Named("foldingExecutor") TaskExecutorService foldingExecutor,
                               ApplicationModel applicationModel,
                               FoldedFigureModel foldedFigureModel,
-                              @Named("mainCreasePattern_Worker") CreasePattern_Worker mainCreasePatternWorker,
                               FoldedFiguresList foldedFiguresList) {
         this.bulletinBoard = bulletinBoard;
         this.canvasModel = canvasModel;

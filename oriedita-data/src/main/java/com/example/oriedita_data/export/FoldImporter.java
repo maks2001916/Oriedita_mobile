@@ -4,7 +4,6 @@ import fold.io.CustomFoldReader;
 import fold.model.Edge;
 import fold.model.FoldEdgeAssignment;
 import fold.model.FoldFrame;
-import jakarta.enterprise.context.ApplicationScoped;
 import oriedita.editor.exception.FileReadingException;
 import oriedita.editor.export.api.FileImporter;
 import oriedita.editor.save.OrieditaFoldFile;
@@ -20,7 +19,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 
-@ApplicationScoped
 public class FoldImporter implements FileImporter {
     @Override
     public boolean supports(File filename) {

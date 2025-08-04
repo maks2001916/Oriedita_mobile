@@ -1,22 +1,16 @@
 package com.example.oriedita.editor.handler;
 
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
-import jakarta.inject.Named;
-import oriedita.editor.canvas.CreasePattern_Worker;
+import com.example.oriedita_data.canvas.CreasePattern_Worker;
 import oriedita.editor.canvas.MouseMode;
 import oriedita.editor.databinding.MeasuresModel;
 import origami.crease_pattern.OritaCalc;
 import origami.crease_pattern.elements.LineSegment;
 import origami.crease_pattern.elements.Point;
 
-@ApplicationScoped
 @Handles(MouseMode.DISPLAY_LENGTH_BETWEEN_POINTS_2_54)
 public class MouseHandlerDisplayLengthBetweenPoints2 extends BaseMouseHandlerInputRestricted {
     private final MeasuresModel measuresModel;
 
-    @Inject
-    public MouseHandlerDisplayLengthBetweenPoints2(@Named("mainCreasePattern_Worker") CreasePattern_Worker d, MeasuresModel measuresModel) {
         this.d = d;
         this.measuresModel = measuresModel;
     }

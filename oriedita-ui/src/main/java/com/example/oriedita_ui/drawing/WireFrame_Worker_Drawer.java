@@ -109,10 +109,10 @@ public class WireFrame_Worker_Drawer {
     }
 
     public void drawing_with_camera(Graphics g, FoldedFigure.State ip4) {
-        g.setColor(Colors.get(Color.black));
+        g.setColor(Colors.get(android.graphics.Color.BLACK));
         for (int i = 1; i <= pointSet.getNumLines(); i++) {
             if (pointSet.getColor(i) == LineColor.BLACK_0) {
-                g.setColor(Colors.get(Color.black));
+                g.setColor(Colors.get(android.graphics.Color.BLACK));
             }
             if (pointSet.getColor(i) == LineColor.RED_1) {
                 g.setColor(Colors.get(Color.red));
@@ -155,9 +155,9 @@ public class WireFrame_Worker_Drawer {
 
         g.setColor(Colors.get(Color.yellow));
         g.fillOval(gx(point.getX()) - 5, gy(point.getY()) - 5, 10, 10); //円
-        g.setColor(Colors.get(Color.black));
+        g.setColor(Colors.get(android.graphics.Color.BLACK));
         g.drawOval(gx(point.getX()) - 5, gy(point.getY()) - 5, 10, 10); //円
-        g.setColor(Colors.get(Color.black));
+        g.setColor(Colors.get(android.graphics.Color.BLACK));
     }
 
 

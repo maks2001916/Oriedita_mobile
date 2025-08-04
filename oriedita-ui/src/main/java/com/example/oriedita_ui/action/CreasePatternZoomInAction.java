@@ -1,10 +1,8 @@
 package com.example.oriedita_ui.action;
 
-import jakarta.enterprise.context.ApplicationScoped;
 
 import java.awt.event.ActionEvent;
 
-@ApplicationScoped
 @ActionHandler(ActionType.creasePatternZoomInAction)
 public class CreasePatternZoomInAction extends AbstractCreasePatternZoomAction{
     @Override

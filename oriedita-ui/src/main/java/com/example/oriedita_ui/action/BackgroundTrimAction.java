@@ -1,10 +1,7 @@
 package com.example.oriedita_ui.action;
 
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
-import jakarta.inject.Named;
 import oriedita.editor.Canvas;
-import oriedita.editor.canvas.CreasePattern_Worker;
+import com.example.oriedita_data.canvas.CreasePattern_Worker;
 import oriedita.editor.canvas.MouseMode;
 import oriedita.editor.databinding.BackgroundModel;
 import oriedita.editor.databinding.CanvasModel;
@@ -17,20 +14,14 @@ import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.image.BufferedImage;
 
-@ApplicationScoped
 @ActionHandler(ActionType.backgroundTrimAction)
 public class BackgroundTrimAction extends AbstractOrieditaAction{
 
-    @Inject
     BackgroundModel backgroundModel;
-    @Inject
     Canvas canvas;
-    @Inject
     CanvasModel canvasModel;
-    @Inject @Named("mainCreasePattern_Worker")
     CreasePattern_Worker mainCreasePatternWorker;
 
-    @Inject
     public BackgroundTrimAction() {
     }
 

@@ -1,8 +1,5 @@
 package com.example.oriedita.editor.factory;
 
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
-import jakarta.inject.Named;
 import oriedita.editor.action.AbstractOrieditaAction;
 import oriedita.editor.action.DegAction;
 import oriedita.editor.action.Oriagari_sousaAction;
@@ -11,7 +8,7 @@ import oriedita.editor.action.SelectionOperationAction;
 import oriedita.editor.action.SetMouseModeLineTypeDeleteAction;
 import oriedita.editor.action.SetMouseModeWithAfterColorAndUnselectAction;
 import oriedita.editor.action.SuiteiAction;
-import oriedita.editor.canvas.CreasePattern_Worker;
+import com.example.oriedita_data.canvas.CreasePattern_Worker;
 import oriedita.editor.canvas.FoldLineAdditionalInputMode;
 import oriedita.editor.canvas.MouseMode;
 import oriedita.editor.databinding.AngleSystemModel;
@@ -24,20 +21,12 @@ import origami.folding.FoldedFigure;
 
 import java.awt.event.ActionEvent;
 
-@ApplicationScoped
 public class ActionFactory {
-    @Inject
     CanvasModel canvasModel;
-    @Inject
-    @Named("mainCreasePattern_Worker")
     CreasePattern_Worker mainCreasePattern_Worker;
-    @Inject
     AngleSystemModel angleSystemModel;
-    @Inject
     FoldingService foldingService;
-    @Inject
     FoldedFiguresList foldedFiguresList;
-    @Inject
     ButtonService buttonService;
 
     public OrieditaAction setMouseModeAction(MouseMode mouseMode){

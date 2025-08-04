@@ -4,15 +4,12 @@ import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.SetMultimap;
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
-import jakarta.inject.Named;
 import org.tinylog.Logger;
 import oriedita.editor.FrameProvider;
 import oriedita.editor.action.ActionService;
 import oriedita.editor.action.ActionType;
 import oriedita.editor.action.OrieditaAction;
-import oriedita.editor.canvas.CreasePattern_Worker;
+import com.example.oriedita_data.canvas.CreasePattern_Worker;
 import oriedita.editor.databinding.CanvasModel;
 import oriedita.editor.service.ButtonService;
 import oriedita.editor.swing.component.DropdownToolButton;
@@ -51,7 +48,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-@ApplicationScoped
 public class ButtonServiceImpl implements ButtonService {
     private final SetMultimap<String, AbstractButton> registeredButtons;
     private final BiMap<String, KeyStroke> keystrokes;
@@ -65,11 +61,9 @@ public class ButtonServiceImpl implements ButtonService {
 
     private final PropertyChangeSupport keystrokeChangeSupport = new PropertyChangeSupport(this);
 
-    @Inject
     public ButtonServiceImpl(
             FrameProvider frame,
             HelpDialog explanation,
-            @Named("mainCreasePattern_Worker") CreasePattern_Worker mainCreasePatternWorker,
             CanvasModel canvasModel,
             ActionService actionService
     ) {

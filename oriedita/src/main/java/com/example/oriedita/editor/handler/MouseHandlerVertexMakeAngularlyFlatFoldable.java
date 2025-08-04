@@ -1,8 +1,6 @@
 package com.example.oriedita.editor.handler;
 
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
-import oriedita.editor.canvas.CreasePattern_Worker;
+import com.example.oriedita_data.canvas.CreasePattern_Worker;
 import oriedita.editor.canvas.MouseMode;
 import origami.Epsilon;
 import origami.crease_pattern.OritaCalc;
@@ -11,7 +9,6 @@ import origami.crease_pattern.elements.LineSegment;
 import origami.crease_pattern.elements.Point;
 import origami.folding.util.SortingBox;
 
-@ApplicationScoped
 @Handles(MouseMode.VERTEX_MAKE_ANGULARLY_FLAT_FOLDABLE_38)
 public class MouseHandlerVertexMakeAngularlyFlatFoldable extends BaseMouseHandlerInputRestricted {
     public boolean isWorkDone() {
@@ -22,7 +19,6 @@ public class MouseHandlerVertexMakeAngularlyFlatFoldable extends BaseMouseHandle
     LineColor icol_temp = LineColor.BLACK_0;
     CreasePattern_Worker.FourPointStep i_step_for_move_4p = CreasePattern_Worker.FourPointStep.STEP_0;
 
-    @Inject
     public MouseHandlerVertexMakeAngularlyFlatFoldable() {
     }
 

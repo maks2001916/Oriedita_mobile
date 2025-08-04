@@ -1,6 +1,5 @@
 package com.example.oriedita_data.export;
 
-import jakarta.enterprise.context.ApplicationScoped;
 import oriedita.editor.save.Save;
 import oriedita.editor.save.SaveProvider;
 import oriedita.editor.export.api.FileImporter;
@@ -16,7 +15,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
 
-@ApplicationScoped
 public class ObjImporter implements FileImporter {
     @Override
     public Save doImport(File file) throws IOException {

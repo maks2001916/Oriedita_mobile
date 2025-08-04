@@ -1,8 +1,6 @@
 package oriedita.editor.swing;
 
 
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
 import oriedita.editor.Canvas;
 import oriedita.editor.CanvasUI;
 
@@ -14,7 +12,6 @@ import java.util.concurrent.Executor;
 /**
  * BorderLayout for each different part.
  */
-@ApplicationScoped
 public class Editor {
     private final Canvas canvas1;
     private JPanel root;
@@ -24,7 +21,6 @@ public class Editor {
     private TopPanel topPanel;
     private LeftPanel leftPanel;
 
-    @Inject
     public Editor(Canvas canvas, RightPanel rightPanel, BottomPanel bottomPanel, TopPanel topPanel, LeftPanel leftPanel) {
         this.canvas1 = canvas;
         this.rightPanel = rightPanel;

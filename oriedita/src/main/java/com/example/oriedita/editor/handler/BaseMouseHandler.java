@@ -1,15 +1,11 @@
 package com.example.oriedita.editor.handler;
 
 
-import jakarta.inject.Inject;
-import jakarta.inject.Named;
-import oriedita.editor.canvas.CreasePattern_Worker;
+import com.example.oriedita_data.canvas.CreasePattern_Worker;
 
 import java.util.EnumSet;
 
 public abstract class BaseMouseHandler implements MouseModeHandler {
-    @Inject
-    @Named("mainCreasePattern_Worker")
     protected CreasePattern_Worker d;
 
     public BaseMouseHandler() {

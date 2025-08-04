@@ -1,7 +1,5 @@
 package com.example.oriedita.editor.handler;
 
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
 import oriedita.editor.canvas.MouseMode;
 import oriedita.editor.databinding.BackgroundModel;
 import oriedita.editor.service.ResetService;
@@ -11,7 +9,6 @@ import origami.crease_pattern.elements.LineSegment;
 import origami.crease_pattern.elements.Point;
 
 
-@ApplicationScoped
 @Handles(MouseMode.BACKGROUND_CHANGE_POSITION_26)
 public class MouseHandlerBackgroundChangePosition extends BaseMouseHandler {
     private final ResetService resetService;
@@ -51,7 +48,6 @@ public class MouseHandlerBackgroundChangePosition extends BaseMouseHandler {
     public void mouseDragged(Point p0) {
     }
 
-    @Inject
     public MouseHandlerBackgroundChangePosition(ResetService resetService, BackgroundModel backgroundModel) {
         this.resetService = resetService;
         this.backgroundModel = backgroundModel;

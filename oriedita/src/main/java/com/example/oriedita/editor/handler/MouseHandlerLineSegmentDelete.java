@@ -1,7 +1,5 @@
 package com.example.oriedita.editor.handler;
 
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
 import oriedita.editor.canvas.FoldLineAdditionalInputMode;
 import oriedita.editor.canvas.MouseMode;
 import origami.Epsilon;
@@ -10,10 +8,8 @@ import origami.crease_pattern.elements.LineSegment;
 import origami.crease_pattern.elements.Point;
 import org.tinylog.Logger;
 
-@ApplicationScoped
 @Handles(MouseMode.LINE_SEGMENT_DELETE_3)
 public class MouseHandlerLineSegmentDelete extends BaseMouseHandlerBoxSelect {
-    @Inject
     public MouseHandlerLineSegmentDelete() {
     }
 

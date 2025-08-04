@@ -1,9 +1,6 @@
 package com.example.oriedita.editor.handler;
 
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
-import jakarta.inject.Named;
-import oriedita.editor.canvas.CreasePattern_Worker;
+import com.example.oriedita_data.canvas.CreasePattern_Worker;
 import oriedita.editor.canvas.MouseMode;
 import oriedita.editor.databinding.CanvasModel;
 import origami.Epsilon;
@@ -12,14 +9,11 @@ import origami.crease_pattern.elements.LineColor;
 import origami.crease_pattern.elements.LineSegment;
 import origami.crease_pattern.elements.Point;
 
-@ApplicationScoped
 @Handles(MouseMode.DRAW_CREASE_SYMMETRIC_12)
 public class MouseHandlerDrawCreaseSymmetric extends BaseMouseHandlerInputRestricted {
     private final CreasePattern_Worker d;
     private final CanvasModel canvasModel;
 
-    @Inject
-    public MouseHandlerDrawCreaseSymmetric(@Named("mainCreasePattern_Worker") CreasePattern_Worker d, CanvasModel canvasModel) {
         this.d = d;
         this.canvasModel = canvasModel;
     }

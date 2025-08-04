@@ -1,7 +1,5 @@
 package com.example.oriedita.editor.handler;
 
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
 import oriedita.editor.canvas.MouseMode;
 import oriedita.editor.databinding.AngleSystemModel;
 import origami.Epsilon;
@@ -10,13 +8,11 @@ import origami.crease_pattern.elements.LineColor;
 import origami.crease_pattern.elements.LineSegment;
 import origami.crease_pattern.elements.Point;
 
-@ApplicationScoped
 @Handles(MouseMode.DRAW_CREASE_ANGLE_RESTRICTED_3_18)
 public class MouseHandlerDrawCreaseAngleRestricted3_2 extends BaseMouseHandlerInputRestricted {
     private final AngleSystemModel angleSystemModel;
     double d_angle_system;
 
-    @Inject
     public MouseHandlerDrawCreaseAngleRestricted3_2(AngleSystemModel angleSystemModel) {
         this.angleSystemModel = angleSystemModel;
     }

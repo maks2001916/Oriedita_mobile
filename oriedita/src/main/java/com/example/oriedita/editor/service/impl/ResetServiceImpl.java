@@ -1,9 +1,6 @@
 package com.example.oriedita.editor.service.impl;
 
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
-import jakarta.inject.Named;
-import oriedita.editor.canvas.CreasePattern_Worker;
+import com.example.oriedita_data.canvas.CreasePattern_Worker;
 import oriedita.editor.databinding.AngleSystemModel;
 import oriedita.editor.databinding.ApplicationModel;
 import oriedita.editor.databinding.CameraModel;
@@ -15,7 +12,6 @@ import oriedita.editor.databinding.InternalDivisionRatioModel;
 import oriedita.editor.drawing.tools.Camera;
 import oriedita.editor.service.ResetService;
 
-@ApplicationScoped
 public class ResetServiceImpl implements ResetService {
     private final CreasePattern_Worker mainCreasePatternWorker;
     private final Camera creasePatternCamera;
@@ -28,9 +24,6 @@ public class ResetServiceImpl implements ResetService {
     private final FoldedFiguresList foldedFiguresList;
     private final ApplicationModel applicationModel;
 
-    @Inject
-    public ResetServiceImpl(@Named("mainCreasePattern_Worker") CreasePattern_Worker mainCreasePatternWorker,
-                            @Named("creasePatternCamera") Camera creasePatternCamera,
                             CanvasModel canvasModel,
                             InternalDivisionRatioModel internalDivisionRatioModel,
                             FoldedFigureModel foldedFigureModel,

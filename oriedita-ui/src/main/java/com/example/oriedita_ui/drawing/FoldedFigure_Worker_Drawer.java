@@ -117,7 +117,7 @@ public class FoldedFigure_Worker_Drawer {
             drawConstraints(g2);
 
             //Prepare the line
-            g.setColor(Colors.get(Color.black));
+            g.setColor(Colors.get(android.graphics.Color.BLACK));
 
             setAntiAlias(g2);
         }
@@ -339,7 +339,7 @@ public class FoldedFigure_Worker_Drawer {
         //棒を描く-----------------------------------------------------------------------------------------
 
         setAntiAlias(g2);
-        g.setColor(L_color);//g.setColor(Colors.get(Color.black));
+        g.setColor(L_color);//g.setColor(Colors.get(android.graphics.Color.BLACK));
 
         for (int ib = 1; ib <= subFace_figure.getNumLines(); ib++) {
 

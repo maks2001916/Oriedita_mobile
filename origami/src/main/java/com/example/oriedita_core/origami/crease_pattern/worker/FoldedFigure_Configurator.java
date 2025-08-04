@@ -350,7 +350,7 @@ public class FoldedFigure_Configurator {
 
         //SubFaceは優先順の何番目までやるかを決める
 
-        Log.i("TAG", String.format("Smen有効数は　{} ／ {}", worker.SubFace_valid_number, worker.SubFaceTotal));
+        Log.i("TAG", "Smen有効数は　" + worker.SubFace_valid_number + " ／ " + worker.SubFaceTotal);
         Log.i("TAG","上下表初期設定終了");
         return HierarchyListStatus.SUCCESSFUL_1000;
     }

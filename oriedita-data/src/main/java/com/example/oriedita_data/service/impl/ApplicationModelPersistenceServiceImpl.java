@@ -8,8 +8,6 @@ import com.example.oriedita_common.editor.service.ApplicationModelPersistenceSer
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
 
 import javax.swing.JOptionPane;
 import java.io.File;
@@ -19,14 +17,12 @@ import java.util.zip.ZipInputStream;
 
 import static oriedita.editor.tools.ResourceUtil.getAppDir;
 
-@ApplicationScoped
 public class ApplicationModelPersistenceServiceImpl implements ApplicationModelPersistenceService {
 
     public static final String CONFIG_JSON = "config.json";
     private final FrameProvider frame;
     private final ApplicationModel applicationModel;
 
-    @Inject
     public ApplicationModelPersistenceServiceImpl(FrameProvider frame, ApplicationModel applicationModel) {
         this.frame = frame;
         this.applicationModel = applicationModel;

@@ -1,18 +1,13 @@
 package com.example.oriedita_ui.action;
 
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
 import oriedita.editor.databinding.FoldedFiguresList;
 
 import java.awt.event.ActionEvent;
 
-@ApplicationScoped
 @ActionHandler(ActionType.trashAction)
 public class TrashAction extends AbstractOrieditaAction {
-    @Inject
     FoldedFiguresList foldedFiguresList;
 
-    @Inject
     public TrashAction() {
 
     }

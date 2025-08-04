@@ -1,8 +1,6 @@
 package com.example.oriedita.editor.handler;
 
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
-import oriedita.editor.canvas.CreasePattern_Worker;
+import com.example.oriedita_data.canvas.CreasePattern_Worker;
 import oriedita.editor.canvas.MouseMode;
 import oriedita.editor.canvas.OperationFrame;
 import oriedita.editor.drawing.tools.Camera;
@@ -17,13 +15,11 @@ import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.List;
 
-@ApplicationScoped
 @Handles(MouseMode.OPERATION_FRAME_CREATE_61)
 public class MouseHandlerOperationFrameCreate extends BaseMouseHandler {
     CreasePattern_Worker.OperationFrameMode operationFrameMode;
     Point lastMousePos;
 
-    @Inject
     public MouseHandlerOperationFrameCreate() {
     }
 

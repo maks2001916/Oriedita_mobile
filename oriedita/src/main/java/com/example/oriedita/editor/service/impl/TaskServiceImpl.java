@@ -1,8 +1,5 @@
 package com.example.oriedita.editor.service.impl;
 
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
-import jakarta.inject.Named;
 import oriedita.editor.Canvas;
 import oriedita.editor.databinding.CanvasModel;
 import oriedita.editor.databinding.FoldedFigureModel;
@@ -14,7 +11,6 @@ import oriedita.editor.service.TaskService;
 import oriedita.editor.task.FoldingEstimateSave100Task;
 import oriedita.editor.task.FoldingEstimateSpecificTask;
 
-@ApplicationScoped
 public class TaskServiceImpl implements TaskService {
     private final TaskExecutorService foldingExecutor;
     private final CanvasModel canvasModel;
@@ -24,9 +20,7 @@ public class TaskServiceImpl implements TaskService {
     private final FoldedFiguresList foldedFiguresList;
     private final FoldedFigureModel foldedFigureModel;
 
-    @Inject
     public TaskServiceImpl(
-            @Named("foldingExecutor") TaskExecutorService foldingExecutor,
             CanvasModel canvasModel,
             Canvas canvas,
             FileSaveService fileSaveService,

@@ -1,8 +1,5 @@
 package oriedita.editor;
 
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.enterprise.event.Observes;
-import jakarta.inject.Inject;
 import org.jboss.weld.bootstrap.api.helpers.RegistrySingletonProvider;
 import org.jboss.weld.environment.se.StartMain;
 import org.jboss.weld.environment.se.bindings.Parameters;
@@ -20,24 +17,17 @@ import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
-@ApplicationScoped
 public class Oriedita {
-    @Inject
     LookAndFeelService lookAndFeelService;
-    @Inject
     ApplicationModelPersistenceService applicationModelPersistenceService;
 
-    @Inject
     FileSaveService fileSaveService;
 
-    @Inject
     App app;
 
-    @Inject
     @Parameters
     List<String> argv;
 
-    public void start(@Observes ContainerInitialized event) throws InterruptedException, InvocationTargetException {
         long startTime = System.currentTimeMillis();
 
         if (!event.getContainerId().equals(RegistrySingletonProvider.STATIC_INSTANCE)) {

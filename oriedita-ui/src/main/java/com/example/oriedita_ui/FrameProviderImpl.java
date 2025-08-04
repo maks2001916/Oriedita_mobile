@@ -1,13 +1,11 @@
 package com.example.oriedita_ui;
 
-import jakarta.enterprise.context.ApplicationScoped;
 
 import javax.swing.JFrame;
 
 /**
  * Provides a pointer to the main JFrame.
  */
-@ApplicationScoped
 public class FrameProviderImpl implements FrameProvider {
     private volatile JFrame frame;
 

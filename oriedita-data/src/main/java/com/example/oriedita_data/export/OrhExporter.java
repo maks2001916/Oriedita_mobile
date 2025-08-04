@@ -1,6 +1,5 @@
 package com.example.oriedita_data.export;
 
-import jakarta.enterprise.context.ApplicationScoped;
 import org.tinylog.Logger;
 import oriedita.editor.databinding.ApplicationModel;
 import oriedita.editor.databinding.FoldedFigureModel;
@@ -20,7 +19,6 @@ import java.io.PrintWriter;
 /**
  * Import and Export Orihime files.
  */
-@ApplicationScoped
 public class OrhExporter implements FileExporter {
     @Override
     public void doExport(Save save, File file) throws IOException {

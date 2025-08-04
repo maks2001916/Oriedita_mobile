@@ -1,10 +1,7 @@
 package com.example.oriedita_ui.action;
 
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
-import jakarta.inject.Named;
 import org.tinylog.Logger;
-import oriedita.editor.canvas.CreasePattern_Worker;
+import com.example.oriedita_data.canvas.CreasePattern_Worker;
 import oriedita.editor.exception.FileReadingException;
 import oriedita.editor.save.Save;
 import oriedita.editor.service.FileSaveService;
@@ -13,16 +10,12 @@ import javax.swing.JOptionPane;
 import java.awt.event.ActionEvent;
 import java.io.File;
 
-@ApplicationScoped
 @ActionHandler(ActionType.IMPORT_ADD)
 public class ImportAddAction extends AbstractOrieditaAction {
-    @Inject
     FileSaveService fileSaveService;
 
-    @Inject@Named("mainCreasePattern_Worker")
     CreasePattern_Worker mainCreasePatternWorker;
 
-    @Inject
     public ImportAddAction() {
 
     }

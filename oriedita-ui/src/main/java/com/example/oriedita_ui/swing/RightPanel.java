@@ -3,9 +3,6 @@ package oriedita.editor.swing;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
-import jakarta.inject.Named;
 import oriedita.editor.FrameProvider;
 import oriedita.editor.canvas.FoldLineAdditionalInputMode;
 import oriedita.editor.canvas.MouseMode;
@@ -39,7 +36,6 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.beans.PropertyChangeEvent;
 
-@ApplicationScoped
 public class RightPanel {
     private final FrameProvider frameProvider;
     private final AngleSystemModel angleSystemModel;
@@ -110,9 +106,7 @@ public class RightPanel {
     private JScrollPane scrollPane1;
     private boolean darkMode;
 
-    @Inject
     public RightPanel(FrameProvider frameProvider,
-                      @Named("aux") HistoryState auxHistoryState,
                       AngleSystemModel angleSystemModel,
                       ButtonService buttonService,
                       MeasuresModel measuresModel,

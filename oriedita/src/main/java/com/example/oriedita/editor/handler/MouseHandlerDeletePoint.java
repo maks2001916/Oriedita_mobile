@@ -1,15 +1,11 @@
 package com.example.oriedita.editor.handler;
 
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
 import oriedita.editor.canvas.MouseMode;
 import origami.Epsilon;
 import origami.crease_pattern.elements.Point;
 
-@ApplicationScoped
 @Handles(MouseMode.DELETE_POINT_15)
 public class MouseHandlerDeletePoint extends BaseMouseHandler {
-    @Inject
     public MouseHandlerDeletePoint() {
     }
 

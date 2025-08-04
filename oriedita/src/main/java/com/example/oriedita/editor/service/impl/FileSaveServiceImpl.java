@@ -1,13 +1,8 @@
 package com.example.oriedita.editor.service.impl;
 
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.enterprise.inject.Any;
-import jakarta.enterprise.inject.Instance;
-import jakarta.inject.Inject;
-import jakarta.inject.Named;
 import org.tinylog.Logger;
 import oriedita.editor.FrameProvider;
-import oriedita.editor.canvas.CreasePattern_Worker;
+import com.example.oriedita_data.canvas.CreasePattern_Worker;
 import oriedita.editor.databinding.ApplicationModel;
 import oriedita.editor.databinding.BackgroundModel;
 import oriedita.editor.databinding.FileModel;
@@ -56,7 +51,6 @@ import java.util.zip.ZipOutputStream;
 import static oriedita.editor.swing.dialog.FileDialogUtil.openFileDialog;
 import static oriedita.editor.swing.dialog.FileDialogUtil.saveFileDialog;
 
-@ApplicationScoped
 public class FileSaveServiceImpl implements FileSaveService {
     private final FrameProvider frame;
     private final Camera creasePatternCamera;
@@ -75,17 +69,11 @@ public class FileSaveServiceImpl implements FileSaveService {
     private ScheduledThreadPoolExecutor schedulePool;
     private ScheduledFuture<?> autoSaveFuture;
 
-    @Inject
     private ApplicationModelPersistenceService applicationModelPersistenceService;
 
 
-    @Inject
     public FileSaveServiceImpl(
             FrameProvider frame,
-            @Any Instance<FileImporter> importers,
-            @Any Instance<FileExporter> exporters,
-            @Named("creasePatternCamera") Camera creasePatternCamera,
-            @Named("mainCreasePattern_Worker") CreasePattern_Worker mainCreasePatternWorker,
             FileModel fileModel,
             ApplicationModel applicationModel,
             ResetService resetService,

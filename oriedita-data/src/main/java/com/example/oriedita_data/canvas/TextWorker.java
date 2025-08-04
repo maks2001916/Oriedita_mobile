@@ -27,7 +27,6 @@ public class TextWorker {
     private final List<Text> texts;
     private final Paint textPaint;
 
-    @Inject
     public TextWorker() {
         this.texts = new ArrayList<>();
         this.textPaint = new Paint();

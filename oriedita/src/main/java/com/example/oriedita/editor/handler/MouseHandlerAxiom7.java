@@ -1,7 +1,5 @@
 package com.example.oriedita.editor.handler;
 
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
 import oriedita.editor.canvas.MouseMode;
 import origami.Epsilon;
 import origami.crease_pattern.OritaCalc;
@@ -9,11 +7,9 @@ import origami.crease_pattern.elements.LineColor;
 import origami.crease_pattern.elements.LineSegment;
 import origami.crease_pattern.elements.Point;
 
-@ApplicationScoped
 @Handles(MouseMode.AXIOM_7)
 public class MouseHandlerAxiom7 extends BaseMouseHandlerInputRestricted{
     private Point midPoint = new Point();
-    @Inject
     public MouseHandlerAxiom7(){}
 
     //マウス操作(マウスを動かしたとき)を行う関数

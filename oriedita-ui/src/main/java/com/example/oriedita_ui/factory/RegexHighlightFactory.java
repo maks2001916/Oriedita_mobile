@@ -1,6 +1,5 @@
 package com.example.oriedita_ui.factory;
 
-import jakarta.enterprise.context.ApplicationScoped;
 import oriedita.editor.Colors;
 
 import javax.swing.JTextField;
@@ -9,7 +8,6 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import java.util.regex.Pattern;
 
-@ApplicationScoped
 public class RegexHighlightFactory {
     /**
      * A DocumentListener custom adapter that highlights an error color when the current string value isn't matching a given regular expression. Purely visual.

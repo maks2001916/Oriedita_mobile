@@ -2,9 +2,7 @@ package com.example.oriedita_ui.service.impl;
 
 import com.formdev.flatlaf.FlatLaf;
 import com.formdev.flatlaf.ui.FlatUIUtils;
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
-import oriedita.editor.Colors;
+import com.example.oriedita_data.Colors;
 import oriedita.editor.FrameProvider;
 import oriedita.editor.databinding.ApplicationModel;
 import oriedita.editor.service.LookAndFeelService;
@@ -29,12 +27,10 @@ import java.awt.KeyboardFocusManager;
 import java.awt.Rectangle;
 import java.net.URL;
 
-@ApplicationScoped
 public class LookAndFeelServiceImpl implements LookAndFeelService {
     private final FrameProvider frameProvider;
     private final ApplicationModel applicationModel;
 
-    @Inject
     public LookAndFeelServiceImpl(FrameProvider frameProvider, ApplicationModel applicationModel) {
         this.frameProvider = frameProvider;
         this.applicationModel = applicationModel;

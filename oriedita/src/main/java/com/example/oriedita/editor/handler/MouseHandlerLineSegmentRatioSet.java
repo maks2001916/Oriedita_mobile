@@ -1,19 +1,15 @@
 package com.example.oriedita.editor.handler;
 
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
 import oriedita.editor.canvas.MouseMode;
 import oriedita.editor.databinding.InternalDivisionRatioModel;
 import origami.Epsilon;
 import origami.crease_pattern.elements.LineSegment;
 import origami.crease_pattern.elements.Point;
 
-@ApplicationScoped
 @Handles(MouseMode.LINE_SEGMENT_RATIO_SET_28)
 public class MouseHandlerLineSegmentRatioSet extends BaseMouseHandlerInputRestricted {
     private final InternalDivisionRatioModel internalDivisionRatioModel;
 
-    @Inject
     public MouseHandlerLineSegmentRatioSet(InternalDivisionRatioModel internalDivisionRatioModel) {
         this.internalDivisionRatioModel = internalDivisionRatioModel;
     }

@@ -18,7 +18,7 @@ public class ColorIcon implements Icon {
     public void paintIcon(Component c, Graphics g, int x, int y) {
         g.setColor(color);
         g.fillRect(x, y, getIconWidth(), getIconHeight());
-        g.setColor(Colors.get(Color.black));
+        g.setColor(Colors.get(android.graphics.Color.BLACK));
         g.drawRect(x, y, getIconWidth(), getIconHeight());
     }
 

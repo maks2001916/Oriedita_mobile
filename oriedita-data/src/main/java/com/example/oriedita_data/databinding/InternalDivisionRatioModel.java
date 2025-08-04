@@ -23,7 +23,6 @@ public class InternalDivisionRatioModel extends AbstractModel {
     private String displayInternalDivisionRatioE;
     private String displayInternalDivisionRatioF;
 
-    @Inject
     public InternalDivisionRatioModel(MeasuresModel measuresModel) {
         this.measuresModel = measuresModel;
         reset();

@@ -1,8 +1,6 @@
 package com.example.oriedita_ui.action;
 
 import com.formdev.flatlaf.FlatLaf;
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
 import oriedita.editor.Colors;
 import oriedita.editor.FrameProvider;
 import oriedita.editor.databinding.FoldedFigureModel;
@@ -11,15 +9,11 @@ import javax.swing.JColorChooser;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 
-@ApplicationScoped
 @ActionHandler(ActionType.backColorAction)
 public class BackColorAction extends AbstractOrieditaAction {
-    @Inject
     FrameProvider frameProvider;
-    @Inject
     FoldedFigureModel foldedFigureModel;
 
-    @Inject
     public BackColorAction() {
 
     }

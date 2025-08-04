@@ -3,14 +3,10 @@ package oriedita.editor.swing;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.enterprise.inject.Any;
-import jakarta.inject.Inject;
-import jakarta.inject.Named;
 import oriedita.editor.AnimationDurations;
 import oriedita.editor.Animations;
 import oriedita.editor.Canvas;
-import oriedita.editor.canvas.CreasePattern_Worker;
+import com.example.oriedita_data.canvas.CreasePattern_Worker;
 import oriedita.editor.canvas.MouseMode;
 import oriedita.editor.databinding.ApplicationModel;
 import oriedita.editor.databinding.BackgroundModel;
@@ -39,7 +35,6 @@ import java.awt.event.FocusEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-@ApplicationScoped
 public class TopPanel implements PropertyChangeListener {
     private final MeasuresModel measuresModel;
     private final ButtonService buttonService;
@@ -88,12 +83,9 @@ public class TopPanel implements PropertyChangeListener {
 
     private final AnimationService animationService;
 
-    @Inject
     public TopPanel(MeasuresModel measuresModel,
                     ButtonService buttonService,
-                    @Any CanvasModel canvasModel,
                     InternalDivisionRatioModel internalDivisionRatioModel,
-                    @Named("mainCreasePattern_Worker") CreasePattern_Worker mainCreasePatternWorker,
                     CameraModel creasePatternCameraModel,
                     Canvas canvas,
                     ApplicationModel applicationModel,

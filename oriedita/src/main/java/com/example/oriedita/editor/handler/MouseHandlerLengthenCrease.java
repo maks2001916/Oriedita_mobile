@@ -1,7 +1,5 @@
 package com.example.oriedita.editor.handler;
 
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
 import org.tinylog.Logger;
 import oriedita.editor.canvas.MouseMode;
 import oriedita.editor.drawing.tools.Camera;
@@ -20,7 +18,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
 
-@ApplicationScoped
 @Handles(MouseMode.LENGTHEN_CREASE_5)
 public class MouseHandlerLengthenCrease extends BaseMouseHandler {
     SortingBox<LineSegment> linesToExtendSortingBox = new SortingBox<>();
@@ -55,7 +52,6 @@ public class MouseHandlerLengthenCrease extends BaseMouseHandler {
                 .forEach(l -> DrawingUtil.drawLineStep(g2, l, camera, settings.getLineWidth(), d.getGridInputAssist()));
     }
 
-    @Inject
     public MouseHandlerLengthenCrease() {
     }
 

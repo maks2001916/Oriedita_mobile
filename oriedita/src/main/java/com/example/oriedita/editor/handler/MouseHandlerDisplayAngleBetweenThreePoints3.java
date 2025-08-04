@@ -1,23 +1,17 @@
 package com.example.oriedita.editor.handler;
 
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
-import jakarta.inject.Named;
-import oriedita.editor.canvas.CreasePattern_Worker;
+import com.example.oriedita_data.canvas.CreasePattern_Worker;
 import oriedita.editor.canvas.MouseMode;
 import oriedita.editor.databinding.MeasuresModel;
 import origami.crease_pattern.OritaCalc;
 import origami.crease_pattern.elements.LineSegment;
 import origami.crease_pattern.elements.Point;
 
-@ApplicationScoped
 @Handles(MouseMode.DISPLAY_ANGLE_BETWEEN_THREE_POINTS_3_57)
 public class MouseHandlerDisplayAngleBetweenThreePoints3 extends BaseMouseHandlerInputRestricted {
     private final CreasePattern_Worker d;
     private final MeasuresModel measuresModel;
 
-    @Inject
-    public MouseHandlerDisplayAngleBetweenThreePoints3(@Named("mainCreasePattern_Worker") CreasePattern_Worker d, MeasuresModel measuresModel) {
         this.d = d;
         this.measuresModel = measuresModel;
     }

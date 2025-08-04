@@ -1,6 +1,8 @@
 package com.example.oriedita_ui.drawing.tools;
 
-import androidx.compose.ui.graphics.Canvas;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.Path;
 
 import com.example.oriedita_common.editor.drawing.tools.Camera;
 import com.example.oriedita_data.Colors;
@@ -14,38 +16,35 @@ import com.example.oriedita_core.origami.crease_pattern.elements.LineColor;
 import com.example.oriedita_core.origami.crease_pattern.elements.LineSegment;
 import com.example.oriedita_core.origami.crease_pattern.elements.Point;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.geom.Ellipse2D;
-import java.awt.geom.GeneralPath;
+import android.graphics.Color;
+
+import java.util.List;
 
 /**
  * Static utility class for drawing
  */
 public class DrawingUtil {
     //For drawing thick lines
-    public static void widthLine(Canvas canvas, Point a, Point b, double width, LineColor iColor) {
-        widthLine(canvas, new LineSegment(a, b), width, iColor);
+    public static void widthLine(Canvas canvas, Paint paint, Point a, Point b, double width, LineColor iColor) {
+        widthLine(canvas, paint, new LineSegment(a, b), width, iColor);
     }
 
-    public static void widthLine(Canvas canvas, LineSegment s, double r, LineColor iColor) {
+    public static void widthLine(Canvas canvas, Paint paint, LineSegment s, double r, LineColor iColor) {
         switch (iColor) {
             case BLACK_0:
-                canvas.setColor(Colors.get(Color.black));
+                paint.setColor(Colors.get(android.graphics.Color.BLACK));
                 break;
             case RED_1:
-                canvas.setColor(Colors.get(Color.red));
+                paint.setColor(Colors.get(android.graphics.Color.RED));
                 break;
             case BLUE_2:
-                canvas.setColor(Colors.get(Color.blue));
+                paint.setColor(Colors.get(android.graphics.Color.BLUE));
                 break;
             case CYAN_3:
-                canvas.setColor(Colors.get(Color.green));
+                paint.setColor(Colors.get(android.graphics.Color.GREEN));
                 break;
             case ORANGE_4:
-                canvas.setColor(Colors.get(Color.orange));
+                paint.setColor(Colors.get(android.graphics.Color.rgb(255, 165, 0)));
                 break;
             default:
                 break;
@@ -53,97 +52,71 @@ public class DrawingUtil {
         LineSegment sp = OritaCalc.moveParallel(s, r);
         LineSegment sm = OritaCalc.moveParallel(s, -r);
 
-        int[] x = new int[5];
-        int[] y = new int[5];
-
-        x[0] = (int) sp.determineAX();
-        y[0] = (int) sp.determineAY();
-        x[1] = (int) sp.determineBX();
-        y[1] = (int) sp.determineBY();
-        x[2] = (int) sm.determineBX();
-        y[2] = (int) sm.determineBY();
-        x[3] = (int) sm.determineAX();
-        y[3] = (int) sm.determineAY();
-
-        canvas.fillPolygon(x, y, 4);
+        Path path = new Path();
+        path.moveTo((float) sp.determineAX(), (float) sp.determineAY());
+        path.lineTo((float) sp.determineBX(), (float) sp.determineBY());
+        path.lineTo((float) sm.determineBX(), (float) sm.determineBY());
+        path.lineTo((float) sm.determineAX(), (float) sm.determineAY());
+        path.close();
+        
+        paint.setStyle(Paint.Style.FILL);
+        canvas.drawPath(path, paint);
     }
 
     //Draw a cross around the designated Point
-    public static void cross(Canvas canvas, Point t, double length, double width, LineColor icolor) {
+    public static void cross(Canvas canvas, Paint paint, Point t, double length, double width, LineColor icolor) {
         Point tx0 = new Point(t.getX() - length, t.getY());
         Point tx1 = new Point(t.getX() + length, t.getY());
         Point ty0 = new Point(t.getX(), t.getY() - length);
         Point ty1 = new Point(t.getX(), t.getY() + length);
-        widthLine(canvas, tx0, tx1, width, icolor);
-        widthLine(canvas, ty0, ty1, width, icolor);
+        widthLine(canvas, paint, tx0, tx1, width, icolor);
+        widthLine(canvas, paint, ty0, ty1, width, icolor);
     }
 
-    public static void drawVertex(Graphics2D canvas, Point a, int pointSize) {
-        canvas.setColor(Colors.get(Color.gray));
-        canvas.fillRect((int) (a.getX() - pointSize), (int) (a.getY() - pointSize), (int) (pointSize * 2 + 0.5), (int) (pointSize * 2 + 0.5));
+    public static void drawVertex(Canvas canvas, Paint paint, Point a, int pointSize) {
+        paint.setColor(Colors.get(android.graphics.Color.GRAY));
+        paint.setStyle(Paint.Style.FILL);
+        canvas.drawRect((float) (a.getX() - pointSize), (float) (a.getY() - pointSize), 
+                       (float) (a.getX() + pointSize), (float) (a.getY() + pointSize), paint);
 
-        canvas.setColor(Colors.get(Color.black));
-        canvas.drawRect((int) (a.getX() - pointSize), (int) (a.getY() - pointSize), (int) (pointSize * 2 + 0.5), (int) (pointSize * 2 + 0.5));
-    }
-
-    //Draw a pointing diagram around the specified Point
-    public static void pointingAt1(Canvas canvas, LineSegment s_tv) {
-        canvas.setColor(Colors.get(new Color(255, 165, 0, 100)));//canvas.setColor(Colors.get(Color.ORANGE));
-        canvas.drawLine((int) s_tv.determineAX(), (int) s_tv.determineAY(), (int) s_tv.determineBX(), (int) s_tv.determineBY()); //直線
-    }
-
-    //Draw a pointing diagram around the specified Point
-    public static void pointingAt2(Canvas canvas, LineSegment s_tv) {
-        canvas.setColor(Colors.get(new Color(255, 165, 0, 100)));//canvas.setColor(Colors.get(Color.ORANGE));
-        canvas.drawLine((int) s_tv.determineAX(), (int) s_tv.determineAY(), (int) s_tv.determineBX(), (int) s_tv.determineBY()); //直線
-
+        paint.setColor(Colors.get(android.graphics.Color.BLACK));
+        paint.setStyle(Paint.Style.STROKE);
+        canvas.drawRect((float) (a.getX() - pointSize), (float) (a.getY() - pointSize), 
+                       (float) (a.getX() + pointSize), (float) (a.getY() + pointSize), paint);
+        paint.setStyle(Paint.Style.FILL);
     }
 
     //Draw a pointing diagram around the specified Point
-    public static void pointingAt3(Canvas canvas, LineSegment s_tv) {
-        canvas.setColor(Colors.get(new Color(255, 200, 0, 50)));
-        canvas.drawLine((int) s_tv.determineAX(), (int) s_tv.determineAY(), (int) s_tv.determineBX(), (int) s_tv.determineBY()); //直線
+    public static void pointingAt1(Canvas canvas, Paint paint, LineSegment s_tv) {
+        paint.setColor(Colors.get(android.graphics.Color.argb(100, 255, 165, 0)));
+        paint.setStyle(Paint.Style.STROKE);
+        canvas.drawLine((float) s_tv.determineAX(), (float) s_tv.determineAY(), 
+                       (float) s_tv.determineBX(), (float) s_tv.determineBY(), paint);
+    }
+
+    //Draw a pointing diagram around the specified Point
+    public static void pointingAt2(Canvas canvas, Paint paint, LineSegment s_tv) {
+        paint.setColor(Colors.get(android.graphics.Color.argb(100, 255, 165, 0)));
+        paint.setStyle(Paint.Style.STROKE);
+        canvas.drawLine((float) s_tv.determineAX(), (float) s_tv.determineAY(), 
+                       (float) s_tv.determineBX(), (float) s_tv.determineBY(), paint);
+    }
+
+    public static void pointingAt3(Canvas canvas, Paint paint, LineSegment s_tv) {
+        paint.setColor(Colors.get(android.graphics.Color.argb(50, 255, 200, 0)));
+        paint.setStyle(Paint.Style.STROKE);
+        canvas.drawLine((float) s_tv.determineAX(), (float) s_tv.determineAY(), 
+                       (float) s_tv.determineBX(), (float) s_tv.determineBY(), paint);
     }
 
     public static void setColor(Canvas canvas, LineColor i) {
-        switch (i) {
-            case BLACK_0:
-                canvas.setColor(Colors.get(Color.black));
-                break;
-            case RED_1:
-                canvas.setColor(Colors.get(Color.red));
-                break;
-            case BLUE_2:
-                canvas.setColor(Colors.get(Color.blue));
-                break;
-            case CYAN_3:
-                canvas.setColor(Colors.get(new Color(100, 200, 200)));
-                break;
-            case ORANGE_4:
-                canvas.setColor(Colors.get(Color.orange));
-                break;
-            case MAGENTA_5:
-                canvas.setColor(Colors.get(Color.magenta));
-                break;
-            case GREEN_6:
-                canvas.setColor(Colors.get(Color.green));
-                break;
-            case YELLOW_7:
-                canvas.setColor(Colors.get(Color.yellow));
-                break;
-            case PURPLE_8:
-                canvas.setColor(Colors.get(new Color(210, 0, 255)));
-                break;
-            case GREY_10:
-                canvas.setColor(Colors.get(new Color(162, 162, 162)));
-                break;
-            default:
-                break;
-        }
+        // This method is deprecated - use paint.setColor() instead
+        // Keeping for backward compatibility but it should not be used
     }
 
-    public static void drawSelectLine(Canvas canvas, LineSegment s, Camera camera) {
-        canvas.setColor(Colors.get(Color.green));
+    public static void drawSelectLine(Canvas canvas, Paint paint, LineSegment s, Camera camera) {
+        paint.setColor(Colors.get(android.graphics.Color.GREEN));
+        paint.setStyle(Paint.Style.STROKE);
 
         LineSegment s_tv = camera.object2TV(s);
 
@@ -152,229 +125,209 @@ public class DrawingUtil {
         Point a = new Point(s_tv.determineAX() + Epsilon.UNKNOWN_1EN6, s_tv.determineAY() + Epsilon.UNKNOWN_1EN6);
         Point b = new Point(s_tv.determineBX() + Epsilon.UNKNOWN_1EN6, s_tv.determineBY() + Epsilon.UNKNOWN_1EN6);
 
-        canvas.drawLine((int) a.getX(), (int) a.getY(), (int) b.getX(), (int) b.getY()); //直線
+        canvas.drawLine((float) a.getX(), (float) a.getY(), (float) b.getX(), (float) b.getY(), paint);
     }
 
-    public static void drawAuxLiveLine(Canvas canvas, LineSegment as, Camera camera, float lineWidth, int pointSize, float f_h_WireframeLineWidth) {
-        setColor(canvas, as.getColor());
-
-        Graphics2D g2 = (Graphics2D) canvas;
+    public static void drawAuxLiveLine(Canvas canvas, Paint paint, LineSegment as, Camera camera, float lineWidth, int pointSize, float f_h_WireframeLineWidth) {
+        paint.setColor(Colors.get(as.getColor()));
+        paint.setStyle(Paint.Style.STROKE);
+        paint.setStrokeWidth(f_h_WireframeLineWidth);
 
         LineSegment s_tv = camera.object2TV(as);
         Point a = new Point(s_tv.determineAX() + Epsilon.UNKNOWN_1EN6, s_tv.determineAY() + Epsilon.UNKNOWN_1EN6);
-        Point b = new Point(s_tv.determineBX() + Epsilon.UNKNOWN_1EN6, s_tv.determineBY() + Epsilon.UNKNOWN_1EN6);//なぜEpsilon.UNKNOWN_0000001を足すかというと,ディスプレイに描画するとき元の折線が新しい折線に影響されて動いてしまうのを防ぐため
+        Point b = new Point(s_tv.determineBX() + Epsilon.UNKNOWN_1EN6, s_tv.determineBY() + Epsilon.UNKNOWN_1EN6);
 
-        canvas.drawLine((int) a.getX(), (int) a.getY(), (int) b.getX(), (int) b.getY()); //直線
+        canvas.drawLine((float) a.getX(), (float) a.getY(), (float) b.getX(), (float) b.getY(), paint);
 
         if (lineWidth < 2.0f) {//Draw a square at the vertex
-            canvas.setColor(Colors.get(Color.gray));
-            canvas.fillRect((int) a.getX() - pointSize, (int) a.getY() - pointSize, 2 * pointSize + 1, 2 * pointSize + 1); //正方形を描く//canvas.fillRect(10, 10, 100, 50);長方形を描く
-            canvas.fillRect((int) b.getX() - pointSize, (int) b.getY() - pointSize, 2 * pointSize + 1, 2 * pointSize + 1); //正方形を描く
+            paint.setColor(Colors.get(android.graphics.Color.GRAY));
+            paint.setStyle(Paint.Style.FILL);
+            canvas.drawRect((float) a.getX() - pointSize, (float) a.getY() - pointSize, 
+                           (float) a.getX() + pointSize + 1, (float) a.getY() + pointSize + 1, paint);
+            canvas.drawRect((float) b.getX() - pointSize, (float) b.getY() - pointSize, 
+                           (float) b.getX() + pointSize + 1, (float) b.getY() + pointSize + 1, paint);
 
-            canvas.setColor(Colors.get(Color.black));
-            canvas.drawRect((int) a.getX() - pointSize, (int) a.getY() - pointSize, 2 * pointSize + 1, 2 * pointSize + 1);
-            canvas.drawRect((int) b.getX() - pointSize, (int) b.getY() - pointSize, 2 * pointSize + 1, 2 * pointSize + 1);
+            paint.setColor(Colors.get(android.graphics.Color.BLACK));
+            paint.setStyle(Paint.Style.STROKE);
+            canvas.drawRect((float) a.getX() - pointSize, (float) a.getY() - pointSize, 
+                           (float) a.getX() + pointSize + 1, (float) a.getY() + pointSize + 1, paint);
+            canvas.drawRect((float) b.getX() - pointSize, (float) b.getY() - pointSize, 
+                           (float) b.getX() + pointSize + 1, (float) b.getY() + pointSize + 1, paint);
+            paint.setStyle(Paint.Style.FILL);
         }
 
         if (lineWidth >= 2.0f) {//  Thick line
-            g2.setStroke(new BasicStroke(1.0f + f_h_WireframeLineWidth % 1.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER));//線の太さや線の末端の形状
+            paint.setColor(Colors.get(android.graphics.Color.GRAY));
+            paint.setStyle(Paint.Style.FILL);
+            paint.setAntiAlias(true);
+            canvas.drawCircle((float) a.getX(), (float) a.getY(), (float) (lineWidth / 2.0 + pointSize), paint);
 
-            if (pointSize != 0) {
-                double d_width = (double) lineWidth / 2.0 + (double) pointSize;
+            paint.setColor(Colors.get(android.graphics.Color.BLACK));
+            paint.setStyle(Paint.Style.STROKE);
+            paint.setAntiAlias(true);
+            canvas.drawCircle((float) a.getX(), (float) a.getY(), (float) (lineWidth / 2.0 + pointSize), paint);
 
-                canvas.setColor(Colors.get(Color.gray));
-                g2.fill(new Ellipse2D.Double(a.getX() - d_width, a.getY() - d_width, 2.0 * d_width, 2.0 * d_width));
+            paint.setColor(Colors.get(android.graphics.Color.GRAY));
+            paint.setStyle(Paint.Style.FILL);
+            paint.setAntiAlias(true);
+            canvas.drawCircle((float) b.getX(), (float) b.getY(), (float) (lineWidth / 2.0 + pointSize), paint);
 
-                canvas.setColor(Colors.get(Color.black));
-                g2.draw(new Ellipse2D.Double(a.getX() - d_width, a.getY() - d_width, 2.0 * d_width, 2.0 * d_width));
-
-                canvas.setColor(Colors.get(Color.gray));
-                g2.fill(new Ellipse2D.Double(b.getX() - d_width, b.getY() - d_width, 2.0 * d_width, 2.0 * d_width));
-
-                canvas.setColor(Colors.get(Color.black));
-                g2.draw(new Ellipse2D.Double(b.getX() - d_width, b.getY() - d_width, 2.0 * d_width, 2.0 * d_width));
-            }
-
-            g2.setStroke(new BasicStroke(f_h_WireframeLineWidth, BasicStroke.CAP_ROUND, BasicStroke.JOIN_MITER));//線の太さや線の末端の形状
-
+            paint.setColor(Colors.get(android.graphics.Color.BLACK));
+            paint.setStyle(Paint.Style.STROKE);
+            paint.setAntiAlias(true);
+            canvas.drawCircle((float) b.getX(), (float) b.getY(), (float) (lineWidth / 2.0 + pointSize), paint);
         }
     }
 
-    public static void drawCircle(Canvas canvas, Circle circle, Camera camera, float lineWidth, int pointSize) {
-        Point a = camera.object2TV(circle.determineCenter());//この場合のaは描画座標系での円の中心の位置
+    public static void drawCircle(Canvas canvas, Paint paint, Circle circle, Camera camera, float lineWidth, int pointSize) {
+        paint.setColor(Colors.get(circle.getColor()));
+        paint.setStyle(Paint.Style.STROKE);
+        paint.setStrokeWidth(lineWidth);
+        paint.setAntiAlias(true);
 
-        Graphics2D g2 = (Graphics2D) canvas;
-        g2.setStroke(new BasicStroke(lineWidth, BasicStroke.CAP_ROUND, BasicStroke.JOIN_MITER));//基本指定A　　線の太さや線の末端の形状
-
-        if (circle.getCustomized() == 0) {
-            setColor(canvas, circle.getColor());
-        } else if (circle.getCustomized() == 1) {
-            canvas.setColor(circle.getCustomizedColor());
-        }
+        Point a = camera.object2TV(circle.determineCenter());
 
         //円周の描画
-        double d_width = circle.getR() * camera.getCameraZoomX();//d_habaは描画時の円の半径。なお、camera.get_camera_bairitsu_x()＝camera.get_camera_bairitsu_y()を前提としている。
-        g2.draw(new Ellipse2D.Double(a.getX() - d_width, a.getY() - d_width, 2.0 * d_width, 2.0 * d_width));
+        double d_width = circle.getR() * camera.getCameraZoomX();
+        canvas.drawCircle((float) a.getX(), (float) a.getY(), (float) d_width, paint);
 
-        a = camera.object2TV(circle.determineCenter());//この場合のaは描画座標系での円の中心の位置
-
-        g2.setStroke(new BasicStroke(lineWidth, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER));//基本指定A　　線の太さや線の末端の形状
-        canvas.setColor(Colors.get(new Color(0, 255, 255, 255)));
-
-        //円の中心の描画
-        if (lineWidth < 2.0f) {//中心の黒い正方形を描く
-            canvas.setColor(Colors.get(Color.black));
-            canvas.fillRect((int) a.getX() - pointSize, (int) a.getY() - pointSize, 2 * pointSize + 1, 2 * pointSize + 1); //正方形を描く//canvas.fillRect(10, 10, 100, 50);長方形を描く
-        }
+        a = camera.object2TV(circle.determineCenter());
+        paint.setColor(Colors.get(new Color(0, 255, 255, 255)));
 
         if (lineWidth >= 2.0f) {//  太線指定時の中心を示す黒い小円を描く
-            g2.setStroke(new BasicStroke(1.0f + lineWidth % 1.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER));//線の太さや線の末端の形状、ここでは折線の端点の線の形状の指定
             if (pointSize != 0) {
                 d_width = (double) lineWidth / 2.0 + (double) pointSize;
 
+                paint.setColor(Colors.get(Color.white));
+                paint.setStyle(Paint.Style.FILL);
+                canvas.drawCircle((float) a.getX(), (float) a.getY(), (float) d_width, paint);
 
-                canvas.setColor(Colors.get(Color.white));
-                g2.fill(new Ellipse2D.Double(a.getX() - d_width, a.getY() - d_width, 2.0 * d_width, 2.0 * d_width));
-
-                canvas.setColor(Colors.get(Color.black));
-                g2.draw(new Ellipse2D.Double(a.getX() - d_width, a.getY() - d_width, 2.0 * d_width, 2.0 * d_width));
+                paint.setColor(Colors.get(android.graphics.Color.BLACK));
+                paint.setStyle(Paint.Style.STROKE);
+                canvas.drawCircle((float) a.getX(), (float) a.getY(), (float) d_width, paint);
             }
         }
     }
 
-    public static void drawAuxLine(Canvas canvas, LineSegment s, Camera camera, float lineWidth, int pointSize, boolean useRoundedEnds) {
-        Graphics2D g2 = (Graphics2D) canvas;
-        g2.setStroke(new BasicStroke(lineWidth, useRoundedEnds? BasicStroke.CAP_ROUND : BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER));//基本指定A　　線の太さや線の末端の形状
+    public static void drawAuxLine(Canvas canvas, Paint paint, LineSegment s, Camera camera, float lineWidth, int pointSize, boolean useRoundedEnds) {
+        paint.setColor(Colors.get(s.getColor()));
+        paint.setStyle(Paint.Style.STROKE);
+        paint.setStrokeWidth(lineWidth);
+        if (useRoundedEnds) {
+            paint.setStrokeCap(Paint.Cap.ROUND);
+        } else {
+            paint.setStrokeCap(Paint.Cap.BUTT);
+        }
 
         if (s.getCustomized() == 0) {
-            setColor(canvas, s.getColor());
-        } else if (s.getCustomized() == 1) {
-            canvas.setColor(s.getCustomizedColor());
-        }
+            LineSegment s_tv = camera.object2TV(s);
+            Point a = new Point(s_tv.determineAX() + Epsilon.UNKNOWN_1EN6, s_tv.determineAY() + Epsilon.UNKNOWN_1EN6);
+            Point b = new Point(s_tv.determineBX() + Epsilon.UNKNOWN_1EN6, s_tv.determineBY() + Epsilon.UNKNOWN_1EN6);
 
-        LineSegment s_tv = camera.object2TV(s);
-        Point a = new Point(s_tv.determineAX() + Epsilon.UNKNOWN_1EN6, s_tv.determineAY() + Epsilon.UNKNOWN_1EN6);
-        Point b = new Point(s_tv.determineBX() + Epsilon.UNKNOWN_1EN6, s_tv.determineBY() + Epsilon.UNKNOWN_1EN6);//なぜEpsilon.UNKNOWN_0000001を足すかというと,ディスプレイに描画するとき元の折線が新しい折線に影響されて動いてしまうのを防ぐため
-
-        canvas.drawLine((int) a.getX(), (int) a.getY(), (int) b.getX(), (int) b.getY()); //直線
-
-        if (Epsilon.high.eq0(lineWidth) || pointSize == 0) {
-            return;
-        }
-        if (lineWidth < 2.0f) {//頂点の黒い正方形を描く
-            drawVertex(g2, a, pointSize);
-            drawVertex(g2, b, pointSize);
+            canvas.drawLine((float) a.getX(), (float) a.getY(), (float) b.getX(), (float) b.getY(), paint);
         }
 
         if (lineWidth >= 2.0f) {//  太線
-            g2.setStroke(new BasicStroke(1.0f + lineWidth % 1.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER));//線の太さや線の末端の形状、ここでは折線の端点の線の形状の指定
+            LineSegment s_tv = camera.object2TV(s);
+            Point a = new Point(s_tv.determineAX() + Epsilon.UNKNOWN_1EN6, s_tv.determineAY() + Epsilon.UNKNOWN_1EN6);
+            Point b = new Point(s_tv.determineBX() + Epsilon.UNKNOWN_1EN6, s_tv.determineBY() + Epsilon.UNKNOWN_1EN6);
             double d_width = (double) lineWidth / 2.0 + (double) pointSize;
 
-            canvas.setColor(Colors.get(Color.white));
-            g2.fill(new Ellipse2D.Double(a.getX() - d_width, a.getY() - d_width, 2.0 * d_width, 2.0 * d_width));
+            paint.setColor(Colors.get(Color.white));
+            paint.setStyle(Paint.Style.FILL);
+            canvas.drawCircle((float) a.getX(), (float) a.getY(), (float) d_width, paint);
 
+            paint.setColor(Colors.get(android.graphics.Color.GRAY));
+            paint.setStyle(Paint.Style.STROKE);
+            canvas.drawCircle((float) a.getX(), (float) a.getY(), (float) d_width, paint);
 
-            canvas.setColor(Colors.get(Color.gray));
-            g2.draw(new Ellipse2D.Double(a.getX() - d_width, a.getY() - d_width, 2.0 * d_width, 2.0 * d_width));
+            paint.setColor(Colors.get(Color.white));
+            paint.setStyle(Paint.Style.FILL);
+            canvas.drawCircle((float) b.getX(), (float) b.getY(), (float) d_width, paint);
 
-            canvas.setColor(Colors.get(Color.white));
-            g2.fill(new Ellipse2D.Double(b.getX() - d_width, b.getY() - d_width, 2.0 * d_width, 2.0 * d_width));
-
-            canvas.setColor(Colors.get(Color.gray));
-            g2.draw(new Ellipse2D.Double(b.getX() - d_width, b.getY() - d_width, 2.0 * d_width, 2.0 * d_width));
+            paint.setColor(Colors.get(android.graphics.Color.GRAY));
+            paint.setStyle(Paint.Style.STROKE);
+            canvas.drawCircle((float) b.getX(), (float) b.getY(), (float) d_width, paint);
         }
     }
 
-    public static void drawCurve(Canvas canvas, GeneralPath curve, float lineWidth) {
-        Graphics2D g2 = (Graphics2D) canvas;
-        g2.setStroke(new BasicStroke(lineWidth, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER));
-        g2.draw(curve);
+    public static void drawCurve(Canvas canvas, Paint paint, Path curve, float lineWidth) {
+        paint.setStyle(Paint.Style.STROKE);
+        paint.setStrokeWidth(lineWidth);
+        canvas.drawPath(curve, paint);
     }
 
-    public static void drawLineStep(Canvas canvas, LineSegment s, Camera camera, float lineWidth, boolean gridInputAssist) {
-        Graphics2D g2 = (Graphics2D) canvas;
-        setColor(canvas, s.getColor());
-        g2.setStroke(new BasicStroke(lineWidth, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER));//基本指定A　　線の太さや線の末端の形状
+    public static void drawLineStep(Canvas canvas, Paint paint, LineSegment s, Camera camera, float lineWidth, boolean gridInputAssist) {
+        paint.setColor(Colors.get(s.getColor()));
+        paint.setStyle(Paint.Style.STROKE);
+        paint.setStrokeWidth(lineWidth);
 
         LineSegment s_tv = camera.object2TV(s);
         Point a = new Point(s_tv.determineAX() + Epsilon.UNKNOWN_1EN6, s_tv.determineAY() + Epsilon.UNKNOWN_1EN6);
-        Point b = new Point(s_tv.determineBX() + Epsilon.UNKNOWN_1EN6, s_tv.determineBY() + Epsilon.UNKNOWN_1EN6);//The reason for adding Epsilon.UNKNOWN_0000001 is to prevent the original fold line from being affected by the new fold line when drawing on the display.
+        Point b = new Point(s_tv.determineBX() + Epsilon.UNKNOWN_1EN6, s_tv.determineBY() + Epsilon.UNKNOWN_1EN6);
 
+        canvas.drawLine((float) a.getX(), (float) a.getY(), (float) b.getX(), (float) b.getY(), paint);
 
-        canvas.drawLine((int) a.getX(), (int) a.getY(), (int) b.getX(), (int) b.getY()); //直線
         int i_width_nyuiiryokuji = 3;
         if (gridInputAssist) {
-            i_width_nyuiiryokuji = 2;
+            i_width_nyuiiryokuji = 5;
         }
 
+        paint.setStyle(Paint.Style.FILL);
         switch (s.getActive()) {
             case ACTIVE_A_1:
-                canvas.fillOval((int) a.getX() - i_width_nyuiiryokuji, (int) a.getY() - i_width_nyuiiryokuji, 2 * i_width_nyuiiryokuji, 2 * i_width_nyuiiryokuji); //円
+                canvas.drawCircle((float) a.getX(), (float) a.getY(), i_width_nyuiiryokuji, paint);
                 break;
             case ACTIVE_B_2:
-                canvas.fillOval((int) b.getX() - i_width_nyuiiryokuji, (int) b.getY() - i_width_nyuiiryokuji, 2 * i_width_nyuiiryokuji, 2 * i_width_nyuiiryokuji); //円
+                canvas.drawCircle((float) b.getX(), (float) b.getY(), i_width_nyuiiryokuji, paint);
                 break;
             case ACTIVE_BOTH_3:
-                canvas.fillOval((int) a.getX() - i_width_nyuiiryokuji, (int) a.getY() - i_width_nyuiiryokuji, 2 * i_width_nyuiiryokuji, 2 * i_width_nyuiiryokuji); //円
-                canvas.fillOval((int) b.getX() - i_width_nyuiiryokuji, (int) b.getY() - i_width_nyuiiryokuji, 2 * i_width_nyuiiryokuji, 2 * i_width_nyuiiryokuji); //円
+                canvas.drawCircle((float) a.getX(), (float) a.getY(), i_width_nyuiiryokuji, paint);
+                canvas.drawCircle((float) b.getX(), (float) b.getY(), i_width_nyuiiryokuji, paint);
                 break;
             default:
                 break;
         }
     }
 
-    public static void drawStepVertex(Graphics2D canvas, Point p, LineColor color, Camera camera, boolean gridInputAssist) {
-        setColor(canvas, color);
+    public static void drawStepVertex(Canvas canvas, Paint paint, Point p, LineColor color, Camera camera, boolean gridInputAssist) {
+        paint.setColor(Colors.get(color));
+        paint.setStyle(Paint.Style.FILL);
         Point a = camera.object2TV(p);
+
         int i_width_nyuiiryokuji = 3;
         if (gridInputAssist) {
-            i_width_nyuiiryokuji = 2;
+            i_width_nyuiiryokuji = 5;
         }
 
-        canvas.fillOval((int) a.getX() - i_width_nyuiiryokuji, (int) a.getY() - i_width_nyuiiryokuji, 2 * i_width_nyuiiryokuji, 2 * i_width_nyuiiryokuji); //円
-
+        canvas.drawCircle((float) a.getX(), (float) a.getY(), i_width_nyuiiryokuji, paint);
     }
 
-    public static void drawLineCandidate(Canvas canvas, LineSegment s, Camera camera, int pointSize) {
-        setColor(canvas, s.getColor());
+    public static void drawLineCandidate(Canvas canvas, Paint paint, LineSegment s, Camera camera, int pointSize) {
+        paint.setColor(Colors.get(s.getColor()));
+        paint.setStyle(Paint.Style.STROKE);
+        paint.setStrokeWidth(1.0f);
 
         LineSegment s_tv = camera.object2TV(s);
         Point a = new Point(s_tv.determineAX() + Epsilon.UNKNOWN_1EN6, s_tv.determineAY() + Epsilon.UNKNOWN_1EN6);
-        Point b = new Point(s_tv.determineBX() + Epsilon.UNKNOWN_1EN6, s_tv.determineBY() + Epsilon.UNKNOWN_1EN6);//なぜEpsilon.UNKNOWN_0000001を足すかというと,ディスプレイに描画するとき元の折線が新しい折線に影響されて動いてしまうのを防ぐため
+        Point b = new Point(s_tv.determineBX() + Epsilon.UNKNOWN_1EN6, s_tv.determineBY() + Epsilon.UNKNOWN_1EN6);
 
-        canvas.drawLine((int) a.getX(), (int) a.getY(), (int) b.getX(), (int) b.getY()); //直線
-        int i_width = pointSize + 5;
+        canvas.drawLine((float) a.getX(), (float) a.getY(), (float) b.getX(), (float) b.getY(), paint);
 
-        switch (s.getActive()) {
-            case ACTIVE_A_1:
-                canvas.drawLine((int) a.getX() - i_width, (int) a.getY(), (int) a.getX() + i_width, (int) a.getY()); //直線
-                canvas.drawLine((int) a.getX(), (int) a.getY() - i_width, (int) a.getX(), (int) a.getY() + i_width); //直線
-                break;
-            case ACTIVE_B_2:
-                canvas.drawLine((int) b.getX() - i_width, (int) b.getY(), (int) b.getX() + i_width, (int) b.getY()); //直線
-                canvas.drawLine((int) b.getX(), (int) b.getY() - i_width, (int) b.getX(), (int) b.getY() + i_width); //直線
-                break;
-            case ACTIVE_BOTH_3:
-                canvas.drawLine((int) a.getX() - i_width, (int) a.getY(), (int) a.getX() + i_width, (int) a.getY()); //直線
-                canvas.drawLine((int) a.getX(), (int) a.getY() - i_width, (int) a.getX(), (int) a.getY() + i_width); //直線
-
-                canvas.drawLine((int) b.getX() - i_width, (int) b.getY(), (int) b.getX() + i_width, (int) b.getY()); //直線
-                canvas.drawLine((int) b.getX(), (int) b.getY() - i_width, (int) b.getX(), (int) b.getY() + i_width); //直線
-                break;
-            default:
-                break;
-        }
+        paint.setStyle(Paint.Style.FILL);
+        canvas.drawCircle((float) a.getX(), (float) a.getY(), pointSize, paint);
+        canvas.drawCircle((float) b.getX(), (float) b.getY(), pointSize, paint);
     }
 
-    public static void drawCircleStep(Canvas canvas, Circle c, Camera camera) {
-        Graphics2D g2 = (Graphics2D) canvas;
-        setColor(canvas, c.getColor());
-        Point a = camera.object2TV(c.determineCenter());//この場合のs_tvは描画座標系での円の中心の位置
-        a = new Point(a.getX() + Epsilon.UNKNOWN_1EN6, a.getY() + Epsilon.UNKNOWN_1EN6);//なぜEpsilon.UNKNOWN_0000001を足すかというと,ディスプレイに描画するとき元の折線が新しい折線に影響されて動いてしまうのを防ぐため
+    public static void drawCircleStep(Canvas canvas, Paint paint, Circle c, Camera camera) {
+        paint.setColor(Colors.get(c.getColor()));
+        paint.setStyle(Paint.Style.STROKE);
+        paint.setStrokeWidth(1.0f);
+        Point a = camera.object2TV(c.determineCenter());
 
-        double d_width = c.getR() * camera.getCameraZoomX();//d_habaは描画時の円の半径。なお、camera.get_camera_bairitsu_x()＝camera.get_camera_bairitsu_y()を前提としている。
+        double d_width = c.getR() * camera.getCameraZoomX();
 
-        g2.draw(new Ellipse2D.Double(a.getX() - d_width, a.getY() - d_width, 2.0 * d_width, 2.0 * d_width));
+        canvas.drawCircle((float) a.getX(), (float) a.getY(), (float) d_width, paint);
     }
 
     private static final float[] dash_M1 = {10.0f, 3.0f, 3.0f, 3.0f};//一点鎖線
@@ -383,100 +336,137 @@ public class DrawingUtil {
 
     private static final Point defaultMove = new Point(Epsilon.UNKNOWN_1EN6, Epsilon.UNKNOWN_1EN6);
 
-    public static void drawCpLine(Canvas canvas, LineSegment s, Camera camera, LineStyle lineStyle, float lineWidth, int pointSize, int clipX, int clipY, boolean useRoundedEnds) {
+    public static void drawCpLine(Canvas canvas, Paint paint, LineSegment s, Camera camera, LineStyle lineStyle, float lineWidth, int pointSize, int clipX, int clipY, boolean useRoundedEnds) {
+        paint.setStyle(Paint.Style.STROKE);
+        paint.setAntiAlias(true);
+        paint.setStrokeWidth(lineWidth);
 
-        Point a = camera.object2TV(s.getA()).move(defaultMove);
-        Point b = camera.object2TV(s.getB()).move(defaultMove);
+        LineSegment s_tv = camera.object2TV(s);
+        Point a = new Point(s_tv.determineAX() + Epsilon.UNKNOWN_1EN6, s_tv.determineAY() + Epsilon.UNKNOWN_1EN6);
+        Point b = new Point(s_tv.determineBX() + Epsilon.UNKNOWN_1EN6, s_tv.determineBY() + Epsilon.UNKNOWN_1EN6);
 
-        int aflag = cohenSutherlandRegion(clipX, clipY, a);
-        if (aflag != CENTER) {
-            int bflag = cohenSutherlandRegion(clipX, clipY, b);
-            if ((aflag & bflag) != CENTER) {
-                return;
-            }
+        // Cohen-Sutherland line clipping
+        int regionA = cohenSutherlandRegion(clipX, clipY, a);
+        int regionB = cohenSutherlandRegion(clipX, clipY, b);
+
+        if ((regionA & regionB) != 0) {
+            return; // Line is completely outside the viewport
         }
-        int cap = useRoundedEnds? BasicStroke.CAP_ROUND : BasicStroke.CAP_BUTT;
-        Graphics2D g2 = (Graphics2D) canvas;
+
+        // Set stroke cap based on useRoundedEnds
+        Paint.Cap cap = useRoundedEnds ? Paint.Cap.ROUND : Paint.Cap.BUTT;
+
         switch (lineStyle) {
             case COLOR:
-                setColor(canvas, s.getColor());
-                g2.setStroke(new BasicStroke(lineWidth, cap, BasicStroke.JOIN_MITER));//基本指定A　　線の太さや線の末端の形状
+                paint.setColor(Colors.get(s.getColor()));
+                paint.setStrokeCap(cap);
+                paint.setStrokeJoin(Paint.Join.MITER);
                 break;
             case BLACK_WHITE:
-                setColor(canvas, s.getColor());
+                paint.setColor(Colors.get(s.getColor()));
                 if (s.getColor() == LineColor.BLACK_0) {
-                    g2.setStroke(new BasicStroke(lineWidth, cap, BasicStroke.JOIN_MITER));
+                    paint.setStrokeCap(cap);
+                    paint.setStrokeJoin(Paint.Join.MITER);
                 }
                 if (s.getColor() == LineColor.RED_1) {
-                    setColor(canvas, LineColor.BLACK_0);
-                    g2.setStroke(new BasicStroke(lineWidth, cap, BasicStroke.JOIN_MITER));
+                    paint.setColor(Colors.get(LineColor.BLACK_0));
+                    paint.setStrokeCap(cap);
+                    paint.setStrokeJoin(Paint.Join.MITER);
                 }
                 if (s.getColor() == LineColor.BLUE_2) {
-                    setColor(canvas, LineColor.GREY_10);
-                    g2.setStroke(new BasicStroke(lineWidth, cap, BasicStroke.JOIN_MITER));
+                    paint.setColor(Colors.get(LineColor.GREY_10));
+                    paint.setStrokeCap(cap);
+                    paint.setStrokeJoin(Paint.Join.MITER);
                 }
                 break;
             case COLOR_AND_SHAPE:
-                setColor(canvas, s.getColor());
+                paint.setColor(Colors.get(s.getColor()));
                 if (s.getColor() == LineColor.BLACK_0) {
-                    g2.setStroke(new BasicStroke(lineWidth, cap, BasicStroke.JOIN_MITER));
-                }//基本指定A　　線の太さや線の末端の形状
+                    paint.setStrokeCap(cap);
+                    paint.setStrokeJoin(Paint.Join.MITER);
+                }
                 if (s.getColor() == LineColor.RED_1) {
-                    g2.setStroke(new BasicStroke(lineWidth, cap, BasicStroke.JOIN_MITER, 10.0f, dash_M1, 0.0f));
-                }//一点鎖線//線の太さや線の末端の形状
+                    paint.setStrokeCap(cap);
+                    paint.setStrokeJoin(Paint.Join.MITER);
+                    paint.setPathEffect(new android.graphics.DashPathEffect(dash_M1, 0));
+                }
                 if (s.getColor() == LineColor.BLUE_2) {
-                    g2.setStroke(new BasicStroke(lineWidth, cap, BasicStroke.JOIN_MITER, 10.0f, dash_V, 0.0f));
-                }//破線//線の太さや線の末端の形状
+                    paint.setStrokeCap(cap);
+                    paint.setStrokeJoin(Paint.Join.MITER);
+                    paint.setPathEffect(new android.graphics.DashPathEffect(dash_V, 0));
+                }
                 break;
             case BLACK_ONE_DOT:
                 if (s.getColor() == LineColor.BLACK_0) {
-                    g2.setStroke(new BasicStroke(lineWidth, cap, BasicStroke.JOIN_MITER));
-                }//基本指定A　　線の太さや線の末端の形状
+                    paint.setColor(Colors.get(LineColor.BLACK_0));
+                    paint.setStrokeCap(cap);
+                    paint.setStrokeJoin(Paint.Join.MITER);
+                }
                 if (s.getColor() == LineColor.RED_1) {
-                    g2.setStroke(new BasicStroke(lineWidth, cap, BasicStroke.JOIN_MITER, 10.0f, dash_M1, 0.0f));
-                }//一点鎖線//線の太さや線の末端の形状
+                    paint.setColor(Colors.get(LineColor.BLACK_0));
+                    paint.setStrokeCap(cap);
+                    paint.setStrokeJoin(Paint.Join.MITER);
+                    paint.setPathEffect(new android.graphics.DashPathEffect(dash_M1, 0));
+                }
                 if (s.getColor() == LineColor.BLUE_2) {
-                    g2.setStroke(new BasicStroke(lineWidth, cap, BasicStroke.JOIN_MITER, 10.0f, dash_V, 0.0f));
-                }//破線//線の太さや線の末端の形状
+                    paint.setColor(Colors.get(LineColor.BLACK_0));
+                    paint.setStrokeCap(cap);
+                    paint.setStrokeJoin(Paint.Join.MITER);
+                    paint.setPathEffect(new android.graphics.DashPathEffect(dash_V, 0));
+                }
                 break;
             case BLACK_TWO_DOT:
                 if (s.getColor() == LineColor.BLACK_0) {
-                    g2.setStroke(new BasicStroke(lineWidth, cap, BasicStroke.JOIN_MITER));
-                }//基本指定A　　線の太さや線の末端の形状
+                    paint.setColor(Colors.get(LineColor.BLACK_0));
+                    paint.setStrokeCap(cap);
+                    paint.setStrokeJoin(Paint.Join.MITER);
+                }
                 if (s.getColor() == LineColor.RED_1) {
-                    g2.setStroke(new BasicStroke(lineWidth, cap, BasicStroke.JOIN_MITER, 10.0f, dash_M2, 0.0f));
-                }//二点鎖線//線の太さや線の末端の形状
+                    paint.setColor(Colors.get(LineColor.BLACK_0));
+                    paint.setStrokeCap(cap);
+                    paint.setStrokeJoin(Paint.Join.MITER);
+                    paint.setPathEffect(new android.graphics.DashPathEffect(dash_M2, 0));
+                }
                 if (s.getColor() == LineColor.BLUE_2) {
-                    g2.setStroke(new BasicStroke(lineWidth, cap, BasicStroke.JOIN_MITER, 10.0f, dash_V, 0.0f));
-                }//破線//線の太さや線の末端の形状
+                    paint.setColor(Colors.get(LineColor.BLACK_0));
+                    paint.setStrokeCap(cap);
+                    paint.setStrokeJoin(Paint.Join.MITER);
+                    paint.setPathEffect(new android.graphics.DashPathEffect(dash_V, 0));
+                }
                 break;
         }
 
-        g2.drawLine((int) a.getX(), (int) a.getY(), (int) b.getX(), (int) b.getY());
+        canvas.drawLine((float) a.getX(), (float) a.getY(), (float) b.getX(), (float) b.getY(), paint);
 
         if (Epsilon.high.eq0(lineWidth) || pointSize == 0) {
             return;
         }
         if (lineWidth < 2.0f) {//頂点の黒い正方形を描く
-            drawVertex(g2, a, pointSize);
+            drawVertex(canvas, paint, a, pointSize);
             if (a.distance(b) > 1) {
-                drawVertex(g2, b, pointSize);
+                drawVertex(canvas, paint, b, pointSize);
             }
         } else if (lineWidth >= 2.0f) {//  太線
-            g2.setStroke(new BasicStroke(1.0f + lineWidth % 1.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER));//線の太さや線の末端の形状、ここでは折線の端点の線の形状の指定
+            paint.setStrokeWidth(1.0f + lineWidth % 1.0f);
+            paint.setStrokeCap(Paint.Cap.BUTT);
+            paint.setStrokeJoin(Paint.Join.MITER);
             double d_width = (double) lineWidth / 2.0 + (double) pointSize;
 
-            canvas.setColor(Colors.get(Color.gray));
-            g2.fill(new Ellipse2D.Double(a.getX() - d_width, a.getY() - d_width, 2.0 * d_width, 2.0 * d_width));
+            paint.setColor(Colors.get(android.graphics.Color.GRAY));
+            paint.setStyle(Paint.Style.FILL);
+            canvas.drawCircle((float) a.getX(), (float) a.getY(), (float) d_width, paint);
 
-            canvas.setColor(Colors.get(Color.black));
-            g2.draw(new Ellipse2D.Double(a.getX() - d_width, a.getY() - d_width, 2.0 * d_width, 2.0 * d_width));
+            paint.setColor(Colors.get(android.graphics.Color.BLACK));
+            paint.setStyle(Paint.Style.STROKE);
+            canvas.drawCircle((float) a.getX(), (float) a.getY(), (float) d_width, paint);
 
-            canvas.setColor(Colors.get(Color.gray));
-            g2.fill(new Ellipse2D.Double(b.getX() - d_width, b.getY() - d_width, 2.0 * d_width, 2.0 * d_width));
+            paint.setColor(Colors.get(android.graphics.Color.GRAY));
+            paint.setStyle(Paint.Style.FILL);
+            canvas.drawCircle((float) b.getX(), (float) b.getY(), (float) d_width, paint);
 
-            canvas.setColor(Colors.get(Color.black));
-            g2.draw(new Ellipse2D.Double(b.getX() - d_width, b.getY() - d_width, 2.0 * d_width, 2.0 * d_width));
+            paint.setColor(Colors.get(android.graphics.Color.BLACK));
+            paint.setStyle(Paint.Style.STROKE);
+            canvas.drawCircle((float) b.getX(), (float) b.getY(), (float) d_width, paint);
         }
     }
 
@@ -526,92 +516,96 @@ public class DrawingUtil {
      * @param useAdvanced  whether to use the "legacy" way to draw (purple circles) or the newer one which differentiates
      *                     between types of violations
      */
-    public static void drawViolation(Graphics2D canvas, Point p, FlatFoldabilityViolation violation, int transparency, boolean useAdvanced) {
-        canvas.setColor(Colors.get(new Color(255, 0, 147, transparency)));
+    public static void drawViolation(Canvas canvas, Paint paint, Point p, FlatFoldabilityViolation violation, int transparency, boolean useAdvanced) {
+        paint.setColor(Colors.get(new Color(255, 0, 147, transparency)));
+        paint.setAntiAlias(true);
 
         if (!useAdvanced) {
-            canvas.setColor(Colors.get(new Color(255, 0, 147, transparency)));
-            canvas.fillOval((int) p.getX() - 11, (int) p.getY() - 11, 23, 23);
+            paint.setColor(Colors.get(new Color(255, 0, 147, transparency)));
+            paint.setStyle(Paint.Style.FILL);
+            canvas.drawCircle((float) p.getX(), (float) p.getY(), 11.5f, paint);
             return;
         }
-        Color c;
-        switch (violation.getColor()) {
-            case NOT_ENOUGH_MOUNTAIN:
-                c = Colors.get(Color.RED);
-                break;
-            case NOT_ENOUGH_VALLEY:
-                c = Colors.get(Color.BLUE);
-                break;
-            case UNKNOWN:
-                c = Colors.get(new Color(255, 0, 147));
-                break;
-            default:
-                c = Colors.get(Color.GRAY);
-                break;
-        }
+
+        Color c = violation.getColor().getColor();
         Color actualColor = new Color(c.getRed(), c.getGreen(), c.getBlue(), transparency);
-        canvas.setColor(actualColor);
-        canvas.setStroke(new BasicStroke(1.5f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL));
+        paint.setColor(actualColor);
+        paint.setAntiAlias(true);
+        paint.setStrokeWidth(1.5f);
+        paint.setStrokeCap(Paint.Cap.BUTT);
+        paint.setStrokeJoin(Paint.Join.BEVEL);
+        
         switch (violation.getViolatedRule()) {
             case NUMBER_OF_FOLDS:
-                drawTriangleAroundPoint(canvas, p);
+                drawTriangleAroundPoint(canvas, paint, p);
                 break;
             case ANGLES:
                 if (violation.getColor() == FlatFoldabilityViolation.Color.CORRECT) {
-                    canvas.drawOval((int) p.getX() - 11, (int) p.getY() - 11, 23, 23);
+                    paint.setStyle(Paint.Style.STROKE);
+                    canvas.drawCircle((float) p.getX(), (float) p.getY(), 11.5f, paint);
                 } else {
-                    canvas.fillOval((int) p.getX() - 11, (int) p.getY() - 11, 23, 23);
+                    paint.setStyle(Paint.Style.FILL);
+                    canvas.drawCircle((float) p.getX(), (float) p.getY(), 11.5f, paint);
                 }
                 break;
             case MAEKAWA:
-                canvas.fillRect((int) p.getX() - 9, (int) p.getY() - 9, 19, 19);
+                paint.setStyle(Paint.Style.FILL);
+                canvas.drawRect((float) p.getX() - 9, (float) p.getY() - 9, 
+                               (float) p.getX() + 9, (float) p.getY() + 9, paint);
                 break;
             case LITTLE_BIG_LITTLE:
-                LittleBigLittleViolation lViolation;
                 if (violation instanceof LittleBigLittleViolation) {
-                    lViolation = (LittleBigLittleViolation) violation;
-                } else {
-                    Logger.warn("LITTLE_BIG_LITTLE violation was not of type LittleBigLittleViolation");
-                    break;
-                }
-                LineSegment[] segments = lViolation.getLineSegments();
-                boolean[] violating = lViolation.getViolatingLBL();
-                for (int i = 0; i < segments.length; i++) {
-                    if (i == segments.length - 1 && segments[i].getColor() == LineColor.BLACK_0) {
-                        break;
+                    LittleBigLittleViolation lblViolation = (LittleBigLittleViolation) violation;
+                    List<LineSegment> violating = lblViolation.getViolatingSegments();
+                    List<LineSegment> all = lblViolation.getAllSegments();
+
+                    for (int i = 0; i < all.size(); i++) {
+                        LineSegment current = all.get(i);
+                        LineSegment next = all.get((i + 1) % all.size());
+
+                        float[] xCoords = new float[]{
+                                (float) p.getX(),
+                                (float) (p.getX() + current.determineDeltaX()),
+                                (float) (p.getX() + next.determineDeltaX())
+                        };
+                        float[] yCoords = new float[]{
+                                (float) p.getY(),
+                                (float) (p.getY() + current.determineDeltaY()),
+                                (float) (p.getY() + next.determineDeltaY())
+                        };
+                        
+                        paint.setStyle(Paint.Style.STROKE);
+                        canvas.drawLines(new float[]{
+                                xCoords[0], yCoords[0], xCoords[1], yCoords[1],
+                                xCoords[1], yCoords[1], xCoords[2], yCoords[2],
+                                xCoords[2], yCoords[2], xCoords[0], yCoords[0]
+                        }, paint);
+                        
+                        if (violating.get(i)) {
+                            paint.setStyle(Paint.Style.FILL);
+                            Path path = new Path();
+                            path.moveTo(xCoords[0], yCoords[0]);
+                            path.lineTo(xCoords[1], yCoords[1]);
+                            path.lineTo(xCoords[2], yCoords[2]);
+                            path.close();
+                            canvas.drawPath(path, paint);
+                        }
                     }
-                    LineSegment current = OritaCalc.lineSegmentChangeLength(segments[i], 15);
-                    LineSegment next = OritaCalc.lineSegmentChangeLength(segments[(i + 1) % segments.length], 15);
-                    int[] xCoords = new int[]{
-                            (int) p.getX(),
-                            (int) (p.getX() + current.determineDeltaX()),
-                            (int) (p.getX() + next.determineDeltaX()),
-                    };
-                    int[] yCoords = new int[]{
-                            (int) p.getY(),
-                            (int) (p.getY() + current.determineDeltaY()),
-                            (int) (p.getY() + next.determineDeltaY()),
-                    };
-                    canvas.drawPolygon(xCoords, yCoords, 3);
-                    if (violating[i]) {
-                        canvas.fillPolygon(xCoords, yCoords, 3);
-                    }
                 }
-                break;
-            case NONE:
                 break;
         }
     }
 
-    private static void drawTriangleAroundPoint(Graphics2D canvas, Point p) {
-        canvas.fillPolygon(new int[]{
-                (int) p.getX(),
-                (int) p.getX() - 10,
-                (int) p.getX() + 10
-        }, new int[]{
-                (int) p.getY() - 9,
-                (int) p.getY() + 7,
-                (int) p.getY() + 7
-        }, 3);
+    private static void drawTriangleAroundPoint(Canvas canvas, Paint paint, Point p) {
+        paint.setAntiAlias(true);
+        paint.setStyle(Paint.Style.FILL);
+        
+        Path path = new Path();
+        path.moveTo((float) p.getX(), (float) p.getY() - 9);
+        path.lineTo((float) p.getX() - 10, (float) p.getY() + 7);
+        path.lineTo((float) p.getX() + 10, (float) p.getY() + 7);
+        path.close();
+        
+        canvas.drawPath(path, paint);
     }
 }

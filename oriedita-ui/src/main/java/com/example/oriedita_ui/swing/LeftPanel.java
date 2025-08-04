@@ -3,13 +3,10 @@ package oriedita.editor.swing;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
-import jakarta.inject.Named;
 import org.tinylog.Logger;
 import oriedita.editor.Canvas;
 import oriedita.editor.Colors;
-import oriedita.editor.canvas.CreasePattern_Worker;
+import com.example.oriedita_data.canvas.CreasePattern_Worker;
 import oriedita.editor.canvas.FoldLineAdditionalInputMode;
 import oriedita.editor.canvas.MouseMode;
 import oriedita.editor.databinding.ApplicationModel;
@@ -58,7 +55,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 
 
-@ApplicationScoped
 public class LeftPanel {
     private final HistoryState historyState;
     private final MeasuresModel measuresModel;
@@ -177,11 +173,8 @@ public class LeftPanel {
         else return 180 + (angle % 180);
     }
 
-    @Inject
-    public LeftPanel(@Named("normal") HistoryState historyState,
                      MeasuresModel measuresModel,
                      ButtonService buttonService,
-                     @Named("mainCreasePattern_Worker") CreasePattern_Worker mainCreasePatternWorker,
                      ApplicationModel applicationModel,
                      FoldedFigureModel foldedFigureModel,
                      GridModel gridModel,
@@ -1155,10 +1148,10 @@ public class LeftPanel {
         colRedButton.setBackground(gray);
         colBlueButton.setBackground(gray);
         colCyanButton.setBackground(gray);
-        colBlackButton.setForeground(Colors.get(Color.black));
-        colRedButton.setForeground(Colors.get(Color.black));
-        colBlueButton.setForeground(Colors.get(Color.black));
-        colCyanButton.setForeground(Colors.get(Color.black));
+        colBlackButton.setForeground(Colors.get(android.graphics.Color.BLACK));
+        colRedButton.setForeground(Colors.get(android.graphics.Color.BLACK));
+        colBlueButton.setForeground(Colors.get(android.graphics.Color.BLACK));
+        colCyanButton.setForeground(Colors.get(android.graphics.Color.BLACK));
 
         switch (canvasModel.getMouseMode()) {
             case REPLACE_LINE_TYPE_SELECT_72:
@@ -1218,20 +1211,20 @@ public class LeftPanel {
 
                 switch (data.calculateLineColor()) {
                     case BLACK_0:
-                        colBlackButton.setBackground(Colors.get(Color.black));
+                        colBlackButton.setBackground(Colors.get(android.graphics.Color.BLACK));
                         colBlackButton.setForeground(Colors.get(Color.white));
                         break;
                     case RED_1:
                         colRedButton.setBackground(Colors.get(Color.red));
-                        colRedButton.setForeground(Colors.get(Color.black));
+                        colRedButton.setForeground(Colors.get(android.graphics.Color.BLACK));
                         break;
                     case BLUE_2:
                         colBlueButton.setBackground(Colors.get(Color.blue));
-                        colBlueButton.setForeground(Colors.get(Color.black));
+                        colBlueButton.setForeground(Colors.get(android.graphics.Color.BLACK));
                         break;
                     case CYAN_3:
                         colCyanButton.setBackground(Colors.get(Color.cyan));
-                        colCyanButton.setForeground(Colors.get(Color.black));
+                        colCyanButton.setForeground(Colors.get(android.graphics.Color.BLACK));
                     default:
                         break;
                 }

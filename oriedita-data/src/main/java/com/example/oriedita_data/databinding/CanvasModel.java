@@ -77,7 +77,6 @@ public class CanvasModel implements Serializable {
 
     private boolean ckbox_add_frame_SelectAnd3click_isSelected;
 
-    @Inject
     public CanvasModel() {
         reset();
     }

@@ -1,7 +1,5 @@
 package com.example.oriedita.editor.handler;
 
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
 import oriedita.editor.canvas.MouseMode;
 import origami.Epsilon;
 import origami.crease_pattern.OritaCalc;
@@ -11,10 +9,8 @@ import origami.crease_pattern.elements.LineSegment;
 import origami.crease_pattern.elements.Point;
 import origami.crease_pattern.elements.StraightLine;
 
-@ApplicationScoped
 @Handles(MouseMode.CIRCLE_DRAW_INVERTED_46)
 public class MouseHandlerCircleDrawInverted extends BaseMouseHandler {
-    @Inject
     public MouseHandlerCircleDrawInverted() {
     }
 

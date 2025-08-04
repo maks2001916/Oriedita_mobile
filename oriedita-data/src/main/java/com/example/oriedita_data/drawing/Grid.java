@@ -8,7 +8,6 @@ import com.example.oriedita_core.origami.crease_pattern.OritaCalc;
 import com.example.oriedita_core.origami.crease_pattern.elements.LineSegment;
 import com.example.oriedita_core.origami.crease_pattern.elements.Point;
 
-import android.graphics.Color;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;

@@ -1,7 +1,5 @@
 package com.example.oriedita.editor.handler;
 
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
 import oriedita.editor.canvas.MouseMode;
 import origami.Epsilon;
 import origami.crease_pattern.OritaCalc;
@@ -9,10 +7,8 @@ import origami.crease_pattern.elements.Circle;
 import origami.crease_pattern.elements.LineColor;
 import origami.crease_pattern.elements.Point;
 
-@ApplicationScoped
 @Handles(MouseMode.CIRCLE_DRAW_CONCENTRIC_TWO_CIRCLE_SELECT_50)
 public class MouseHandlerCircleDrawConcentricTwoCircleSelect extends BaseMouseHandler {
-    @Inject
     public MouseHandlerCircleDrawConcentricTwoCircleSelect() {
     }
 

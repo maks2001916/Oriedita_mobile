@@ -1,7 +1,5 @@
 package oriedita.editor.swing.dialog;
 
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
 import org.tinylog.Logger;
 import oriedita.editor.FrameProvider;
 import oriedita.editor.databinding.ApplicationModel;
@@ -30,7 +28,6 @@ import java.util.ResourceBundle;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-@ApplicationScoped
 public class HelpDialog {
     private final FrameProvider frameProvider;
     private final ApplicationModel applicationModel;
@@ -82,7 +79,6 @@ public class HelpDialog {
         }
     }
 
-    @Inject
     public HelpDialog(FrameProvider frameProvider, ApplicationModel applicationModel) {
         this.frameProvider = frameProvider;
         this.applicationModel = applicationModel;

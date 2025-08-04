@@ -1,9 +1,6 @@
 package com.example.oriedita.editor.handler;
 
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
-import jakarta.inject.Named;
-import oriedita.editor.canvas.CreasePattern_Worker;
+import com.example.oriedita_data.canvas.CreasePattern_Worker;
 import oriedita.editor.canvas.MouseMode;
 import oriedita.editor.databinding.CanvasModel;
 import oriedita.editor.save.Save;
@@ -15,13 +12,10 @@ import origami.crease_pattern.elements.LineColor;
 import origami.crease_pattern.elements.LineSegment;
 import origami.crease_pattern.elements.Point;
 
-@ApplicationScoped
 @Handles(MouseMode.CREASE_COPY_4P_32)
 public class MouseHandlerCreaseCopy4p extends BaseMouseHandlerInputRestricted {
     private final CanvasModel canvasModel;
 
-    @Inject
-    public MouseHandlerCreaseCopy4p(@Named("mainCreasePattern_Worker") CreasePattern_Worker d, CanvasModel canvasModel) {
         this.d = d;
         this.canvasModel = canvasModel;
     }

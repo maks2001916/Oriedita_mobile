@@ -1,16 +1,12 @@
 package com.example.oriedita.editor.handler;
 
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
 import oriedita.editor.canvas.MouseMode;
 import origami.Epsilon;
 import origami.crease_pattern.elements.Point;
 
-@ApplicationScoped
 @Handles(MouseMode.VERTEX_DELETE_ON_CREASE_41)
 public class MouseHandlerVertexDeleteOnCrease extends BaseMouseHandler {
 
-    @Inject
     public MouseHandlerVertexDeleteOnCrease() {
     }
 

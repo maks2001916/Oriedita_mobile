@@ -3,8 +3,6 @@ package oriedita.editor.swing;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
 import oriedita.editor.canvas.MouseMode;
 import oriedita.editor.databinding.ApplicationModel;
 import oriedita.editor.databinding.CanvasModel;
@@ -44,7 +42,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeEvent;
 
-@ApplicationScoped
 public class BottomPanel {
     private final ButtonService buttonService;
     private final MeasuresModel measuresModel;
@@ -80,7 +77,6 @@ public class BottomPanel {
     private JScrollPane scrollPane1;
     private final AnimationService animationService;
 
-    @Inject
     public BottomPanel(
             ButtonService buttonService,
             MeasuresModel measuresModel,

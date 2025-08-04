@@ -2,7 +2,6 @@ package oriedita.editor.swing;
 
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
-import jakarta.enterprise.context.ApplicationScoped;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
@@ -13,7 +12,6 @@ import java.awt.event.FocusEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-@ApplicationScoped
 public class CollapsiblePanel extends JPanel {
 
     public CollapsiblePanel(String labelName, JPanel contentPanel) {

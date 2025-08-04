@@ -1,6 +1,5 @@
 package com.example.oriedita_data.export;
 
-import jakarta.enterprise.context.ApplicationScoped;
 import oriedita.editor.export.api.FileExporter;
 import oriedita.editor.json.DefaultObjectMapper;
 import oriedita.editor.save.Save;
@@ -8,7 +7,6 @@ import oriedita.editor.save.Save;
 import java.io.File;
 import java.io.IOException;
 
-@ApplicationScoped
 public class OriExporter implements FileExporter {
     @Override
     public void doExport(Save save, File file) throws IOException {

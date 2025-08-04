@@ -1,8 +1,6 @@
 package com.example.oriedita_data.export;
 
 import fold.io.CreasePatternWriter;
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
 import org.tinylog.Logger;
 import oriedita.editor.FrameProvider;
 import oriedita.editor.databinding.ApplicationModel;
@@ -19,12 +17,10 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 
-@ApplicationScoped
 public class CpExporter implements FileExporter {
     private final FrameProvider frame;
     private final ApplicationModel applicationModel;
 
-    @Inject
     public CpExporter(FrameProvider frame, ApplicationModel applicationModel) {
         this.frame = frame;
         this.applicationModel = applicationModel;

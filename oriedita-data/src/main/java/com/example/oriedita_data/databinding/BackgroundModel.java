@@ -19,7 +19,6 @@ public class BackgroundModel {
     private Drawable backgroundImage;
     private Rectangle backgroundPosition;
 
-    @Inject
     public BackgroundModel() {
         reset();
     }

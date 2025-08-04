@@ -1,16 +1,12 @@
 package com.example.oriedita.editor.handler;
 
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
 import oriedita.editor.canvas.MouseMode;
 import oriedita.editor.databinding.AngleSystemModel;
 import origami.Epsilon;
 import origami.crease_pattern.elements.Point;
 
-@ApplicationScoped
 @Handles(MouseMode.UNSELECT_LINE_INTERSECTING_69)
 public class MouseHandlerUnselectLineIntersecting extends BaseMouseHandlerLineSelect {
-    @Inject
     public MouseHandlerUnselectLineIntersecting(AngleSystemModel angleSystemModel) {
         super(angleSystemModel);
     }

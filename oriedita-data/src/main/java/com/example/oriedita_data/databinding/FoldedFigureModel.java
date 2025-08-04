@@ -68,7 +68,6 @@ public class FoldedFigureModel implements Serializable {
         this.pcs.firePropertyChange("transparencyColor", oldTransparencyColor, transparencyColor);
     }
 
-    @Inject
     public FoldedFigureModel() {
         reset();
     }

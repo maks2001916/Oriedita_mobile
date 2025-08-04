@@ -21,7 +21,6 @@ public class SelectedTextModel {
 
     private boolean dirty;
 
-    @Inject
     public SelectedTextModel() {
         reset();
     }
