@@ -1,40 +1,60 @@
 package com.example.oriedita_data.export;
 
-import org.tinylog.Logger;
-import oriedita.editor.canvas.LineStyle;
-import oriedita.editor.databinding.ApplicationModel;
-import oriedita.editor.databinding.CanvasModel;
-import oriedita.editor.databinding.FoldedFigureModel;
-import oriedita.editor.databinding.GridModel;
-import oriedita.editor.drawing.tools.Camera;
-import oriedita.editor.export.api.FileImporter;
-import oriedita.editor.save.Save;
-import oriedita.editor.save.SaveProvider;
-import oriedita.editor.tools.StringOp;
-import origami.crease_pattern.elements.Circle;
-import origami.crease_pattern.elements.LineColor;
-import origami.crease_pattern.elements.LineSegment;
+import android.graphics.Color;
+import android.util.Log;
+import com.example.oriedita_common.editor.canvas.LineStyle;
+import com.example.oriedita_data.databinding.ApplicationModel;
+import com.example.oriedita_data.databinding.CanvasModel;
+import com.example.oriedita_data.databinding.FoldedFigureModel;
+import com.example.oriedita_data.databinding.GridModel;
+import com.example.oriedita_common.editor.drawing.tools.Camera;
+import com.example.oriedita_data.save.Save;
+import com.example.oriedita_data.save.SaveProvider;
+import com.example.oriedita_common.editor.tools.StringOp;
+import com.example.oriedita_core.origami.crease_pattern.elements.Circle;
+import com.example.oriedita_core.origami.crease_pattern.elements.LineColor;
+import com.example.oriedita_core.origami.crease_pattern.elements.LineSegment;
 
-import java.awt.Color;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.nio.charset.CharacterCodingException;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * OrhImporter - импортер файлов .orh (Orihime) для Android
+ * 
+ * Этот класс отвечает за импорт файлов оригами в формате .orh (Orihime).
+ * Поддерживает чтение настроек камеры, сетки, цветов, линий и окружностей
+ * из файлов, созданных в программе Orihime.
+ */
 public class OrhImporter implements FileImporter {
+    
+    private static final String TAG = "OrhImporter";
+
+    /**
+     * Проверяет, поддерживается ли файл для импорта
+     * @param filename файл для проверки
+     * @return true если файл имеет расширение .orh
+     */
     @Override
     public boolean supports(File filename) {
         return filename.getName().endsWith(".orh");
     }
 
     /**
-     * Read an Orihime file
+     * Читает файл Orihime (.orh) и создает объект Save с данными оригами
+     * 
+     * @param file файл .orh для импорта
+     * @return объект Save с данными оригами
+     * @throws IOException при ошибках чтения файла
      */
     @Override
     public Save doImport(File file) throws IOException {
@@ -43,15 +63,16 @@ public class OrhImporter implements FileImporter {
 
         boolean reading;
 
-        // Loading the camera settings for the development view
+        // Загрузка настроек камеры для вида разработки
         reading = false;
 
         List<String> fileLines = loadFile(file);
 
         if (fileLines == null) {
-            throw new IOException("Encoding not detected");
+            throw new IOException("Кодировка не определена");
         }
 
+        // Чтение настроек камеры
         for (String str : fileLines) {
             if (str.equals("<camera_of_orisen_nyuuryokuzu>")) {
                 reading = true;
@@ -72,7 +93,6 @@ public class OrhImporter implements FileImporter {
                 save.setCreasePatternCamera(creasePatternCamera);
                 switch (m.group(1)) {
                     case "camera_ichi_x":
-
                         creasePatternCamera.setCameraPositionX(Double.parseDouble(m.group(2)));
                         break;
                     case "camera_ichi_y":
@@ -106,7 +126,7 @@ public class OrhImporter implements FileImporter {
         ApplicationModel applicationModel = new ApplicationModel();
         save.setApplicationModel(applicationModel);
 
-        // ----------------------------------------- チェックボックス等の設定の読み込み
+        // ----------------------------------------- Чтение настроек чекбоксов и других параметров
         reading = false;
         for (String str : fileLines) {
             if (str.equals("<settei>")) {
@@ -195,8 +215,7 @@ public class OrhImporter implements FileImporter {
             }
         }
 
-        // ----------------------------------------- 格子設定の読み込み
-
+        // ----------------------------------------- Чтение настроек сетки
         reading = false;
         GridModel gridModel = new GridModel();
         save.setGridModel(gridModel);
@@ -230,7 +249,6 @@ public class OrhImporter implements FileImporter {
                         break;
                     case "memori_kankaku":
                         int scale_interval = Integer.parseInt(m.group(2));
-
                         gridModel.setIntervalGridSize(scale_interval);
                         break;
                     case "a_to_heikouna_memori_iti":
@@ -264,14 +282,13 @@ public class OrhImporter implements FileImporter {
                         gridModel.setGridAngle(StringOp.String2double(m.group(2), gridModel.getGridAngle()));
                         break;
                 }
-
             }
         }
 
         gridModel.applyGridX(gridXA, gridXB, gridXC);
         gridModel.applyGridY(gridYA, gridYB, gridYC);
 
-        // ----------------------------------------- 格子色設定の読み込み
+        // ----------------------------------------- Чтение настроек цветов сетки
         int i_grid_color_R = 0;
         int i_grid_color_G = 0;
         int i_grid_color_B = 0;
@@ -279,7 +296,7 @@ public class OrhImporter implements FileImporter {
         int i_grid_memori_color_G = 0;
         int i_grid_memori_color_B = 0;
 
-        boolean i_Grid_iro_yomikomi = false;//Kousi_iroの読み込みがあったら1、なければ0
+        boolean i_Grid_iro_yomikomi = false; // Флаг чтения цветов сетки
         reading = false;
         for (String str : fileLines) {
             if (str.equals("<Kousi_iro>")) {
@@ -320,17 +337,20 @@ public class OrhImporter implements FileImporter {
             }
         }
 
-        if (i_Grid_iro_yomikomi) {//Grid_iroの読み込みがあったら1、なければ0
-            applicationModel.setGridColor(new Color(i_grid_color_R, i_grid_color_G, i_grid_color_B));
+        if (i_Grid_iro_yomikomi) {
+            // Создаем Android Color из RGB компонентов
+            int gridColor = Color.rgb(i_grid_color_R, i_grid_color_G, i_grid_color_B);
+            applicationModel.setGridColor(gridColor);
 
-            Logger.info("i_kousi_memori_color_R= " + i_grid_memori_color_R);
-            Logger.info("i_kousi_memori_color_G= " + i_grid_memori_color_G);
-            Logger.info("i_kousi_memori_color_B= " + i_grid_memori_color_B);
-            applicationModel.setGridScaleColor(new Color(i_grid_memori_color_R, i_grid_memori_color_G, i_grid_memori_color_B));
+            Log.i(TAG, "i_kousi_memori_color_R= " + i_grid_memori_color_R);
+            Log.i(TAG, "i_kousi_memori_color_G= " + i_grid_memori_color_G);
+            Log.i(TAG, "i_kousi_memori_color_B= " + i_grid_memori_color_B);
+            
+            int gridScaleColor = Color.rgb(i_grid_memori_color_R, i_grid_memori_color_G, i_grid_memori_color_B);
+            applicationModel.setGridScaleColor(gridScaleColor);
         }
 
-        // 折り上がり図設定の読み込み -------------------------------------------------------------------------
-
+        // Чтение настроек сложенной фигуры -------------------------------------------------------------------------
         int i_oriagarizu_F_color_R = 0;
         int i_oriagarizu_F_color_G = 0;
         int i_oriagarizu_F_color_B = 0;
@@ -343,8 +363,7 @@ public class OrhImporter implements FileImporter {
         int i_oriagarizu_L_color_G = 0;
         int i_oriagarizu_L_color_B = 0;
 
-
-        boolean i_oriagarizu_yomikomi = false;//oriagarizuの読み込みがあったら1、なければ0
+        boolean i_oriagarizu_yomikomi = false; // Флаг чтения настроек сложенной фигуры
         reading = false;
         for (String str : fileLines) {
             if (str.equals("<oriagarizu>")) {
@@ -396,16 +415,20 @@ public class OrhImporter implements FileImporter {
         FoldedFigureModel foldedFigureModel = new FoldedFigureModel();
         save.setFoldedFigureModel(foldedFigureModel);
         if (i_oriagarizu_yomikomi) {
-            foldedFigureModel.setFrontColor(new Color(i_oriagarizu_F_color_R, i_oriagarizu_F_color_G, i_oriagarizu_F_color_B));
-            foldedFigureModel.setBackColor(new Color(i_oriagarizu_B_color_R, i_oriagarizu_B_color_G, i_oriagarizu_B_color_B));
-            foldedFigureModel.setLineColor(new Color(i_oriagarizu_L_color_R, i_oriagarizu_L_color_G, i_oriagarizu_L_color_B));
+            // Создаем Android Color из RGB компонентов
+            int frontColor = Color.rgb(i_oriagarizu_F_color_R, i_oriagarizu_F_color_G, i_oriagarizu_F_color_B);
+            int backColor = Color.rgb(i_oriagarizu_B_color_R, i_oriagarizu_B_color_G, i_oriagarizu_B_color_B);
+            int lineColor = Color.rgb(i_oriagarizu_L_color_R, i_oriagarizu_L_color_G, i_oriagarizu_L_color_B);
+            
+            foldedFigureModel.setFrontColor(frontColor);
+            foldedFigureModel.setBackColor(backColor);
+            foldedFigureModel.setLineColor(lineColor);
         }
 
-        int reading_flag = 0;//If it is 0, it will not be read. If it is 1, read it.
+        int reading_flag = 0; // Флаг чтения: 0 - не читаем, 1 - читаем линии, 2 - читаем заголовок, 3 - читаем окружности
         int number = 0;
         LineColor ic;
         LineSegment.ActiveState is;
-
 
         String r_title = "_";
 
@@ -414,9 +437,9 @@ public class OrhImporter implements FileImporter {
 
         String str;
 
-        //Read the file .orh for Orihime
+        // Чтение файла .orh для Orihime
 
-        //First find the total number of line segments
+        // Сначала находим общее количество сегментов линий
         int numLines = 0;
         for (String line : fileLines) {
             StringTokenizer tk = new StringTokenizer(line, ",");
@@ -437,7 +460,7 @@ public class OrhImporter implements FileImporter {
             save.addLineSegment(new LineSegment());
             save.addCircle(new Circle());
         }
-        //First the total number of line segments was calculated
+        // Общее количество сегментов линий было подсчитано
 
         Circle e_temp = new Circle();
 
@@ -447,7 +470,7 @@ public class OrhImporter implements FileImporter {
 
         List<Circle> circles = save.getCircles();
         for (String str_i : fileLines) {
-            //Old-fashioned reading method
+            // Старомодный метод чтения
             StringTokenizer tk = new StringTokenizer(str_i, ",");
             str = tk.nextToken();
 
@@ -474,7 +497,7 @@ public class OrhImporter implements FileImporter {
             }
 
             if (reading_flag == 1) {
-                String[] st_new = str_i.split(">", 2);// <-----------------------------------２つに分割するときは2を指定
+                String[] st_new = str_i.split(">", 2); // Разделяем на 2 части
                 if (st_new[0].equals("<tpp")) {
                     String[] s_new = st_new[1].split("<", 2);
                     int i_customized = (Integer.parseInt(s_new[0]));
@@ -484,22 +507,25 @@ public class OrhImporter implements FileImporter {
                 if (st_new[0].equals("<tpp_color_R")) {
                     String[] s_new = st_new[1].split("<", 2);
                     i_customized_color_R = (Integer.parseInt(s_new[0]));
-                    s.setCustomizedColor(new Color(i_customized_color_R, i_customized_color_G, i_customized_color_B));
+                    int customizedColor = Color.rgb(i_customized_color_R, i_customized_color_G, i_customized_color_B);
+                    s.setCustomizedColor(customizedColor);
                 }
 
                 if (st_new[0].equals("<tpp_color_G")) {
                     String[] s_new = st_new[1].split("<", 2);
                     i_customized_color_G = (Integer.parseInt(s_new[0]));
-                    s.setCustomizedColor(new Color(i_customized_color_R, i_customized_color_G, i_customized_color_B));
+                    int customizedColor = Color.rgb(i_customized_color_R, i_customized_color_G, i_customized_color_B);
+                    s.setCustomizedColor(customizedColor);
                 }
                 if (st_new[0].equals("<tpp_color_B")) {
                     String[] s_new = st_new[1].split("<", 2);
                     i_customized_color_B = (Integer.parseInt(s_new[0]));
-                    s.setCustomizedColor(new Color(i_customized_color_R, i_customized_color_G, i_customized_color_B));
+                    int customizedColor = Color.rgb(i_customized_color_R, i_customized_color_G, i_customized_color_B);
+                    s.setCustomizedColor(customizedColor);
                 }
             }
 
-            if ((reading_flag == 1) && (str.equals("iactive"))) {//20181110追加
+            if ((reading_flag == 1) && (str.equals("iactive"))) { // Добавлено 20181110
                 str = tk.nextToken();
                 is = LineSegment.ActiveState.valueOf(str);
                 s.setActive(is);
@@ -522,7 +548,7 @@ public class OrhImporter implements FileImporter {
 
                 s = s.withCoordinates(ax, ay, bx, by);
             }
-            // TODO: test performance, implement and use LineSegmentBuilder if too slow
+            // TODO: протестировать производительность, реализовать и использовать LineSegmentBuilder если слишком медленно
             save.getLineSegments().set(number, s);
             if (str.equals("<円集合>")) {
                 reading_flag = 3;
@@ -546,12 +572,11 @@ public class OrhImporter implements FileImporter {
                 str = tk.nextToken();
                 ic = LineColor.from(str);
 
-
                 circles.get(number).set(dx, dy, dr, ic);
             }
 
             if (reading_flag == 3) {
-                String[] st_new = str_i.split(">", 2);// <-----------------------------------２つに分割するときは2を指定
+                String[] st_new = str_i.split(">", 2); // Разделяем на 2 части
                 if (st_new[0].equals("<tpp")) {
                     String[] s_new = st_new[1].split("<", 2);
                     int i_customized = (Integer.parseInt(s_new[0]));
@@ -561,18 +586,21 @@ public class OrhImporter implements FileImporter {
                 if (st_new[0].equals("<tpp_color_R")) {
                     String[] s_new = st_new[1].split("<", 2);
                     i_customized_color_R = (Integer.parseInt(s_new[0]));
-                    circles.get(number).setCustomizedColor(new Color(i_customized_color_R, i_customized_color_G, i_customized_color_B));
+                    int customizedColor = Color.rgb(i_customized_color_R, i_customized_color_G, i_customized_color_B);
+                    circles.get(number).setCustomizedColor(customizedColor);
                 }
 
                 if (st_new[0].equals("<tpp_color_G")) {
                     String[] s_new = st_new[1].split("<", 2);
                     i_customized_color_G = (Integer.parseInt(s_new[0]));
-                    circles.get(number).setCustomizedColor(new Color(i_customized_color_R, i_customized_color_G, i_customized_color_B));
+                    int customizedColor = Color.rgb(i_customized_color_R, i_customized_color_G, i_customized_color_B);
+                    circles.get(number).setCustomizedColor(customizedColor);
                 }
                 if (st_new[0].equals("<tpp_color_B")) {
                     String[] s_new = st_new[1].split("<", 2);
                     i_customized_color_B = (Integer.parseInt(s_new[0]));
-                    circles.get(number).setCustomizedColor(new Color(i_customized_color_R, i_customized_color_G, i_customized_color_B));
+                    int customizedColor = Color.rgb(i_customized_color_R, i_customized_color_G, i_customized_color_B);
+                    circles.get(number).setCustomizedColor(customizedColor);
                 }
             }
         }
@@ -582,8 +610,16 @@ public class OrhImporter implements FileImporter {
         return save;
     }
 
+    /**
+     * Загружает файл с автоматическим определением кодировки
+     * Поддерживает различные японские и китайские кодировки
+     * 
+     * @param file файл для загрузки
+     * @return список строк файла или null если кодировка не определена
+     * @throws IOException при ошибках чтения файла
+     */
     private static List<String> loadFile(File file) throws IOException {
-        // Possible charsets
+        // Возможные кодировки
         List<Charset> possibleCharsets = List.of(
                 StandardCharsets.UTF_8,
                 Charset.forName("EUC-JP"),
@@ -594,10 +630,17 @@ public class OrhImporter implements FileImporter {
 
         for (Charset charset : possibleCharsets) {
             try {
-                return Files.readAllLines(file.toPath(), charset);
+                List<String> lines = new ArrayList<>();
+                try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+                    String line;
+                    while ((line = reader.readLine()) != null) {
+                        lines.add(line);
+                    }
+                }
+                return lines;
             } catch (CharacterCodingException exception) {
-                Logger.info("File is not " + charset.displayName());
-                // ignored
+                Log.i(TAG, "Файл не в кодировке " + charset.displayName());
+                // игнорируем
             }
         }
 
