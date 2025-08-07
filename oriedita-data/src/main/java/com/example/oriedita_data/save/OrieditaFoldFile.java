@@ -4,8 +4,8 @@ import com.example.oriedita_data.save.fold.MapCircleAdapter;
 import com.example.oriedita_data.save.fold.MapTextAdapter;
 import com.example.oriedita_common.editor.text.Text;
 import com.example.oriedita_core.origami.crease_pattern.elements.Circle;
-import com.example.oriedita_core.origami.folding.fold.custom.CustomListField;
-import com.example.oriedita_core.origami.folding.fold.model.FoldFile;
+import fold.custom.CustomListField;
+import fold.model.FoldFile;
 
 import java.util.List;
 
