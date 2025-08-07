@@ -3,11 +3,11 @@ package com.example.oriedita_data.export;
 import fold.io.CreasePatternReader;
 import fold.model.Edge;
 import fold.model.FoldFile;
-import oriedita.editor.export.api.FileImporter;
-import oriedita.editor.save.Save;
-import oriedita.editor.save.SaveProvider;
-import origami.crease_pattern.elements.LineSegment;
-import origami.crease_pattern.elements.Point;
+import com.example.oriedita_data.export.api.FileImporter;
+import com.example.oriedita_data.save.Save;
+import com.example.oriedita_data.save.SaveProvider;
+import com.example.oriedita_core.origami.crease_pattern.elements.LineSegment;
+import com.example.oriedita_core.origami.crease_pattern.elements.Point;
 
 import java.io.File;
 import java.io.FileInputStream;
