@@ -57,6 +57,8 @@ public interface CreasePattern_Worker {
 
     int getTotal();
 
+    Save getSave(String title);
+
     Save getSave_for_export();
 
     Save getSave_for_export_with_applicationModel();
@@ -82,9 +84,9 @@ public interface CreasePattern_Worker {
     void auxRecord();
 
     //------------------------------------------------------------------------------
-    //Drawing the basic branch
+    // Рисование базовой ветви
     //------------------------------------------------------------------------------
-    void drawGrid(Graphics g, int p0x_max, int p0y_max);
+    void drawGrid(Canvas g, int p0x_max, int p0y_max);
 
     void drawWithCamera(
             Canvas g,
@@ -231,6 +233,8 @@ public interface CreasePattern_Worker {
     void selectConnected(Point p);
 
     List<LineSegment> getLineStep();
+
+    void setLineStepColor(LineSegment s, LineColor icol);
 
     Path getLinePath();
 
