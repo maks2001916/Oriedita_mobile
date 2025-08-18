@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Main help -->
+    <string name="help_welcome">Welcome to Oriedita!</string>
+    <string name="help_quick_start">Quick start: select a tool and start drawing lines</string>
+    <string name="help_tool_selection">Choose a tool from the toolbar to begin working</string>
+    
+    <!-- Tool help -->
+    <string name="help_line_tool">Line tool: double-click to create a line between points</string>
+    <string name="help_circle_tool">Circle tool: specify center and radius to create a circle</string>
+    <string name="help_select_tool">Select tool: click on an element to select it</string>
+    <string name="help_delete_tool">Delete tool: removes selected elements</string>
+    
+    <!-- Line type help -->
+    <string name="help_mountain_fold">Mountain fold: line that will be folded outward (convex)</string>
+    <string name="help_valley_fold">Valley fold: line that will be folded inward (concave)</string>
+    <string name="help_edge_line">Edge line: defines the boundaries of the origami model</string>
+    <string name="help_auxiliary_line">Auxiliary line: helps in construction but is not a fold</string>
+    
+    <!-- Geometric construction help -->
+    <string name="help_parallel_lines">Parallel lines: creates a line parallel to existing one</string>
+    <string name="help_perpendicular_lines">Perpendicular lines: creates a line perpendicular to existing one</string>
+    <string name="help_angle_bisector">Angle bisector: divides an angle in half</string>
+    <string name="help_square_bisector">Square bisector: divides a square diagonally</string>
+    
+    <!-- Check help -->
+    <string name="help_check1">Check 1: verifies basic folding conditions</string>
+    <string name="help_check2">Check 2: verifies geometric constraints</string>
+    <string name="help_check3">Check 3: verifies topological conditions</string>
+    <string name="help_check4">Check 4: verifies flat foldability</string>
+    
+    <!-- Navigation help -->
+    <string name="help_zoom">Zooming: use gestures or +/- buttons to change scale</string>
+    <string name="help_pan">Panning: hold and drag to move around the canvas</string>
+    <string name="help_rotate">Rotation: use gestures to rotate the model</string>
+    
+    <!-- File help -->
+    <string name="help_save">Saving: save your work in ORH, DXF, or FOLD format</string>
+    <string name="help_load">Loading: open an existing file to continue working</string>
+    <string name="help_export">Export: export the model to various formats</string>
+</resources> 

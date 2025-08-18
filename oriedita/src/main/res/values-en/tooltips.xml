@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Tool tooltips -->
+    <string name="tooltip_line_input">Draw a line between two points</string>
+    <string name="tooltip_circle_input">Draw a circle with specified center and radius</string>
+    <string name="tooltip_select">Select elements for editing</string>
+    <string name="tooltip_delete">Delete selected elements</string>
+    <string name="tooltip_undo">Undo last action</string>
+    <string name="tooltip_redo">Redo undone action</string>
+    
+    <!-- Line type tooltips -->
+    <string name="tooltip_mountain">Create a mountain fold (convex)</string>
+    <string name="tooltip_valley">Create a valley fold (concave)</string>
+    <string name="tooltip_edge">Create a model edge</string>
+    <string name="tooltip_aux">Create an auxiliary line</string>
+    
+    <!-- Geometric construction tooltips -->
+    <string name="tooltip_parallel">Draw a line parallel to existing one</string>
+    <string name="tooltip_perpendicular">Draw a line perpendicular to existing one</string>
+    <string name="tooltip_angle_bisector">Construct an angle bisector</string>
+    <string name="tooltip_square_bisector">Construct a square bisector</string>
+    
+    <!-- Check tooltips -->
+    <string name="tooltip_check1">Check basic folding conditions</string>
+    <string name="tooltip_check2">Check geometric constraints</string>
+    <string name="tooltip_check3">Check topological conditions</string>
+    <string name="tooltip_check4">Check flat foldability</string>
+</resources> 

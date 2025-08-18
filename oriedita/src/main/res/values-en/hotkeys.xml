@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Tool hotkeys -->
+    <string name="hotkey_line_input">L</string>
+    <string name="hotkey_circle_input">C</string>
+    <string name="hotkey_select">S</string>
+    <string name="hotkey_delete">Del</string>
+    <string name="hotkey_undo">Ctrl+Z</string>
+    <string name="hotkey_redo">Ctrl+Y</string>
+    <string name="hotkey_zoom_in">+</string>
+    <string name="hotkey_zoom_out">-</string>
+    <string name="hotkey_pan">Space</string>
+    <string name="hotkey_rotate">R</string>
+    
+    <!-- Line type hotkeys -->
+    <string name="hotkey_mountain">M</string>
+    <string name="hotkey_valley">V</string>
+    <string name="hotkey_edge">E</string>
+    <string name="hotkey_aux">A</string>
+    
+    <!-- Geometric construction hotkeys -->
+    <string name="hotkey_parallel">P</string>
+    <string name="hotkey_perpendicular">T</string>
+    <string name="hotkey_angle_bisector">B</string>
+    <string name="hotkey_square_bisector">Q</string>
+    
+    <!-- Check hotkeys -->
+    <string name="hotkey_check1">F1</string>
+    <string name="hotkey_check2">F2</string>
+    <string name="hotkey_check3">F3</string>
+    <string name="hotkey_check4">F4</string>
+    
+    <!-- Settings hotkeys -->
+    <string name="hotkey_settings">Ctrl+,</string>
+    <string name="hotkey_mouse_settings">Ctrl+M</string>
+</resources> 

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Основная помощь -->
+    <string name="help_welcome">Добро пожаловать в Oriedita!</string>
+    <string name="help_quick_start">Быстрый старт: выберите инструмент и начните рисовать линии</string>
+    <string name="help_tool_selection">Выберите инструмент из панели инструментов для начала работы</string>
+    
+    <!-- Помощь по инструментам -->
+    <string name="help_line_tool">Инструмент линий: двойной клик для создания линии между точками</string>
+    <string name="help_circle_tool">Инструмент кругов: укажите центр и радиус для создания круга</string>
+    <string name="help_select_tool">Инструмент выбора: кликните на элемент для выбора</string>
+    <string name="help_delete_tool">Инструмент удаления: удаляет выбранные элементы</string>
+    
+    <!-- Помощь по типам линий -->
+    <string name="help_mountain_fold">Горная складка: линия, которая складывается наружу (выпуклая)</string>
+    <string name="help_valley_fold">Долинная складка: линия, которая складывается внутрь (вогнутая)</string>
+    <string name="help_edge_line">Линия края: определяет границы модели оригами</string>
+    <string name="help_auxiliary_line">Вспомогательная линия: помогает в построении, но не является складкой</string>
+    
+    <!-- Помощь по геометрическим построениям -->
+    <string name="help_parallel_lines">Параллельные линии: создание линии, параллельной существующей</string>
+    <string name="help_perpendicular_lines">Перпендикулярные линии: создание линии, перпендикулярной существующей</string>
+    <string name="help_angle_bisector">Биссектриса угла: деление угла пополам</string>
+    <string name="help_square_bisector">Биссектриса квадрата: деление квадрата по диагонали</string>
+    
+    <!-- Помощь по проверкам -->
+    <string name="help_check1">Проверка 1: проверка основных условий складывания</string>
+    <string name="help_check2">Проверка 2: проверка геометрических ограничений</string>
+    <string name="help_check3">Проверка 3: проверка топологических условий</string>
+    <string name="help_check4">Проверка 4: проверка возможности плоского складывания</string>
+    
+    <!-- Помощь по навигации -->
+    <string name="help_zoom">Масштабирование: жесты или кнопки +/- для изменения масштаба</string>
+    <string name="help_pan">Перемещение: удерживайте и перетаскивайте для перемещения по холсту</string>
+    <string name="help_rotate">Вращение: жесты для вращения модели</string>
+    
+    <!-- Помощь по файлам -->
+    <string name="help_save">Сохранение: сохранение работы в форматах ORH, DXF, FOLD</string>
+    <string name="help_load">Загрузка: открытие существующего файла для продолжения работы</string>
+    <string name="help_export">Экспорт: экспорт модели в различных форматах</string>
+</resources> 

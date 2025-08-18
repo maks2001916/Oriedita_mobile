@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Основные иконки приложения -->
+    <string name="icon_oriedita">Ориэдита</string>
+    <string name="icon_fishbase">Рыбья основа</string>
+    <string name="icon_zahyou">Координатная сетка</string>
+    
+    <!-- Иконки инструментов -->
+    <string name="icon_line_input">Ввод линий</string>
+    <string name="icon_circle_input">Ввод окружностей</string>
+    <string name="icon_select">Выбор</string>
+    <string name="icon_delete">Удаление</string>
+    <string name="icon_undo">Отмена</string>
+    <string name="icon_redo">Повтор</string>
+    <string name="icon_zoom_in">Увеличение</string>
+    <string name="icon_zoom_out">Уменьшение</string>
+    <string name="icon_pan">Перемещение</string>
+    <string name="icon_rotate">Поворот</string>
+    
+    <!-- Иконки типов линий -->
+    <string name="icon_mountain">Горная складка</string>
+    <string name="icon_valley">Долинная складка</string>
+    <string name="icon_edge">Край</string>
+    <string name="icon_aux">Вспомогательная линия</string>
+    <string name="icon_black">Черная линия</string>
+    <string name="icon_red">Красная линия</string>
+    
+    <!-- Иконки геометрических построений -->
+    <string name="icon_parallel">Параллельные линии</string>
+    <string name="icon_perpendicular">Перпендикулярные линии</string>
+    <string name="icon_angle_bisector">Биссектриса угла</string>
+    <string name="icon_square_bisector">Биссектриса квадрата</string>
+    <string name="icon_fish_bone">Рыбья кость</string>
+    <string name="icon_voronoi">Диаграмма Вороного</string>
+    
+    <!-- Иконки проверок -->
+    <string name="icon_check1">Проверка 1</string>
+    <string name="icon_check2">Проверка 2</string>
+    <string name="icon_check3">Проверка 3</string>
+    <string name="icon_check4">Проверка 4</string>
+    
+    <!-- Иконки настроек -->
+    <string name="icon_settings">Настройки</string>
+    <string name="icon_mouse_settings">Настройки мыши</string>
+    <string name="icon_line_width">Ширина линии</string>
+    <string name="icon_point_size">Размер точки</string>
+</resources> 
