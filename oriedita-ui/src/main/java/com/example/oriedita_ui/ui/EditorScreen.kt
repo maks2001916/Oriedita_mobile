@@ -1,55 +1,77 @@
 package com.example.oriedita_ui.ui
 
-import androidx.compose.foundation.Canvas
-import androidx.compose.foundation.background
+import androidx.compose.foundation.*
 import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.*
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Build
+import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.filled.Refresh
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.material3.TopAppBar
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.*
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.input.pointer.pointerInput
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.oriedita_ui.R
+import androidx.compose.ui.platform.LocalContext
+import com.example.oriedita_common.resources.AndroidResourceManager
+import com.example.oriedita_common.resources.ResourceConstants
 import com.example.oriedita_ui.viewmodel.CanvasViewModel
-import com.example.oriedita_ui.viewmodel.DockBarViewModel
 import com.example.oriedita_ui.viewmodel.CanvasObject
 import com.example.oriedita_ui.viewmodel.LineType
+import com.example.oriedita_ui.ui.components.DynamicDockBar
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun EditorScreen(
     onNavigateBack: () -> Unit,
-    viewModel: CanvasViewModel = viewModel()
+    onSettingsClick: () -> Unit,
+    canvasViewModel: CanvasViewModel
 ) {
+    val context = LocalContext.current
+    val resourceManager = remember { AndroidResourceManager(context) }
     var showToolMenu by remember { mutableStateOf(false) }
     var showLineTypeMenu by remember { mutableStateOf(false) }
     
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text(stringResource(R.string.app_name)) },
+                title = { Text(resourceManager.getString(ResourceConstants.APP_NAME)) },
                 navigationIcon = {
                     IconButton(onClick = onNavigateBack) {
-                        Icon(Icons.Default.ArrowBack, stringResource(R.string.back))
+                        Icon(Icons.Default.ArrowBack, resourceManager.getString(ResourceConstants.BACK))
                     }
                 },
                 actions = {
                     IconButton(onClick = { showToolMenu = !showToolMenu }) {
-                        Icon(Icons.Default.Build, stringResource(R.string.menu_tools))
+                        Icon(Icons.Default.Build, resourceManager.getString(ResourceConstants.MENU_TOOLS))
                     }
                     IconButton(onClick = { showLineTypeMenu = !showLineTypeMenu }) {
-                        Icon(Icons.Default.Style, stringResource(R.string.menu_line_type))
+                        Icon(Icons.Default.Add, resourceManager.getString(ResourceConstants.MENU_LINE_TYPE))
                     }
-                    IconButton(onClick = { viewModel.undo() }) {
-                        Icon(Icons.Default.Undo, stringResource(R.string.menu_undo))
+                    IconButton(onClick = { canvasViewModel.undo() }) {
+                        Icon(Icons.Default.Refresh, resourceManager.getString(ResourceConstants.MENU_UNDO))
+                    }
+                    IconButton(onClick = onSettingsClick) {
+                        Icon(Icons.Default.Settings, resourceManager.getString(ResourceConstants.MENU_SETTINGS))
                     }
                 }
             )
@@ -60,27 +82,29 @@ fun EditorScreen(
                 .fillMaxSize()
                 .padding(padding)
         ) {
-            DrawingCanvas(viewModel)
-            
+            DrawingCanvas(canvasViewModel)
+            DynamicDockBar(canvasViewModel)
             if (showToolMenu) {
                 ToolMenu(
-                    currentTool = viewModel.getCurrentTool(),
+                    currentTool = canvasViewModel.getCurrentTool(),
                     onToolSelected = { tool ->
-                        viewModel.setTool(tool)
+                        canvasViewModel.setTool(tool)
                         showToolMenu = false
                     },
-                    onDismiss = { showToolMenu = false }
+                    onDismiss = { showToolMenu = false },
+                    resourceManager = resourceManager
                 )
             }
             
             if (showLineTypeMenu) {
                 LineTypeMenu(
-                    currentType = viewModel.currentLineType.collectAsState().value,
+                    currentType = canvasViewModel.currentLineType.collectAsState().value,
                     onTypeSelected = { type ->
-                        viewModel.setLineType(type)
+                        canvasViewModel.setLineType(type)
                         showLineTypeMenu = false
                     },
-                    onDismiss = { showLineTypeMenu = false }
+                    onDismiss = { showLineTypeMenu = false },
+                    resourceManager = resourceManager
                 )
             }
         }
@@ -193,128 +217,151 @@ private fun DrawingCanvas(viewModel: CanvasViewModel) {
 private fun ToolMenu(
     currentTool: CanvasTool,
     onToolSelected: (CanvasTool) -> Unit,
-    onDismiss: () -> Unit
+    onDismiss: () -> Unit,
+    resourceManager: AndroidResourceManager
 ) {
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text(stringResource(R.string.menu_tools)) },
+                    title = { Text(resourceManager.getString(ResourceConstants.MENU_TOOLS)) },
         text = {
             Column {
                 ToolButton(
                     tool = CanvasTool.DrawCreaseFree,
                     currentTool = currentTool,
-                    onClick = { onToolSelected(CanvasTool.DrawCreaseFree) }
+                    onClick = { onToolSelected(CanvasTool.DrawCreaseFree) },
+                    resourceManager = resourceManager
                 )
                 ToolButton(
                     tool = CanvasTool.MoveCreasePattern,
                     currentTool = currentTool,
-                    onClick = { onToolSelected(CanvasTool.MoveCreasePattern) }
+                    onClick = { onToolSelected(CanvasTool.MoveCreasePattern) },
+                    resourceManager = resourceManager
                 )
                 ToolButton(
                     tool = CanvasTool.LineSegmentDelete,
                     currentTool = currentTool,
-                    onClick = { onToolSelected(CanvasTool.LineSegmentDelete) }
+                    onClick = { onToolSelected(CanvasTool.LineSegmentDelete) },
+                    resourceManager = resourceManager
                 )
                 ToolButton(
                     tool = CanvasTool.ChangeCreaseType,
                     currentTool = currentTool,
-                    onClick = { onToolSelected(CanvasTool.ChangeCreaseType) }
+                    onClick = { onToolSelected(CanvasTool.ChangeCreaseType) },
+                    resourceManager = resourceManager
                 )
                 ToolButton(
                     tool = CanvasTool.LengthenCrease,
                     currentTool = currentTool,
-                    onClick = { onToolSelected(CanvasTool.LengthenCrease) }
+                    onClick = { onToolSelected(CanvasTool.LengthenCrease) },
+                    resourceManager = resourceManager
                 )
                 ToolButton(
                     tool = CanvasTool.DrawPoint,
                     currentTool = currentTool,
-                    onClick = { onToolSelected(CanvasTool.DrawPoint) }
+                    onClick = { onToolSelected(CanvasTool.DrawPoint) },
+                    resourceManager = resourceManager
                 )
                 ToolButton(
                     tool = CanvasTool.DeletePoint,
                     currentTool = currentTool,
-                    onClick = { onToolSelected(CanvasTool.DeletePoint) }
+                    onClick = { onToolSelected(CanvasTool.DeletePoint) },
+                    resourceManager = resourceManager
                 )
                 ToolButton(
                     tool = CanvasTool.CircleDraw,
                     currentTool = currentTool,
-                    onClick = { onToolSelected(CanvasTool.CircleDraw) }
+                    onClick = { onToolSelected(CanvasTool.CircleDraw) },
+                    resourceManager = resourceManager
                 )
                 ToolButton(
                     tool = CanvasTool.CircleDrawThreePoint,
                     currentTool = currentTool,
-                    onClick = { onToolSelected(CanvasTool.CircleDrawThreePoint) }
+                    onClick = { onToolSelected(CanvasTool.CircleDrawThreePoint) },
+                    resourceManager = resourceManager
                 )
                 ToolButton(
                     tool = CanvasTool.CircleDrawFree,
                     currentTool = currentTool,
-                    onClick = { onToolSelected(CanvasTool.CircleDrawFree) }
+                    onClick = { onToolSelected(CanvasTool.CircleDrawFree) },
+                    resourceManager = resourceManager
                 )
                 ToolButton(
                     tool = CanvasTool.ParallelDraw,
                     currentTool = currentTool,
-                    onClick = { onToolSelected(CanvasTool.ParallelDraw) }
+                    onClick = { onToolSelected(CanvasTool.ParallelDraw) },
+                    resourceManager = resourceManager
                 )
                 ToolButton(
                     tool = CanvasTool.PerpendicularDraw,
                     currentTool = currentTool,
-                    onClick = { onToolSelected(CanvasTool.PerpendicularDraw) }
+                    onClick = { onToolSelected(CanvasTool.PerpendicularDraw) },
+                    resourceManager = resourceManager
                 )
                 ToolButton(
                     tool = CanvasTool.CreaseSelect,
                     currentTool = currentTool,
-                    onClick = { onToolSelected(CanvasTool.CreaseSelect) }
+                    onClick = { onToolSelected(CanvasTool.CreaseSelect) },
+                    resourceManager = resourceManager
                 )
                 ToolButton(
                     tool = CanvasTool.CreaseUnselect,
                     currentTool = currentTool,
-                    onClick = { onToolSelected(CanvasTool.CreaseUnselect) }
+                    onClick = { onToolSelected(CanvasTool.CreaseUnselect) },
+                    resourceManager = resourceManager
                 )
                 ToolButton(
                     tool = CanvasTool.SelectLasso,
                     currentTool = currentTool,
-                    onClick = { onToolSelected(CanvasTool.SelectLasso) }
+                    onClick = { onToolSelected(CanvasTool.SelectLasso) },
+                    resourceManager = resourceManager
                 )
                 ToolButton(
                     tool = CanvasTool.UnselectLasso,
                     currentTool = currentTool,
-                    onClick = { onToolSelected(CanvasTool.UnselectLasso) }
+                    onClick = { onToolSelected(CanvasTool.UnselectLasso) },
+                    resourceManager = resourceManager
                 )
                 ToolButton(
                     tool = CanvasTool.SelectPolygon,
                     currentTool = currentTool,
-                    onClick = { onToolSelected(CanvasTool.SelectPolygon) }
+                    onClick = { onToolSelected(CanvasTool.SelectPolygon) },
+                    resourceManager = resourceManager
                 )
                 ToolButton(
                     tool = CanvasTool.UnselectPolygon,
                     currentTool = currentTool,
-                    onClick = { onToolSelected(CanvasTool.UnselectPolygon) }
+                    onClick = { onToolSelected(CanvasTool.UnselectPolygon) },
+                    resourceManager = resourceManager
                 )
                 ToolButton(
                     tool = CanvasTool.Text,
                     currentTool = currentTool,
-                    onClick = { onToolSelected(CanvasTool.Text) }
+                    onClick = { onToolSelected(CanvasTool.Text) },
+                    resourceManager = resourceManager
                 )
                 ToolButton(
                     tool = CanvasTool.AngleSystem,
                     currentTool = currentTool,
-                    onClick = { onToolSelected(CanvasTool.AngleSystem) }
+                    onClick = { onToolSelected(CanvasTool.AngleSystem) },
+                    resourceManager = resourceManager
                 )
                 ToolButton(
                     tool = CanvasTool.Axiom5,
                     currentTool = currentTool,
-                    onClick = { onToolSelected(CanvasTool.Axiom5) }
+                    onClick = { onToolSelected(CanvasTool.Axiom5) },
+                    resourceManager = resourceManager
                 )
                 ToolButton(
                     tool = CanvasTool.Axiom7,
                     currentTool = currentTool,
-                    onClick = { onToolSelected(CanvasTool.Axiom7) }
+                    onClick = { onToolSelected(CanvasTool.Axiom7) },
+                    resourceManager = resourceManager
                 )
             }
         },
         confirmButton = {
             TextButton(onClick = onDismiss) {
-                Text(stringResource(R.string.close))
+                Text(resourceManager.getString(ResourceConstants.CLOSE))
             }
         }
     )
@@ -324,7 +371,8 @@ private fun ToolMenu(
 private fun ToolButton(
     tool: CanvasTool,
     currentTool: CanvasTool,
-    onClick: () -> Unit
+    onClick: () -> Unit,
+    resourceManager: AndroidResourceManager
 ) {
     Button(
         onClick = onClick,
@@ -336,42 +384,80 @@ private fun ToolButton(
     ) {
         Text(
             when (tool) {
-                is CanvasTool.DrawCreaseFree -> stringResource(R.string.tool_draw_crease_free)
-                is CanvasTool.MoveCreasePattern -> stringResource(R.string.tool_move_crease_pattern)
-                is CanvasTool.LineSegmentDelete -> stringResource(R.string.tool_line_segment_delete)
-                is CanvasTool.ChangeCreaseType -> stringResource(R.string.tool_change_crease_type)
-                is CanvasTool.LengthenCrease -> stringResource(R.string.tool_lengthen_crease)
-                is CanvasTool.DrawPoint -> stringResource(R.string.tool_draw_point)
-                is CanvasTool.DeletePoint -> stringResource(R.string.tool_delete_point)
-                is CanvasTool.CircleDraw -> stringResource(R.string.tool_circle_draw)
-                is CanvasTool.CircleDrawThreePoint -> stringResource(R.string.tool_circle_draw_three_point)
-                is CanvasTool.CircleDrawFree -> stringResource(R.string.tool_circle_draw_free)
-                is CanvasTool.ParallelDraw -> stringResource(R.string.tool_parallel_draw)
-                is CanvasTool.PerpendicularDraw -> stringResource(R.string.tool_perpendicular_draw)
-                is CanvasTool.SymmetricDraw -> stringResource(R.string.tool_symmetric_draw)
-                is CanvasTool.DrawCreaseRestricted -> stringResource(R.string.tool_draw_crease_restricted)
-                is CanvasTool.DrawCreaseSymmetric -> stringResource(R.string.tool_draw_crease_symmetric)
-                is CanvasTool.DrawCreaseAngleRestricted -> stringResource(R.string.tool_draw_crease_angle_restricted)
-                is CanvasTool.AngleSystem -> stringResource(R.string.tool_angle_system)
-                is CanvasTool.CreaseSelect -> stringResource(R.string.tool_crease_select)
-                is CanvasTool.CreaseUnselect -> stringResource(R.string.tool_crease_unselect)
-                is CanvasTool.CreaseMove -> stringResource(R.string.tool_crease_move)
-                is CanvasTool.CreaseCopy -> stringResource(R.string.tool_crease_copy)
-                is CanvasTool.CreaseMakeMountain -> stringResource(R.string.tool_crease_make_mountain)
-                is CanvasTool.CreaseMakeValley -> stringResource(R.string.tool_crease_make_valley)
-                is CanvasTool.CreaseMakeEdge -> stringResource(R.string.tool_crease_make_edge)
-                is CanvasTool.CreaseMakeAux -> stringResource(R.string.tool_crease_make_aux)
-                is CanvasTool.CreaseToggleMV -> stringResource(R.string.tool_crease_toggle_mv)
-                is CanvasTool.CreaseDeleteOverlapping -> stringResource(R.string.tool_crease_delete_overlapping)
-                is CanvasTool.CreaseDeleteIntersecting -> stringResource(R.string.tool_crease_delete_intersecting)
-                is CanvasTool.SelectPolygon -> stringResource(R.string.tool_select_polygon)
-                is CanvasTool.UnselectPolygon -> stringResource(R.string.tool_unselect_polygon)
-                is CanvasTool.SelectLasso -> stringResource(R.string.tool_select_lasso)
-                is CanvasTool.UnselectLasso -> stringResource(R.string.tool_unselect_lasso)
-                is CanvasTool.Text -> stringResource(R.string.tool_text)
-                is CanvasTool.AddFoldingConstraint -> stringResource(R.string.tool_add_folding_constraint)
-                is CanvasTool.Axiom5 -> stringResource(R.string.tool_axiom5)
-                is CanvasTool.Axiom7 -> stringResource(R.string.tool_axiom7)
+                is CanvasTool.DrawCreaseFree -> resourceManager.getString(ResourceConstants.TOOL_DRAW_CREASE_FREE)
+                is CanvasTool.MoveCreasePattern -> resourceManager.getString(ResourceConstants.TOOL_MOVE_CREASE_PATTERN)
+                is CanvasTool.LineSegmentDelete -> resourceManager.getString(ResourceConstants.TOOL_LINE_SEGMENT_DELETE)
+                is CanvasTool.ChangeCreaseType -> resourceManager.getString(ResourceConstants.TOOL_CHANGE_CREASE_TYPE)
+                is CanvasTool.LengthenCrease -> resourceManager.getString(ResourceConstants.TOOL_LENGTHEN_CREASE)
+                is CanvasTool.DrawPoint -> resourceManager.getString(ResourceConstants.TOOL_DRAW_POINT)
+                is CanvasTool.DeletePoint -> resourceManager.getString(ResourceConstants.TOOL_DELETE_POINT)
+                is CanvasTool.CircleDraw -> resourceManager.getString(ResourceConstants.TOOL_CIRCLE_DRAW)
+                is CanvasTool.CircleDrawThreePoint -> resourceManager.getString(ResourceConstants.TOOL_CIRCLE_DRAW_THREE_POINT)
+                is CanvasTool.CircleDrawFree -> resourceManager.getString(ResourceConstants.TOOL_CIRCLE_DRAW_FREE)
+                is CanvasTool.ParallelDraw -> resourceManager.getString(ResourceConstants.TOOL_PARALLEL_DRAW)
+                is CanvasTool.PerpendicularDraw -> resourceManager.getString(ResourceConstants.TOOL_PERPENDICULAR_DRAW)
+                is CanvasTool.SymmetricDraw -> resourceManager.getString(ResourceConstants.TOOL_SYMMETRIC_DRAW)
+                is CanvasTool.DrawCreaseRestricted -> resourceManager.getString(ResourceConstants.TOOL_DRAW_CREASE_RESTRICTED)
+                is CanvasTool.DrawCreaseSymmetric -> resourceManager.getString(ResourceConstants.TOOL_DRAW_CREASE_SYMMETRIC)
+                is CanvasTool.DrawCreaseAngleRestricted -> resourceManager.getString(ResourceConstants.TOOL_DRAW_CREASE_ANGLE_RESTRICTED)
+                is CanvasTool.AngleSystem -> resourceManager.getString(ResourceConstants.TOOL_ANGLE_SYSTEM)
+                is CanvasTool.CreaseSelect -> resourceManager.getString(ResourceConstants.TOOL_CREASE_SELECT)
+                is CanvasTool.CreaseUnselect -> resourceManager.getString(ResourceConstants.TOOL_CREASE_UNSELECT)
+                is CanvasTool.CreaseMove -> resourceManager.getString(ResourceConstants.TOOL_CREASE_MOVE)
+                is CanvasTool.CreaseCopy -> resourceManager.getString(ResourceConstants.TOOL_CREASE_COPY)
+                is CanvasTool.CreaseMakeMountain -> resourceManager.getString(ResourceConstants.TOOL_CREASE_MAKE_MOUNTAIN)
+                is CanvasTool.CreaseMakeValley -> resourceManager.getString(ResourceConstants.TOOL_CREASE_MAKE_VALLEY)
+                is CanvasTool.CreaseMakeEdge -> resourceManager.getString(ResourceConstants.TOOL_CREASE_MAKE_EDGE)
+                is CanvasTool.CreaseMakeAux -> resourceManager.getString(ResourceConstants.TOOL_CREASE_MAKE_AUX)
+                is CanvasTool.CreaseToggleMV -> resourceManager.getString(ResourceConstants.TOOL_CREASE_TOGGLE_MV)
+                is CanvasTool.CreaseDeleteOverlapping -> resourceManager.getString(ResourceConstants.TOOL_CREASE_DELETE_OVERLAPPING)
+                is CanvasTool.CreaseDeleteIntersecting -> resourceManager.getString(ResourceConstants.TOOL_CREASE_DELETE_INTERSECTING)
+                is CanvasTool.SelectPolygon -> resourceManager.getString(ResourceConstants.TOOL_SELECT_POLYGON)
+                is CanvasTool.UnselectPolygon -> resourceManager.getString(ResourceConstants.TOOL_UNSELECT_POLYGON)
+                is CanvasTool.SelectLasso -> resourceManager.getString(ResourceConstants.TOOL_SELECT_LASSO)
+                is CanvasTool.UnselectLasso -> resourceManager.getString(ResourceConstants.TOOL_UNSELECT_LASSO)
+                is CanvasTool.Text -> resourceManager.getString(ResourceConstants.TOOL_TEXT)
+                is CanvasTool.AddFoldingConstraint -> resourceManager.getString(ResourceConstants.TOOL_ADD_FOLDING_CONSTRAINT)
+                is CanvasTool.Axiom5 -> resourceManager.getString(ResourceConstants.TOOL_AXIOM5)
+                is CanvasTool.Axiom7 -> resourceManager.getString(ResourceConstants.TOOL_AXIOM7)
+                is CanvasTool.BackgroundChangePosition -> resourceManager.getString(ResourceConstants.TOOL_BACKGROUND_CHANGE_POSITION)
+                is CanvasTool.ChangeStandardFace -> resourceManager.getString(ResourceConstants.TOOL_CHANGE_STANDARD_FACE)
+                is CanvasTool.CircleChangeColor -> resourceManager.getString(ResourceConstants.TOOL_CIRCLE_CHANGE_COLOR)
+                is CanvasTool.CircleDrawConcentric -> resourceManager.getString(ResourceConstants.TOOL_CIRCLE_DRAW_CONCENTRIC)
+                is CanvasTool.CircleDrawConcentricSelect -> resourceManager.getString(ResourceConstants.TOOL_CIRCLE_DRAW_CONCENTRIC_SELECT)
+                is CanvasTool.CircleDrawInverted -> resourceManager.getString(ResourceConstants.TOOL_CIRCLE_DRAW_INVERTED)
+                is CanvasTool.CircleDrawSeparate -> resourceManager.getString(ResourceConstants.TOOL_CIRCLE_DRAW_SEPARATE)
+                is CanvasTool.SquareBisector -> resourceManager.getString(ResourceConstants.TOOL_SQUARE_BISECTOR)
+                is CanvasTool.Inward -> resourceManager.getString(ResourceConstants.TOOL_INWARD)
+                is CanvasTool.DrawCreaseAngleRestricted3 -> resourceManager.getString(ResourceConstants.TOOL_DRAW_CREASE_ANGLE_RESTRICTED3)
+                is CanvasTool.LineSegmentDivision -> resourceManager.getString(ResourceConstants.TOOL_LINE_SEGMENT_DIVISION)
+                is CanvasTool.LineSegmentRatioSet -> resourceManager.getString(ResourceConstants.TOOL_LINE_SEGMENT_RATIO_SET)
+                is CanvasTool.PolygonSetNoCorners -> resourceManager.getString(ResourceConstants.TOOL_POLYGON_SET_NO_CORNERS)
+                is CanvasTool.FishBoneDraw -> resourceManager.getString(ResourceConstants.TOOL_FISH_BONE_DRAW)
+                is CanvasTool.DoubleSymmetricDraw -> resourceManager.getString(ResourceConstants.TOOL_DOUBLE_SYMMETRIC_DRAW)
+                is CanvasTool.CreasesAlternateMV -> resourceManager.getString(ResourceConstants.TOOL_CREASES_ALTERNATE_MV)
+                is CanvasTool.DrawCreaseAngleRestricted5 -> resourceManager.getString(ResourceConstants.TOOL_DRAW_CREASE_ANGLE_RESTRICTED5)
+                is CanvasTool.VertexMakeAngularlyFlatFoldable -> resourceManager.getString(ResourceConstants.TOOL_VERTEX_MAKE_ANGULARLY_FLAT_FOLDABLE)
+                is CanvasTool.FoldableLineInput -> resourceManager.getString(ResourceConstants.TOOL_FOLDABLE_LINE_INPUT)
+                is CanvasTool.VertexDeleteOnCrease -> resourceManager.getString(ResourceConstants.TOOL_VERTEX_DELETE_ON_CREASE)
+                is CanvasTool.ParallelDrawWidth -> resourceManager.getString(ResourceConstants.TOOL_PARALLEL_DRAW_WIDTH)
+                is CanvasTool.OperationFrameCreate -> resourceManager.getString(ResourceConstants.TOOL_OPERATION_FRAME_CREATE)
+                is CanvasTool.VoronoiCreate -> resourceManager.getString(ResourceConstants.TOOL_VORONOI_CREATE)
+                is CanvasTool.FlatFoldableCheck -> resourceManager.getString(ResourceConstants.TOOL_FLAT_FOLDABLE_CHECK)
+                is CanvasTool.SelectLineIntersecting -> resourceManager.getString(ResourceConstants.TOOL_SELECT_LINE_INTERSECTING)
+                is CanvasTool.UnselectLineIntersecting -> resourceManager.getString(ResourceConstants.TOOL_UNSELECT_LINE_INTERSECTING)
+                is CanvasTool.LengthenCreaseSameColor -> resourceManager.getString(ResourceConstants.TOOL_LENGTHEN_CREASE_SAME_COLOR)
+                is CanvasTool.FoldableLineDraw -> resourceManager.getString(ResourceConstants.TOOL_FOLDABLE_LINE_DRAW)
+                is CanvasTool.ReplaceLineTypeSelect -> resourceManager.getString(ResourceConstants.TOOL_REPLACE_LINE_TYPE_SELECT)
+                is CanvasTool.DeleteLineTypeSelect -> resourceManager.getString(ResourceConstants.TOOL_DELETE_LINE_TYPE_SELECT)
+                is CanvasTool.ModifyCalculatedShape -> resourceManager.getString(ResourceConstants.TOOL_MODIFY_CALCULATED_SHAPE)
+                is CanvasTool.MoveCalculatedShape -> resourceManager.getString(ResourceConstants.TOOL_MOVE_CALCULATED_SHAPE)
+                is CanvasTool.CircleDrawTangentLine -> resourceManager.getString(ResourceConstants.TOOL_CIRCLE_DRAW_TANGENT_LINE)
+                is CanvasTool.CircleDrawTwoConcentricSelect -> resourceManager.getString(ResourceConstants.TOOL_CIRCLE_DRAW_TWO_CONCENTRIC_SELECT)
+                is CanvasTool.ContinuousSymmetricDraw -> resourceManager.getString(ResourceConstants.TOOL_CONTINUOUS_SYMMETRIC_DRAW)
+                is CanvasTool.CreaseAdvanceType -> resourceManager.getString(ResourceConstants.TOOL_CREASE_ADVANCE_TYPE)
+                is CanvasTool.CreaseMakeMV -> resourceManager.getString(ResourceConstants.TOOL_CREASE_MAKE_MV)
+                else -> resourceManager.getString(ResourceConstants.TOOL_UNKNOWN)
             }
         )
     }
@@ -381,11 +467,12 @@ private fun ToolButton(
 private fun LineTypeMenu(
     currentType: LineType,
     onTypeSelected: (LineType) -> Unit,
-    onDismiss: () -> Unit
+    onDismiss: () -> Unit,
+    resourceManager: AndroidResourceManager
 ) {
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text(stringResource(R.string.menu_line_type)) },
+        title = { Text(resourceManager.getString(ResourceConstants.MENU_LINE_TYPE)) },
         text = {
             Column {
                 LineType.values().forEach { type ->
@@ -399,10 +486,10 @@ private fun LineTypeMenu(
                     ) {
                         Text(
                             when (type) {
-                                LineType.EDGE -> stringResource(R.string.line_type_edge)
-                                LineType.MOUNTAIN -> stringResource(R.string.line_type_mountain)
-                                LineType.VALLEY -> stringResource(R.string.line_type_valley)
-                                LineType.AUX -> stringResource(R.string.line_type_aux)
+                                LineType.EDGE -> resourceManager.getString(ResourceConstants.LINE_TYPE_EDGE)
+                                LineType.MOUNTAIN -> resourceManager.getString(ResourceConstants.LINE_TYPE_MOUNTAIN)
+                                LineType.VALLEY -> resourceManager.getString(ResourceConstants.LINE_TYPE_VALLEY)
+                                LineType.AUX -> resourceManager.getString(ResourceConstants.LINE_TYPE_AUX)
                             }
                         )
                     }
@@ -411,48 +498,10 @@ private fun LineTypeMenu(
         },
         confirmButton = {
             TextButton(onClick = onDismiss) {
-                Text(stringResource(R.string.close))
+                Text(resourceManager.getString(ResourceConstants.CLOSE))
             }
         }
     )
 }
 
-// Инструменты для холста
-sealed class CanvasTool {
-    object DrawCreaseFree : CanvasTool() // Свободное рисование линий
-    object MoveCreasePattern : CanvasTool() // Перемещение паттерна
-    object LineSegmentDelete : CanvasTool() // Удаление линий
-    object ChangeCreaseType : CanvasTool() // Изменение типа линии
-    object LengthenCrease : CanvasTool() // Удлинение линий
-    object DrawPoint : CanvasTool() // Рисование точек
-    object CircleDraw : CanvasTool() // Рисование окружностей
-    object CircleDrawThreePoint : CanvasTool() // Рисование окружности по трем точкам
-    object CircleDrawFree : CanvasTool() // Свободное рисование окружностей
-    object ParallelDraw : CanvasTool() // Рисование параллельных линий
-    object PerpendicularDraw : CanvasTool() // Рисование перпендикулярных линий
-    object SymmetricDraw : CanvasTool() // Симметричное рисование
-    object DrawCreaseRestricted : CanvasTool() // Рисование линий с ограничениями
-    object DrawCreaseSymmetric : CanvasTool() // Симметричное рисование линий
-    object DrawCreaseAngleRestricted : CanvasTool() // Рисование линий с угловыми ограничениями
-    object DeletePoint : CanvasTool() // Удаление точек
-    object AngleSystem : CanvasTool() // Система углов
-    object CreaseSelect : CanvasTool() // Выбор линий
-    object CreaseUnselect : CanvasTool() // Отмена выбора линий
-    object CreaseMove : CanvasTool() // Перемещение линий
-    object CreaseCopy : CanvasTool() // Копирование линий
-    object CreaseMakeMountain : CanvasTool() // Создание горной линии
-    object CreaseMakeValley : CanvasTool() // Создание долинной линии
-    object CreaseMakeEdge : CanvasTool() // Создание краевой линии
-    object CreaseMakeAux : CanvasTool() // Создание вспомогательной линии
-    object CreaseToggleMV : CanvasTool() // Переключение между горной и долинной линиями
-    object CreaseDeleteOverlapping : CanvasTool() // Удаление перекрывающихся линий
-    object CreaseDeleteIntersecting : CanvasTool() // Удаление пересекающихся линий
-    object SelectPolygon : CanvasTool() // Выбор многоугольника
-    object UnselectPolygon : CanvasTool() // Отмена выбора многоугольника
-    object SelectLasso : CanvasTool() // Выбор лассо
-    object UnselectLasso : CanvasTool() // Отмена выбора лассо
-    object Text : CanvasTool() // Текст
-    object AddFoldingConstraint : CanvasTool() // Добавление ограничений складывания
-    object Axiom5 : CanvasTool() // Аксиома 5
-    object Axiom7 : CanvasTool() // Аксиома 7
-} 
+ 

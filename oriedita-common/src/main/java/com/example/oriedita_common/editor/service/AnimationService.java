@@ -1,7 +1,7 @@
 package com.example.oriedita_common.editor.service;
 
-import oriedita.editor.canvas.animation.Interpolation;
-import origami.crease_pattern.elements.Point;
+import com.example.oriedita_common.editor.canvas.animation.Interpolation;
+import com.example.oriedita_core.origami.crease_pattern.elements.Point;
 
 import java.util.function.Consumer;
 import java.util.function.Supplier;
@@ -9,18 +9,19 @@ import java.util.function.UnaryOperator;
 
 public interface AnimationService {
     /**
-     * animates a value from the current value (determined by applying getter) to a new value, which is
-     * determined by applying calculateEndValue either on the current value, if no animation of the same key
-     * is currently running; or on the endValue of the currently running animation of the same key if one exists.
-     * the animation runs for time seconds, and the animated value is set using setter each time update is called.
-     * @param key identifier of the animation, should be unique for each property
-     * @param setter method to set the value of the animated property during the animation
-     * @param getter method to get the starting value of the animated property, to determine the end value
-     * @param calculateEndValue method to determine the end value of the animated property, is called with the current value
-     *                          if no animation with the same key is running, or with the end value of the current animation
-     *                          with the same key if one is running
-     * @param time animation duration in seconds
-     * @param interpolation interpolation to be used for the animation
+     * Анимирует значение от текущего значения (определяется применением getter) к новому значению,
+     * которое определяется применением calculateEndValue либо к текущему значению, если анимация с тем же ключом
+     * не выполняется в данный момент; либо к конечному значению выполняющейся анимации с тем же ключом, если она существует.
+     * Анимация выполняется в течение time секунд, и анимированное значение устанавливается с помощью setter
+     * каждый раз при вызове update.
+     * @param key идентификатор анимации, должен быть уникальным для каждого свойства
+     * @param setter метод для установки значения анимируемого свойства во время анимации
+     * @param getter метод для получения начального значения анимируемого свойства для определения конечного значения
+     * @param calculateEndValue метод для определения конечного значения анимируемого свойства, вызывается с текущим значением
+     *                          если анимация с тем же ключом не выполняется, или с конечным значением текущей анимации
+     *                          с тем же ключом, если она выполняется
+     * @param time продолжительность анимации в секундах
+     * @param interpolation интерполяция для использования в анимации
      */
     void animate(String key, Consumer<Double> setter, Supplier<Double> getter, UnaryOperator<Double> calculateEndValue, double time, Interpolation interpolation);
 
@@ -39,13 +40,14 @@ public interface AnimationService {
     Interpolation getDefaultInterpolation();
 
     /**
-     *
-     * @param key unique string identifying the animation. animations with the same key will overwrite each other
-     * @param setter method to set the animated value
-     * @param getter method to get the animated value
-     * @param calculateEndPoint method to calculate the value that should be animated to, based on the current value (before the animation)
-     * @param time time to animate
-     * @param interpolation interpolation curve to use for the animation
+     * Анимирует точку от текущего положения к новому положению
+     * 
+     * @param key уникальная строка, идентифицирующая анимацию. анимации с тем же ключом будут перезаписывать друг друга
+     * @param setter метод для установки анимируемого значения
+     * @param getter метод для получения анимируемого значения
+     * @param calculateEndPoint метод для вычисления значения, к которому должна анимироваться точка, на основе текущего значения (до анимации)
+     * @param time время анимации
+     * @param interpolation кривая интерполяции для использования в анимации
      */
     void animatePoint(String key, Consumer<Point> setter, Supplier<Point> getter, UnaryOperator<Point> calculateEndPoint, double time, Interpolation interpolation);
 
@@ -63,12 +65,12 @@ public interface AnimationService {
 
 
     /**
-     * updates all currently running animations and sets their respective properties to the correct value
+     * Обновляет все выполняющиеся в данный момент анимации и устанавливает их соответствующие свойства в правильные значения
      */
     void update();
 
     /**
-     * @return true if any animation is currently running
+     * @return true если какая-либо анимация выполняется в данный момент
      */
     boolean isAnimating();
 }

@@ -33,7 +33,7 @@ public class TextWorker {
     public void draw(Canvas canvas, Camera camera) {
         Text.setPaint(textPaint);
         for (Text text : texts) {
-            Point textPos = camera.ob(text.getPos());
+            Point textPos = camera.object2TV(text.getPos());
             Paint.FontMetrics fontMetrics = textPaint.getFontMetrics();
             float height = fontMetrics.bottom - fontMetrics.top;
             float textY = (float) textPos.getY();

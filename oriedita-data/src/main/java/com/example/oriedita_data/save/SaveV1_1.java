@@ -7,7 +7,7 @@ import com.google.gson.annotations.SerializedName;
  * Расширенная версия формата сохранения с дополнительными возможностями
  * Использует Gson для сериализации/десериализации
  */
-@SerializedName("v1.1")
+
 public class SaveV1_1 extends BaseSave {
     
     /**

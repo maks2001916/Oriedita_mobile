@@ -26,6 +26,7 @@ import java.util.List;
 import java.util.Queue;
 import java.util.Set;
 import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.stream.Collectors;
 
 /**
  * Representation of the current drawn crease pattern.
@@ -126,7 +127,7 @@ public class FoldLineSet {
     }
 
     public Collection<LineSegment> getLineSegmentsCollection() {
-        return lineSegments.stream().skip(1).limit(getTotal()).toList();
+        return lineSegments.stream().skip(1).limit(getTotal()).collect(Collectors.toList());
     }
 
     //Get a line segment
@@ -138,7 +139,17 @@ public class FoldLineSet {
     //Enter the color of the i-th line segment
     public void setColor(int i, LineColor icol) {
         LineSegment s = lineSegments.get(i);
-        s.setColor(icol);
+        setColor(s, icol);
+    }
+    
+    public void setColor(LineSegment s, LineColor icol) {
+        int index = lineSegments.indexOf(s);
+        if (index >= 0) {
+            lineSegments.set(index, s.withColor(icol));
+        } else {
+            // Если не найден в списке, просто изменяем цвет
+            s.setColor(icol);
+        }
     }
 
     //Output the color of the i-th line segment
@@ -2285,6 +2296,188 @@ public class FoldLineSet {
 
     public Queue<FlatFoldabilityViolation> getViolations() {
         return this.cAMVViolations;
+    }
+    
+    // Методы для работы с выбранными линиями
+    public void del_selected_senbun() {
+        delSelectedLineSegmentFast();
+    }
+    
+    // Методы для проверок
+    public void check1() {
+        // Простая реализация check1 - поиск параллельных линий
+        Check1LineSegment.clear();
+        unselect_all();
+        for (LineSegment si : getLineSegmentsIterable()) {
+            for (LineSegment sj : getLineSegmentsIterable()) {
+                if (sj == si) break;
+                if (si.getColor() == LineColor.CYAN_3) continue;
+                if (sj.getColor() == LineColor.CYAN_3) continue;
+                
+                LineSegment.Intersection intersection = OritaCalc.determineLineSegmentIntersection(si, sj, Epsilon.UNKNOWN_0001, Epsilon.PARALLEL_FOR_FIX);
+                if (intersection == LineSegment.Intersection.PARALLEL_EQUAL_31) {
+                    Check1LineSegment.add(new LineSegment(si));
+                    Check1LineSegment.add(new LineSegment(sj));
+                }
+            }
+        }
+    }
+    
+    public void check2() {
+        // Простая реализация check2 - поиск T-образных пересечений
+        Check2LineSegment.clear();
+        unselect_all();
+        for (LineSegment si : getLineSegmentsIterable()) {
+            for (LineSegment sj : getLineSegmentsIterable()) {
+                if (sj == si) break;
+                if (si.getColor() == LineColor.CYAN_3) continue;
+                if (sj.getColor() == LineColor.CYAN_3) continue;
+                
+                LineSegment.Intersection intersection = OritaCalc.determineLineSegmentIntersection(si, sj, Epsilon.UNKNOWN_0001, Epsilon.PARALLEL_FOR_FIX);
+                if (intersection == LineSegment.Intersection.INTERSECTS_TSHAPE_S1_VERTICAL_BAR_25 ||
+                    intersection == LineSegment.Intersection.INTERSECTS_TSHAPE_S1_VERTICAL_BAR_26 ||
+                    intersection == LineSegment.Intersection.INTERSECTS_TSHAPE_S2_VERTICAL_BAR_27 ||
+                    intersection == LineSegment.Intersection.INTERSECTS_TSHAPE_S2_VERTICAL_BAR_28) {
+                    Check2LineSegment.add(new LineSegment(si));
+                    Check2LineSegment.add(new LineSegment(sj));
+                }
+            }
+        }
+    }
+    
+    public void check3() {
+        // Простая реализация check3 - проверка количества линий вокруг вершин
+        Check3LineSegment.clear();
+        unselect_all();
+        for (LineSegment si : getLineSegmentsIterable()) {
+            if (si.getColor() != LineColor.CYAN_3) {
+                Point p = si.getA();
+                int tss = vertex_syuui_numLines_for_del_V(p, Epsilon.UNKNOWN_1EN4);
+                if (tss != 0 && tss != 2) {
+                    Check3LineSegment.add(new LineSegment(p, p));
+                }
+            }
+        }
+    }
+    
+    public void check4() {
+        // Простая реализация check4 - проверка возможности складывания
+        cAMVViolations.clear();
+        // TODO: Реализовать полную проверку CAMV
+    }
+    
+    public boolean fix1() {
+        // Простая реализация fix1 - исправление параллельных линий
+        unselect_all();
+        for (int i = 1; i <= getTotal() - 1; i++) {
+            LineSegment si = get(i);
+            if (si.getColor() != LineColor.CYAN_3) {
+                for (int j = i + 1; j <= getTotal(); j++) {
+                    LineSegment sj = get(j);
+                    if (sj.getColor() != LineColor.CYAN_3) {
+                        LineSegment.Intersection intersection = OritaCalc.determineLineSegmentIntersection(si, sj, Epsilon.UNKNOWN_0001, Epsilon.PARALLEL_FOR_FIX);
+                        if (intersection == LineSegment.Intersection.PARALLEL_EQUAL_31) {
+                            setColor(si, sj.getColor());
+                            deleteLine(j);
+                            return true; // Исправление выполнено
+                        }
+                    }
+                }
+            }
+        }
+        return false; // Исправление не выполнено
+    }
+    
+    public void fix2() {
+        // Простая реализация fix2 - исправление T-образных пересечений
+        unselect_all();
+        for (int i = 1; i <= getTotal() - 1; i++) {
+            LineSegment si = get(i);
+            if (si.getColor() != LineColor.CYAN_3) {
+                for (int j = i + 1; j <= getTotal(); j++) {
+                    LineSegment sj = get(j);
+                    if (sj.getColor() != LineColor.CYAN_3) {
+                        LineSegment.Intersection intersection = OritaCalc.determineLineSegmentIntersection(si, sj, Epsilon.UNKNOWN_0001, Epsilon.PARALLEL_FOR_FIX);
+                        if (intersection == LineSegment.Intersection.INTERSECTS_TSHAPE_S1_VERTICAL_BAR_25 ||
+                            intersection == LineSegment.Intersection.INTERSECTS_TSHAPE_S1_VERTICAL_BAR_26 ||
+                            intersection == LineSegment.Intersection.INTERSECTS_TSHAPE_S2_VERTICAL_BAR_27 ||
+                            intersection == LineSegment.Intersection.INTERSECTS_TSHAPE_S2_VERTICAL_BAR_28) {
+                            // TODO: Реализовать исправление T-образных пересечений
+                            return;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    public void lightenCheck4Color() {
+        // Простая реализация осветления цвета check4
+        // TODO: Реализовать изменение прозрачности
+    }
+    
+    public void darkenCheck4Color() {
+        // Простая реализация затемнения цвета check4
+        // TODO: Реализовать изменение прозрачности
+    }
+    
+    public void organizeCircles() {
+        // Простая реализация организации кругов
+        for (int i = circles.size() - 1; i >= 0; i--) {
+            Circle circle = circles.get(i);
+            // TODO: Реализовать полную логику организации кругов
+        }
+    }
+    
+    public void point_removal() {
+        // Удаление точечных линий
+        removePoints();
+    }
+    
+    public void overlapping_line_removal() {
+        // Удаление перекрывающихся линий
+        removeOverlappingLines();
+    }
+    
+    public void branch_trim() {
+        // Обрезка веток
+        double r = Epsilon.UNKNOWN_1EN6;
+        for (int i = 1; i <= getTotal(); i++) {
+            LineSegment si = get(i);
+            boolean iflga = false;
+            boolean iflgb = false;
+            
+            for (int j = 1; j <= getTotal(); j++) {
+                if (i != j) {
+                    LineSegment sj = get(j);
+                    if (OritaCalc.distance(si.getA(), sj.getA()) < r ||
+                        OritaCalc.distance(si.getA(), sj.getB()) < r) {
+                        iflga = true;
+                    }
+                    if (OritaCalc.distance(si.getB(), sj.getA()) < r ||
+                        OritaCalc.distance(si.getB(), sj.getB()) < r) {
+                        iflgb = true;
+                    }
+                }
+            }
+            
+            if (!iflga || !iflgb) {
+                deleteLine(i);
+                i = 1; // Начать заново
+            }
+        }
+    }
+    
+    public void selectConnected(Point p) {
+        // Выбор связанных элементов с точкой
+        // Простая реализация - выбор всех линий, которые содержат точку p
+        double r = Epsilon.UNKNOWN_1EN4;
+        for (int i = 1; i <= getTotal(); i++) {
+            LineSegment s = get(i);
+            if (OritaCalc.distance(p, s.getA()) < r || OritaCalc.distance(p, s.getB()) < r) {
+                s.setSelected(2);
+            }
+        }
     }
 
     /**

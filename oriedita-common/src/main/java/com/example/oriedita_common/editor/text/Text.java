@@ -1,16 +1,15 @@
 package com.example.oriedita_common.editor.text;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.example.oriedita_core.origami.crease_pattern.elements.Point;
 
-import java.awt.Graphics;
-import java.awt.Rectangle;
+import android.graphics.Paint;
+import android.graphics.Rect;
 import java.io.Serializable;
 
 public class Text implements Serializable {
     private double x, y;
     private String text;
-    private static Graphics g;
+    private static Paint paint;
 
     @SuppressWarnings("unused") // Used for unit test
 	private Text() {
@@ -45,12 +44,10 @@ public class Text implements Serializable {
         this.y = y;
     }
 
-    @JsonIgnore
-    public static void setGraphics(Graphics g) {
-        Text.g = g;
+    public static void setPaint(Paint paint) {
+        Text.paint = paint;
     }
 
-    @JsonIgnore
     public Point getPos() {
         return new Point(getX(), getY());
     }
@@ -63,19 +60,20 @@ public class Text implements Serializable {
         this.text = text;
     }
 
-    public Rectangle calculateBounds() {
-        if (g == null) {
-            return new Rectangle(25, 3);
+    public Rect calculateBounds() {
+        if (paint == null) {
+            return new Rect(0, 0, 25, 3);
         }
         int width = 0;
         String[] lines = text.split("\n");
         for (String line : lines) {
-            int newWidth = g.getFontMetrics().stringWidth(line);
+            float newWidth = paint.measureText(line);
             if (newWidth > width) {
-                width = newWidth;
+                width = (int) newWidth;
             }
         }
-        int height = g.getFontMetrics().getHeight();
-        return new Rectangle(width, (height) * (int) text.chars().filter(c -> c == '\n').count() + 1);
+        Paint.FontMetrics fontMetrics = paint.getFontMetrics();
+        int height = (int) (fontMetrics.bottom - fontMetrics.top);
+        return new Rect(0, 0, width, height * (int) text.chars().filter(c -> c == '\n').count() + 1);
     }
 }

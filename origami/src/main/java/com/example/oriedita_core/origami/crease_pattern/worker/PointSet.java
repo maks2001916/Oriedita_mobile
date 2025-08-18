@@ -434,7 +434,7 @@ public class PointSet implements Serializable {
             return false;
         }
 
-        Log.i("TAG","全面数　＝　{}", numFaces);
+        Log.i("TAG","全面数　＝　{}");
         findLineInFaceBorder();
 
         Log.i("TAG","線分集合->点集合：点集合内で面を発生　終了");

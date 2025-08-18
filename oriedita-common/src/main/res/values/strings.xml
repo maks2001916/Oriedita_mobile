@@ -1,3 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">oriedita-common</string>
+    <string name="app_name">Oriedita</string>
+    
+    <!-- Common -->
+    <string name="back">Назад</string>
+    <string name="close">Закрыть</string>
+    <string name="cancel">Отмена</string>
+    <string name="ok">OK</string>
+    <string name="save">Сохранить</string>
+    <string name="delete">Удалить</string>
+    
+    <!-- Tools -->
+    <string name="tool_draw_crease_free">Свободное рисование линий</string>
+    <string name="tool_move_crease_pattern">Перемещение паттерна</string>
+    <string name="tool_line_segment_delete">Удаление линий</string>
+    <string name="tool_change_crease_type">Изменение типа линии</string>
+    <string name="tool_lengthen_crease">Удлинение линии</string>
+    <string name="tool_draw_point">Рисование точки</string>
+    <string name="tool_delete_point">Удаление точки</string>
+    <string name="tool_circle_draw">Рисование окружности</string>
+    <string name="tool_circle_draw_three_point">Рисование окружности (3 точки)</string>
+    <string name="tool_circle_draw_free">Свободное рисование окружности</string>
+    <string name="tool_parallel_draw">Рисование параллельной линии</string>
+    <string name="tool_perpendicular_draw">Рисование перпендикулярной линии</string>
+    <string name="tool_symmetric_draw">Симметричное рисование</string>
+    <string name="tool_draw_crease_restricted">Рисование линии с ограничениями</string>
+    <string name="tool_draw_crease_symmetric">Симметричное рисование линии</string>
+    <string name="tool_draw_crease_angle_restricted">Рисование линии с ограничением угла</string>
+    <string name="tool_angle_system">Система углов</string>
+    <string name="tool_crease_select">Выбор линии</string>
+    <string name="tool_crease_unselect">Отмена выбора линии</string>
+    <string name="tool_crease_move">Перемещение линии</string>
+    <string name="tool_crease_copy">Копирование линии</string>
+    <string name="tool_crease_make_mountain">Сделать горной складкой</string>
+    <string name="tool_crease_make_valley">Сделать долинной складкой</string>
+    <string name="tool_crease_make_edge">Сделать краевой линией</string>
+    <string name="tool_crease_make_aux">Сделать вспомогательной линией</string>
+    <string name="tool_crease_toggle_mv">Переключить горная/долинная</string>
+    <string name="tool_crease_delete_overlapping">Удалить перекрывающиеся линии</string>
+    <string name="tool_crease_delete_intersecting">Удалить пересекающиеся линии</string>
+    <string name="tool_select_polygon">Выбор многоугольника</string>
+    <string name="tool_unselect_polygon">Отмена выбора многоугольника</string>
+    <string name="tool_select_lasso">Выбор лассо</string>
+    <string name="tool_unselect_lasso">Отмена выбора лассо</string>
+    <string name="tool_text">Добавить текст</string>
+    <string name="tool_add_folding_constraint">Добавить ограничение складывания</string>
+    <string name="tool_axiom5">Аксиома 5</string>
+    <string name="tool_axiom7">Аксиома 7</string>
+    
+    <!-- Additional tool names -->
+    <string name="tool_background_change_position">Смена позиции фона</string>
+    <string name="tool_change_standard_face">Смена стандартной грани</string>
+    <string name="tool_circle_change_color">Смена цвета круга</string>
+    <string name="tool_circle_draw_concentric">Рисование концентрических кругов</string>
+    <string name="tool_circle_draw_concentric_select">Выбор концентрических кругов</string>
+    <string name="tool_circle_draw_inverted">Рисование инвертированных кругов</string>
+    <string name="tool_circle_draw_separate">Рисование отдельных кругов</string>
+    <string name="tool_square_bisector">Биссектриса квадрата</string>
+    <string name="tool_inward">Внутрь (Rabbit Ear)</string>
+    <string name="tool_draw_crease_angle_restricted3">Сгиб по 3 точкам</string>
+    <string name="tool_line_segment_division">Деление отрезка</string>
+    <string name="tool_line_segment_ratio_set">Деление по пропорции</string>
+    <string name="tool_polygon_set_no_corners">Многоугольник без углов</string>
+    <string name="tool_fish_bone_draw">Рыбья кость</string>
+    <string name="tool_double_symmetric_draw">Двойная симметрия</string>
+    <string name="tool_creases_alternate_mv">Чередование MV</string>
+    <string name="tool_draw_crease_angle_restricted5">Сгиб по 5 точкам</string>
+    <string name="tool_vertex_make_angularly_flat_foldable">Плоский угол вершины</string>
+    <string name="tool_foldable_line_input">Ввод сгибаемой линии</string>
+    <string name="tool_vertex_delete_on_crease">Удалить вершину на сгибе</string>
+    <string name="tool_parallel_draw_width">Ширина параллельных</string>
+    <string name="tool_operation_frame_create">Создать рамку операции</string>
+    <string name="tool_voronoi_create">Создать Вороной</string>
+    <string name="tool_flat_foldable_check">Проверка на складываемость</string>
+    <string name="tool_select_line_intersecting">Выделить пересекающиеся линии</string>
+    <string name="tool_unselect_line_intersecting">Снять выделение с пересечённых</string>
+    <string name="tool_lengthen_crease_same_color">Продлить сгиб того же цвета</string>
+    <string name="tool_foldable_line_draw">Рисовать сгибаемую линию</string>
+    <string name="tool_replace_line_type_select">Заменить тип линии</string>
+    <string name="tool_delete_line_type_select">Удалить тип линии</string>
+    <string name="tool_modify_calculated_shape">Изменить вычисленную форму</string>
+    <string name="tool_move_calculated_shape">Переместить вычисленную форму</string>
+    <string name="tool_circle_draw_tangent_line">Рисование касательной к кругу</string>
+    <string name="tool_circle_draw_two_concentric_select">Выбор двух концентрических кругов</string>
+    <string name="tool_continuous_symmetric_draw">Непрерывное симметричное рисование</string>
+    <string name="tool_crease_advance_type">Продвинутый тип сгиба</string>
+    <string name="tool_crease_make_mv">Создание горной/долинной линии</string>
+    <string name="tool_unknown">Неизвестный инструмент</string>
+    
+    <!-- Line Types -->
+    <string name="line_type_edge">Краевая</string>
+    <string name="line_type_mountain">Горная</string>
+    <string name="line_type_valley">Долинная</string>
+    <string name="line_type_aux">Вспомогательная</string>
+    
+    <!-- Menu -->
+    <string name="menu_tools">Инструменты</string>
+    <string name="menu_line_type">Тип линии</string>
+    <string name="menu_undo">Отменить</string>
+    <string name="menu_redo">Повторить</string>
+    <string name="menu_new">Новый</string>
+    <string name="menu_open">Открыть</string>
+    <string name="menu_save">Сохранить</string>
+    <string name="menu_settings">Настройки</string>
+    
+    <!-- Settings -->
+    <string name="settings_grid">Сетка</string>
+    <string name="settings_grid_show">Показать сетку</string>
+    <string name="settings_grid_snap">Привязка к сетке</string>
+    <string name="settings_grid_size">Размер сетки</string>
+    <string name="settings_angle_snap">Привязка по углу</string>
+    <string name="settings_angle_snap_enabled">Включить привязку по углу</string>
+    <string name="settings_angle_snap_value">Угол привязки</string>
+    <string name="settings_line_width">Толщина линии</string>
+    <string name="settings_point_size">Размер точки</string>
+    <string name="settings_zoom">Масштаб</string>
+    <string name="settings_zoom_in">Увеличить</string>
+    <string name="settings_zoom_out">Уменьшить</string>
+    <string name="settings_zoom_reset">Сбросить масштаб</string>
 </resources>

@@ -1,6 +1,6 @@
 package com.example.oriedita_common.editor.service;
 
-import oriedita.editor.task.OrieditaTask;
+import com.example.oriedita_common.editor.task.OrieditaTask;
 
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeoutException;

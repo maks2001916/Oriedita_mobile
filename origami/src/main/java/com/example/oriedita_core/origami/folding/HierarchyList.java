@@ -74,7 +74,7 @@ public class HierarchyList {//This class is used to record and utilize the hiera
         hierarchyList_copy = SymmetricMatrix.create(facesTotal, 2);
     }
 
-    public Throwable getEquivalenceConditionTotal() {
+    public int getEquivalenceConditionTotal() {
         return tL.size();
     }
 
@@ -98,7 +98,7 @@ public class HierarchyList {//This class is used to record and utilize the hiera
                 .thenComparingInt(EquivalenceCondition::getD));
     }
 
-    public Throwable getUEquivalenceConditionTotal() {
+    public int getUEquivalenceConditionTotal() {
         return uL.size();
     }
 

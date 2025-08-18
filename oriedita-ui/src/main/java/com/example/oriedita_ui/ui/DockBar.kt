@@ -6,6 +6,8 @@ import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -97,7 +99,7 @@ private fun DockBarButtons(
                 )
             } else {
                 Icon(
-                    imageVector = androidx.compose.material.icons.Icons.Default.Add,
+                    imageVector = Icons.Default.Add,
                     contentDescription = "Добавить инструмент",
                     modifier = Modifier.align(Alignment.Center),
                     tint = Color.Black

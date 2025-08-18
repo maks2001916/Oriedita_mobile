@@ -74,6 +74,7 @@ public interface CreasePattern_Worker {
     String redo();
 
     void setTitle(String s_title0);
+    String getS_title();
 
     void record();
 
