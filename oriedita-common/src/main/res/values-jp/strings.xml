@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Oriedita</string>
+    
+    <!-- Common -->
+    <string name="back">戻る</string>
+    <string name="close">閉じる</string>
+    <string name="cancel">キャンセル</string>
+    <string name="ok">OK</string>
+    <string name="save">保存</string>
+    <string name="delete">削除</string>
+    
+    <!-- Tools -->
+    <string name="tool_draw_crease_free">自由な線描画</string>
+    <string name="tool_move_crease_pattern">折り目パターンの移動</string>
+    <string name="tool_line_segment_delete">線の削除</string>
+    <string name="tool_change_crease_type">線の種類の変更</string>
+    <string name="tool_lengthen_crease">線の延長</string>
+    <string name="tool_draw_point">点の描画</string>
+    <string name="tool_delete_point">点の削除</string>
+    <string name="tool_circle_draw">円の描画</string>
+    <string name="tool_circle_draw_three_point">円の描画（3点）</string>
+    <string name="tool_circle_draw_free">自由な円描画</string>
+    <string name="tool_parallel_draw">平行線の描画</string>
+    <string name="tool_perpendicular_draw">垂直線の描画</string>
+    <string name="tool_symmetric_draw">対称描画</string>
+    <string name="tool_draw_crease_restricted">制限付き線描画</string>
+    <string name="tool_draw_crease_symmetric">対称線描画</string>
+    <string name="tool_draw_crease_angle_restricted">角度制限付き線描画</string>
+    <string name="tool_angle_system">角度システム</string>
+    <string name="tool_crease_select">線の選択</string>
+    <string name="tool_crease_unselect">線の選択解除</string>
+    <string name="tool_crease_move">線の移動</string>
+    <string name="tool_crease_copy">線のコピー</string>
+    <string name="tool_crease_make_mountain">山折りにする</string>
+    <string name="tool_crease_make_valley">谷折りにする</string>
+    <string name="tool_crease_make_edge">エッジ線にする</string>
+    <string name="tool_crease_make_aux">補助線にする</string>
+    <string name="tool_crease_toggle_mv">山/谷の切り替え</string>
+    <string name="tool_crease_delete_overlapping">重複線の削除</string>
+    <string name="tool_crease_delete_intersecting">交差線の削除</string>
+    <string name="tool_select_polygon">多角形の選択</string>
+    <string name="tool_unselect_polygon">多角形の選択解除</string>
+    <string name="tool_select_lasso">ラッソ選択</string>
+    <string name="tool_unselect_lasso">ラッソ選択解除</string>
+    <string name="tool_text">テキストの追加</string>
+    <string name="tool_add_folding_constraint">折り畳み制約の追加</string>
+    <string name="tool_axiom5">公理5</string>
+    <string name="tool_axiom7">公理7</string>
+    
+    <!-- Line Types -->
+    <string name="line_type_edge">エッジ</string>
+    <string name="line_type_mountain">山折り</string>
+    <string name="line_type_valley">谷折り</string>
+    <string name="line_type_aux">補助</string>
+    
+    <!-- Menu -->
+    <string name="menu_tools">ツール</string>
+    <string name="menu_line_type">線の種類</string>
+    <string name="menu_undo">元に戻す</string>
+    <string name="menu_redo">やり直し</string>
+    <string name="menu_new">新規</string>
+    <string name="menu_open">開く</string>
+    <string name="menu_save">保存</string>
+    <string name="menu_settings">設定</string>
+    
+    <!-- Settings -->
+    <string name="settings_grid">グリッド</string>
+    <string name="settings_grid_show">グリッドの表示</string>
+    <string name="settings_grid_snap">グリッドスナップ</string>
+    <string name="settings_grid_size">グリッドサイズ</string>
+    <string name="settings_angle_snap">角度スナップ</string>
+    <string name="settings_angle_snap_enabled">角度スナップの有効化</string>
+    <string name="settings_angle_snap_value">スナップ角度</string>
+    <string name="settings_line_width">線の幅</string>
+    <string name="settings_point_size">点のサイズ</string>
+    <string name="settings_zoom">ズーム</string>
+    <string name="settings_zoom_in">拡大</string>
+    <string name="settings_zoom_out">縮小</string>
+    <string name="settings_zoom_reset">ズームリセット</string>
+</resources> 

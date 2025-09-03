@@ -17,7 +17,6 @@ public class FileModel implements Serializable {
     private String savedFileName;
     private boolean saved;
 
-    @Inject
     public FileModel() {
         reset();
     }

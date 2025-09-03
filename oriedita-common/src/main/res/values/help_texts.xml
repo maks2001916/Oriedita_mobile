@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Tools Help -->
+    <string name="help_draw_diagonal_gridlines">Отобразить диагональные линии на каждой ячейке сетки.\n\nСоздать равностороннюю треугольную сетку, используя диагональные линии сетки с углом 60°.</string>
+    <string name="help_draw_two_colored_cp">Создать двухцветный паттерн сгибов с выбранными линиями сгиба.</string>
+    <string name="help_a__hajimeni">Выберите инструмент для просмотра инструкции помощи.</string>
+    <string name="help_folded_figure_toggle_anti_alias">Отобразить сглаживание сложенной формы.</string>
+    <string name="help_all_s_step_to_orisen">Преобразовать временные линии из различных операций в линии сгиба.</string>
+    <string name="help_anti_alias_toggle">Отобразить сглаживание линий.</string>
+    <string name="help_As100">Вычислить 100 решений сложенной формы и сохранить их как файлы изображений.</string>
+    <string name="help_back_color">Установить цвет задней стороны сложенной формы.</string>
+    <string name="help_go_to_folded_figure">Перейти к конкретному решению сложенной формы.</string>
+    <string name="help_col_orange">Нарисовать оранжевую маркерную линию.</string>
+    <string name="help_col_yellow">Нарисовать желтую маркерную линию.</string>
+    <string name="help_button_suitei_04">Вычислить сложенную форму.</string>
+    <string name="help_folded_figure_flip">Перевернуть сложенную форму.</string>
+    <string name="help_scale">Масштабировать сложенную форму к паттерну сгибов.</string>
+    <string name="help_duplicate_folded_model">Дублировать сложенную форму.</string>
+    <string name="help_another_solution">Вычислить следующее доступное решение для сложенной формы.</string>
+    <string name="help_col_black">Нарисовать краевую линию.</string>
+    <string name="help_col_blue">Нарисовать долинную линию.</string>
+    <string name="help_col_cyan">Нарисовать вспомогательную линию.</string>
+    <string name="help_col_red">Нарисовать горную линию.</string>
+    <string name="help_check">Проверить</string>
+    <string name="help_ck_o">Проверить ошибки для совпадающих линий.\nСовпадающие линии вызывают проблемы с вычислениями.</string>
+    <string name="help_ck_t">Проверить ошибки для T-пересекающихся линий.\nT-пересекающиеся линии, которые не разделяются правильно на сегменты, вызывают проблемы с вычислениями.</string>
+    <string name="help_check3">Проверить ошибки локальной плоской сгибаемости.\nПаттерн сгибов должен быть плоскосгибаемым перед вычислением складывания.</string>
+    <string name="help_c_amv">Проверить ошибки плоской сгибаемости для вершин.\n\nТреугольник: Неправильное (нечетное) количество линий:\n🔴 Недостаточно горных линий\n🔵 Недостаточно долинных линий\n🟣 Неправильное количество краевых линий\n\nКвадрат: Неправильные типы (теорема Маекавы)\n🔴 Недостаточно горных линий\n🔵 Недостаточно долинных линий\n⚫ Равное количество горных и долинных линий\n🟣 Неправильная конфигурация краевых линий\n\nКруг: Неправильные углы (теорема Кавасаки)\n🔴 Недостаточно горных линий\n🔵 Недостаточно долинных линий\n⚫ Равное количество горных и долинных линий\n⚫ Только углы неправильные\n\nМногоугольник: Неправильный порядок линий\n🟢 Правильное количество линий, типы и углы, но неправильный порядок (лемма big-little-big)\nВыделенные секторы показывают углы, вызывающие проблему.</string>
+    <string name="help_ck4_color_increase">Увеличить прозрачность ошибок.</string>
+    <string name="help_ck4_color_decrease">Уменьшить прозрачность ошибок.</string>
+    <string name="help_display_aux_lines">Отобразить вспомогательные линии.</string>
+    <string name="help_display_live_aux_lines">Отобразить маркерные линии.</string>
+    <string name="help_select_and3_click">Активировать функцию тройного клика для переключения из режима выбора в режим трансформации.</string>
+    <string name="help_replace_line">Перекрасить линии, рисуя прямоугольник.\n\nВыберите типы линий для замены новым цветом линии.</string>
+    <string name="help_switch_replace">Переключить режим замены.</string>
+    
+    <!-- Navigation Help -->
+    <string name="help_memori_yoko_idou">Горизонтальное перемещение по памяти</string>
+    <string name="help_memori_tate_idou">Вертикальное перемещение по памяти</string>
+    <string name="help_tenkaizu_kakudai">Увеличить карту</string>
+    <string name="help_tenkaizu_syukusyou">Уменьшить карту</string>
+    <string name="help_zen_syokika">Полная инициализация</string>
+    <string name="help_tenkaizu_idiu">Переместить карту</string>
+    <string name="help_tenkaizu_m_kaiten">Повернуть карту влево</string>
+    <string name="help_tenkaizu_p_kaiten">Повернуть карту вправо</string>
+    
+    <!-- Settings Help -->
+    <string name="help_grid_show">Показать/скрыть сетку на экране</string>
+    <string name="help_grid_snap">Включить/выключить привязку к сетке</string>
+    <string name="help_angle_snap">Включить/выключить привязку по углу</string>
+    <string name="help_zoom_in">Увеличить масштаб изображения</string>
+    <string name="help_zoom_out">Уменьшить масштаб изображения</string>
+    <string name="help_zoom_reset">Сбросить масштаб к исходному значению</string>
+</resources> 

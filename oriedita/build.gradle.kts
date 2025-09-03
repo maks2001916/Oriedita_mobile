@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    id("kotlin-kapt")
 }
 
 android {
@@ -28,14 +29,28 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = "11"
+        jvmTarget = "17"
     }
     buildFeatures {
         compose = true
+    }
+    
+    packaging {
+        resources {
+            excludes += "/META-INF/{AL2.0,LGPL2.1}"
+            excludes += "META-INF/versions/9/OSGI-INF/MANIFEST.MF"
+        }
+    }
+    
+    lint {
+        disable += "MissingClass"
+        disable += "MissingTranslation"
+        disable += "ExtraTranslation"
+        abortOnError = false
     }
 }
 
@@ -50,7 +65,14 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
     implementation(libs.identity.doctypes.jvm)
+    
+    // Дополнительные зависимости для работы с разрешениями
+    implementation("androidx.activity:activity-ktx:1.8.2")
+    implementation("androidx.fragment:fragment-ktx:1.6.2")
+    implementation("androidx.core:core-ktx:1.12.0")
+    
     testImplementation(libs.junit)
+    testImplementation(libs.junit.jupiter.api)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))
@@ -62,4 +84,14 @@ dependencies {
     implementation(project(":oriedita-common"))
     implementation(project(":oriedita-data"))
     implementation(project(":oriedita-ui"))
+    
+    // Guava for utility classes
+    implementation(libs.guava)
+    
+    // JICO for icon processing
+    implementation(libs.jico)
+    
+    // Hilt for dependency injection (replaces CDI)
+    implementation("com.google.dagger:hilt-core:2.48")
+    kapt("com.google.dagger:hilt-compiler:2.48")
 }

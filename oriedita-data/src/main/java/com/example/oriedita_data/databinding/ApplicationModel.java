@@ -6,20 +6,14 @@ import com.example.oriedita_core.origami.crease_pattern.CustomLineTypes;
 
 import android.graphics.Color;
 import android.graphics.Point;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Frame;
-import java.awt.Point;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import javax.inject.Singleton;
-import javax.inject.Inject;
 
 /**
  * This model is saved to disk and restored when the application starts.
@@ -87,6 +81,11 @@ public class ApplicationModel implements Serializable {
     private boolean isGridColorDetached;
     private boolean isFoldedFigureColorDetached;
 
+    // Константы для состояний окна (аналог Frame.NORMAL и других)
+    public static final int WINDOW_STATE_NORMAL = 0;
+    public static final int WINDOW_STATE_ICONIFIED = 1;
+    public static final int WINDOW_STATE_MAXIMIZED = 2;
+
 
     /*
     Things to remember when adding a new property:
@@ -96,7 +95,6 @@ public class ApplicationModel implements Serializable {
         - if included in preference window: add property to restorePrefDefaults
      */
 
-    @Inject
     public ApplicationModel() {
         reset();
     }
@@ -427,8 +425,8 @@ public class ApplicationModel implements Serializable {
         cpExportWarning = false;
 
         windowPosition = null;
-        //заменить на view или аналог из jetpack compose
-        windowState = Frame.NORMAL;
+        // Состояние окна по умолчанию для Android
+        windowState = WINDOW_STATE_NORMAL;
         windowSize = null;
 
         gridColor = Colors.GRID_LINE;
@@ -882,7 +880,14 @@ public class ApplicationModel implements Serializable {
         showInvisibleTextWarning = applicationModel.getShowInvisibleTextWarning();
 
         laf = applicationModel.getLaf();
-        recentFileList = applicationModel.getRecentFileList().stream().filter(File::exists).collect(Collectors.toList());
+        // Фильтруем список файлов, оставляя только существующие
+        List<File> filteredList = new ArrayList<>();
+        for (File file : applicationModel.getRecentFileList()) {
+            if (file.exists()) {
+                filteredList.add(file);
+            }
+        }
+        recentFileList = filteredList;
 
         customFromLineType = applicationModel.getCustomFromLineType();
         customToLineType = applicationModel.getCustomToLineType();

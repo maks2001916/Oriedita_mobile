@@ -21,7 +21,6 @@ public class SelectedTextModel {
 
     private boolean dirty;
 
-    @Inject
     public SelectedTextModel() {
         reset();
     }
@@ -44,7 +43,7 @@ public class SelectedTextModel {
         setDirty(false);
     }
 
-    @Expose(serialize = false, deserialize = false)
+
     public void setDirty(boolean dirty) {
         boolean oldDirty = this.dirty;
         if (dirty && !oldDirty) {
@@ -86,7 +85,7 @@ public class SelectedTextModel {
         this.pcs.removePropertyChangeListener(listener);
     }
 
-    @Expose(serialize = false, deserialize = false)
+
     public boolean isDirty() {
         return dirty;
     }

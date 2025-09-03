@@ -9,25 +9,19 @@ import com.example.oriedita_core.origami.crease_pattern.elements.Point;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.graphics.Typeface;
 
-import java.awt.Graphics2D;
-import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.inject.Singleton;
-import javax.inject.Inject;
 
 /**
  * Allows displaying text on the canvas
  */
-@Singleton
 public class TextWorker {
     private final List<Text> texts;
     private final Paint textPaint;
 
-    @Inject
     public TextWorker() {
         this.texts = new ArrayList<>();
         this.textPaint = new Paint();
@@ -37,14 +31,15 @@ public class TextWorker {
     }
 
     public void draw(Canvas canvas, Camera camera) {
-        Text.setGraphics(canvas);
+        Text.setPaint(textPaint);
         for (Text text : texts) {
-            Point textPos = camera.ob(text.getPos());
-            int height = canvas.getFontMetrics().getHeight();
-            int textY = (int) textPos.getY();
+            Point textPos = camera.object2TV(text.getPos());
+            Paint.FontMetrics fontMetrics = textPaint.getFontMetrics();
+            float height = fontMetrics.bottom - fontMetrics.top;
+            float textY = (float) textPos.getY();
 
             for (String line : text.getText().split("\n")) {
-                canvas.drawString(line, (int) textPos.getX(), textY);
+                canvas.drawText(line, (float) textPos.getX(), textY, textPaint);
                 textY += height;
             }
         }
@@ -97,12 +92,12 @@ public class TextWorker {
         List<Text> toRemove = new ArrayList<>();
 
         for (Text text : texts) {
-            Rectangle r = text.calculateBounds();
+            Rect r = text.calculateBounds();
             Point p1 = camera.object2TV(text.getPos());
-            r.setLocation((int) p1.getX(), (int) p1.getY());
-            Rectangle selection = new Rectangle((int) pa.getX(), (int) pa.getY(), (int) (pb.getX() - pa.getX()), (int) (pb.getY() - pa.getY()));
+            r.offset((int) p1.getX(), (int) p1.getY());
+            Rect selection = new Rect((int) pa.getX(), (int) pa.getY(), (int) pb.getX(), (int) pb.getY());
 
-            if (selection.contains(r) || selection.intersects(r) || r.contains(selection)) {
+            if (Rect.intersects(selection, r)) {
                 changed = true;
                 toRemove.add(text);
             }

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- ツールのツールチップ -->
+    <string name="tooltip_line_input">2点間に線を描く</string>
+    <string name="tooltip_circle_input">指定された中心と半径で円を描く</string>
+    <string name="tooltip_select">編集する要素を選択</string>
+    <string name="tooltip_delete">選択された要素を削除</string>
+    <string name="tooltip_undo">最後の操作を元に戻す</string>
+    <string name="tooltip_redo">元に戻した操作をやり直す</string>
+    
+    <!-- 線の種類のツールチップ -->
+    <string name="tooltip_mountain">山折り（凸）を作成</string>
+    <string name="tooltip_valley">谷折り（凹）を作成</string>
+    <string name="tooltip_edge">モデルのエッジを作成</string>
+    <string name="tooltip_aux">補助線を作成</string>
+    
+    <!-- 幾何学的構築のツールチップ -->
+    <string name="tooltip_parallel">既存の線に平行な線を描く</string>
+    <string name="tooltip_perpendicular">既存の線に垂直な線を描く</string>
+    <string name="tooltip_angle_bisector">角の二等分線を構築</string>
+    <string name="tooltip_square_bisector">正方形の二等分線を構築</string>
+    
+    <!-- チェックのツールチップ -->
+    <string name="tooltip_check1">基本的な折り畳み条件をチェック</string>
+    <string name="tooltip_check2">幾何学的制約をチェック</string>
+    <string name="tooltip_check3">位相的条件をチェック</string>
+    <string name="tooltip_check4">平面折り畳み可能性をチェック</string>
+</resources> 

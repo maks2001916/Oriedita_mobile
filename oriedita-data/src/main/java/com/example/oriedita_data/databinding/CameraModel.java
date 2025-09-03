@@ -16,7 +16,6 @@ public class CameraModel {
     private double rotation;
     private double scale;
 
-    @Inject
     public CameraModel() {
         reset();
     }

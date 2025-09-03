@@ -1,12 +1,8 @@
 package com.example.oriedita_data.canvas;
 
-import com.example.oriedita_data.databinding.AngleSystemModel;
-import com.example.oriedita_data.databinding.ApplicationModel;
-import com.example.oriedita_data.databinding.CanvasModel;
-import com.example.oriedita_data.databinding.GridModel;
-import com.example.oriedita_data.drawing.Grid;
-import com.example.oriedita_common.editor.drawing.tools.Camera;
-import com.example.oriedita_data.save.Save;
+import android.graphics.Canvas;
+import android.graphics.Path;
+
 import com.example.oriedita_core.origami.crease_pattern.CustomLineTypes;
 import com.example.oriedita_core.origami.crease_pattern.FoldLineSet;
 import com.example.oriedita_core.origami.crease_pattern.LineSegmentSet;
@@ -14,11 +10,16 @@ import com.example.oriedita_core.origami.crease_pattern.elements.Circle;
 import com.example.oriedita_core.origami.crease_pattern.elements.LineColor;
 import com.example.oriedita_core.origami.crease_pattern.elements.LineSegment;
 import com.example.oriedita_core.origami.crease_pattern.elements.Point;
+import com.example.oriedita_data.databinding.AngleSystemModel;
+import com.example.oriedita_data.save.Save;
+import com.example.oriedita_common.editor.canvas.FoldLineAdditionalInputMode;
+import com.example.oriedita_common.editor.canvas.LineStyle;
+import com.example.oriedita_common.editor.drawing.tools.Camera;
+import com.example.oriedita_data.databinding.ApplicationModel;
+import com.example.oriedita_data.databinding.CanvasModel;
+import com.example.oriedita_data.databinding.GridModel;
+import com.example.oriedita_data.drawing.Grid;
 
-
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.geom.GeneralPath;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.List;
@@ -48,12 +49,15 @@ public interface CreasePattern_Worker {
 
     LineSegmentSet get();
 
-    //折畳み推定用にselectされた線分集合の折線数を intとして出力する。//icolが3(cyan＝水色)以上の補助線はカウントしない
+    // Возвращает количество линий сгиба в выбранном наборе сегментов для оценки складывания в виде int
+    // Вспомогательные линии с icol >= 3 (cyan = голубой) не учитываются
     int getFoldLineTotalForSelectFolding();
 
     LineSegmentSet getForSelectFolding();
 
     int getTotal();
+
+    Save getSave(String title);
 
     Save getSave_for_export();
 
@@ -70,6 +74,7 @@ public interface CreasePattern_Worker {
     String redo();
 
     void setTitle(String s_title0);
+    String getS_title();
 
     void record();
 
@@ -80,14 +85,28 @@ public interface CreasePattern_Worker {
     void auxRecord();
 
     //------------------------------------------------------------------------------
-    //Drawing the basic branch
+    // Рисование базовой ветви
     //------------------------------------------------------------------------------
-    void drawWithCamera(Graphics g, boolean displayComments, boolean displayCpLines, boolean displayAuxLines, boolean displayAuxLiveLines, float lineWidth, LineStyle lineStyle, float f_h_WireframeLineWidth, int p0x_max, int p0y_max, boolean i_mejirusi_display, boolean hideOperationFrame);
+    void drawGrid(Canvas g, int p0x_max, int p0y_max);
+
+    void drawWithCamera(
+            Canvas g,
+            boolean displayComments,
+            boolean displayCpLines,
+            boolean displayAuxLines,
+            boolean displayAuxLiveLines,
+            float lineWidth,
+            LineStyle lineStyle,
+            float f_h_WireframeLineWidth,
+            int p0x_max, int p0y_max,
+            boolean i_mejirusi_display,
+            boolean hideOperationFrame);
 
     void resetCircleStep();
-
     // ------------------------------------
+
     void setGridInputAssist(boolean i);
+
 
     void addCircle(Circle e0);
 
@@ -102,17 +121,17 @@ public interface CreasePattern_Worker {
     void addLineSegment(LineSegment s0);
 
     Point getClosestPoint(Point t0);
-
     //------------------------------
+
     LineSegment getClosestLineSegment(Point t0);
-
     //------------------------------------------------------
+
     LineSegment getClosestLineStepSegment(Point t0, int imin, int imax);
-
     //------------------------------
-    Circle getClosestCircleMidpoint(Point t0);
 
+    Circle getClosestCircleMidpoint(Point t0);
     //-----------------------------------------------62ここまで　//20181121　iactiveをtppに置き換える
+
     Point getGridPosition(Point p0);
 
     void resetLineStep(int i);
@@ -150,8 +169,8 @@ public interface CreasePattern_Worker {
     int MV_change(Point p0a, Point p0b);
 
     LineSegment extendToIntersectionPoint(LineSegment s0);
-
     //-------------------------
+
     void del_selected_senbun();
 
     void v_del_all();
@@ -178,8 +197,7 @@ public interface CreasePattern_Worker {
 
     void setFoldLineAdditional(FoldLineAdditionalInputMode i);
 
-    void check1()//In foldLineSet, check and set the funny fold line to the selected state.
-    ;
+    void check1(); // В foldLineSet проверяет и устанавливает забавную линию сгиба в выбранное состояние
 
     void fix1();
 
@@ -211,15 +229,15 @@ public interface CreasePattern_Worker {
 
     void setData(CanvasModel data);
 
-    void setData(AngleSystemModel angleSystemModel);
-
     Point getCameraPosition();
 
     void selectConnected(Point p);
 
-    java.util.List<LineSegment> getLineStep();
+    List<LineSegment> getLineStep();
 
-    GeneralPath getLinePath();
+    void setLineStepColor(LineSegment s, LineColor icol);
+
+    Path getLinePath();
 
     Camera getCamera();
 
@@ -255,7 +273,7 @@ public interface CreasePattern_Worker {
 
     int getNumPolygonCorners();
 
-    Color getCustomCircleColor();
+    int getCustomCircleColor();
 
     CanvasModel.SelectionOperationMode getI_select_mode();
 
@@ -269,7 +287,7 @@ public interface CreasePattern_Worker {
 
     void setGridConfigurationData(GridModel gridModel);
 
-    //30 30 30 30 30 30 30 30 30 30 30 30 除け_線_変換
+    //30 30 30 30 30 30 30 30 30 30 30 30 Исключение_линии_преобразование
     enum FourPointStep {
         STEP_0,
         STEP_1,

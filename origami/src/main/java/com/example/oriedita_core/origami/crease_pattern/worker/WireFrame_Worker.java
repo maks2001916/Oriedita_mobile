@@ -18,37 +18,67 @@ import com.example.oriedita_core.origami.folding.util.AverageCoordinates;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+/**
+ * Рабочий класс для создания каркасной модели оригами.
+ * Этот класс ремесленника паттерна складок имеет только один PointSet как паттерн складок.
+ * PointSet, полученный в результате складывания и т.д., должен возвращаться наружу и не храниться внутри.
+ */
 public class WireFrame_Worker {
-    //This crease pattern craftsman class has only one PointStore c as a crease pattern.
-    //PointSet obtained as a result of folding etc. should be returned to the outside and not held by oneself.
-    double r;                   //Criteria for determining the radius of the circles at both ends of the straight line of the basic branch structure and the proximity of the branches to various points
-    PointSet pointSet = new PointSet();    //Development view
-    //Definition of variables used in VVVVVVVVVVVV oritatami and oekaki VVVVVVVVVVVVVVVVVVVVVVVVVVVV
-    int[] facePosition;//Indicates how far a surface is from the reference surface. Enter a value such as 1, next to the reference plane, 2, next to the reference plane, and 3 next to it.
+    /** Критерий для определения радиуса окружностей на обоих концах прямой линии базовой структуры ветвления и близости ветвей к различным точкам */
+    double r;
+    /** Набор точек - развертка */
+    PointSet pointSet = new PointSet();
+    
+    // Определение переменных, используемых в складывании и рисовании
+    
+    /** Указывает, насколько далеко поверхность находится от опорной поверхности. Введите значение типа 1 - рядом с опорной плоскостью, 2 - рядом с опорной плоскостью, и 3 рядом с ней */
+    int[] facePosition;
+    /** ID начальной грани */
     int startingFaceId = -1;
-    int[] nextFaceId;//The id of the surface (reference surface side) next to a certain surface
-    int[] associatedLineId;//The id of the bar between one side and the next side (reference plane side)
-    AverageCoordinates[] tnew;//Stores the position of the point when folded
+    /** ID поверхности (сторона опорной поверхности) рядом с определенной поверхностью */
+    int[] nextFaceId;
+    /** ID линии между одной стороной и следующей стороной (сторона опорной плоскости) */
+    int[] associatedLineId;
+    /** Хранит позицию точки при складывании */
+    AverageCoordinates[] tnew;
 
-    public WireFrame_Worker(double r0) {  //コンストラクタ
+    /**
+     * Конструктор рабочего класса каркасной модели
+     * @param r0 критерий радиуса для определения близости точек
+     */
+    public WireFrame_Worker(double r0) {
         r = r0;
     }
 
+    /**
+     * Сбрасывает состояние рабочего класса к значениям по умолчанию
+     */
     public void reset() {
         r = 3.0;
         pointSet.reset();
     }
 
+    /**
+     * Настраивает массивы для работы с указанным количеством точек, линий и граней
+     * @param numPoints количество точек
+     * @param numLines количество линий
+     * @param numFaces количество граней
+     */
     private void configure(int numPoints, int numLines, int numFaces) {
         tnew = new AverageCoordinates[numPoints + 1];
         for (int i = 0; i <= numPoints; i++) {
             tnew[i] = new AverageCoordinates();
         }
         facePosition = new int[numFaces + 1];
-        nextFaceId = new int[numFaces + 1];         //The id of the surface (reference surface side) next to a certain surface
-        associatedLineId = new int[numFaces + 1];         //The id of the bar between one surface and the next surface (reference surface side)
+        nextFaceId = new int[numFaces + 1];         // ID поверхности (сторона опорной поверхности) рядом с определенной поверхностью
+        associatedLineId = new int[numFaces + 1];   // ID линии между одной поверхностью и следующей поверхностью (сторона опорной поверхности)
     }
 
+    /**
+     * Устанавливает ID начальной грани для складывания
+     * @param i ID грани для установки
+     * @return установленный ID начальной грани
+     */
     public int setStartingFaceId(int i) {
         startingFaceId = i;
 
@@ -67,54 +97,71 @@ public class WireFrame_Worker {
 
 
     /**
-     * Get the total number of lines in the point set
+     * Получает общее количество линий в наборе точек
+     * @return количество линий
      */
     public int getNumLines() {
         return pointSet.getNumLines();
     }
 
     /**
-     * Obtain the color of the line of the point set (when the point set is treated as a development view, this color represents a mountain valley).
+     * Получает цвет линии набора точек (когда набор точек рассматривается как развертка, этот цвет представляет гору-долину)
+     * @param i индекс линии
+     * @return цвет линии
      */
     public LineColor getColor(int i) {
         return pointSet.getColor(i);
     }
 
+    /**
+     * Получает позицию грани относительно опорной поверхности
+     * @param i индекс грани
+     * @return позиция грани
+     */
     public int getIFacePosition(int i) {
         return facePosition[i];
     }
 
     /**
-     * Folding estimation (What you can do here is a wire diagram that does not consider the overlap of surfaces)
+     * Оценка складывания (здесь можно создать каркасную диаграмму, которая не учитывает перекрытие поверхностей)
+     * @return набор точек после складывания
+     * @throws InterruptedException если поток прерван
+     * @throws FoldingException если произошла ошибка при складывании
      */
-    public PointSet folding() throws InterruptedException, FoldingException {//Folding estimate
-        // The code that was previously here is identical to getFacePositions
+    public PointSet folding() throws InterruptedException, FoldingException {
+        // Код, который был здесь ранее, идентичен getFacePositions
         PointSet pointSet = getFacePositions();
 
-        Log.i("TAG","折ったときの点の位置を求める。");
-        // Find the position of the point when folded.
-        // If the point it is included in the face im
-        // Find where to move when the crease pattern is folded by moving the face im.
+        Log.i("TAG", "Находим позицию точки при складывании.");
+        // Находим позицию точки при складывании.
+        // Если точка включена в грань im
+        // Находим, куда перемещаться, когда паттерн складок складывается путем перемещения грани im.
 
         QuadTree qt = new QuadTree(new PointSetFaceAdapter(pointSet));
-        Log.i("TAG","折ったときの点の位置を求める（開始）");
+        Log.i("TAG", "Начинаем находить позицию точки при складывании");
         for (int it = 1; it <= this.pointSet.getNumPoints(); it++) {
             tnew[it].reset();
             for (int im : qt.collect(new PointCollector(pointSet.getPoint(it)))) {
-                if (pointSet.pointInFaceBorder(im, it)) {//c.Ten_moti_hantei returns 1 if the boundary of Face [im] contains Point [it], 0 if it does not.
+                if (pointSet.pointInFaceBorder(im, it)) { // c.Ten_moti_hantei возвращает 1, если граница грани [im] содержит точку [it], 0 если не содержит.
                     tnew[it].addPoint(fold_movement(it, im));
                     pointSet.setPoint(it, tnew[it].getAveragePoint());
                 }
             }
         }
-        Log.i("TAG","折ったときの点の位置を求めた（終了）");
+        Log.i("TAG", "Завершили поиск позиции точки при складывании");
 
         return pointSet;
     }
 
-    private Point fold_movement(int it, int im) { //A function that finds the position of the destination when the point it is folded as a member of the surface im
+    /**
+     * Функция, которая находит позицию назначения, когда точка it складывается как член поверхности im
+     * @param it индекс точки
+     * @param im индекс грани
+     * @return позиция точки после складывания
+     */
+    private Point fold_movement(int it, int im) {
         Point p = pointSet.getPoint(it);
-        int idestination_faceId = im;//The id number of the first face. From now on, we will follow the planes adjacent to the reference plane.
+        int idestination_faceId = im; // Номер id первой грани. Отныне мы будем следовать плоскостям, смежным с опорной плоскостью.
         while (idestination_faceId != startingFaceId) {
             p = lineSymmetry_point_determine(associatedLineId[idestination_faceId], p);
             idestination_faceId = nextFaceId[idestination_faceId];
@@ -122,9 +169,13 @@ public class WireFrame_Worker {
         return p;
     }
 
-    //Folding estimation (What you can do here is a wire diagram that does not consider the overlap of surfaces)
-    public PointSet getFacePositions() throws InterruptedException {//Folding estimate
-        PointSet cn = new PointSet();    //展開図
+    /**
+     * Оценка складывания (здесь можно создать каркасную диаграмму, которая не учитывает перекрытие поверхностей)
+     * @return набор точек с позициями граней
+     * @throws InterruptedException если поток прерван
+     */
+    public PointSet getFacePositions() throws InterruptedException {
+        PointSet cn = new PointSet();    // Развертка
         cn.configure(pointSet.getNumPoints(), pointSet.getNumLines(), pointSet.getNumFaces());
         cn.set(pointSet);
 
@@ -136,14 +187,14 @@ public class WireFrame_Worker {
             associatedLineId[i] = 0;
             facePosition[i] = 0;
         }
-        //Grasp the positional relationship between the faces in preparation for folding
-        Log.i("TAG","折りたたみの準備として面同士の位置関係を把握する");
+        // Понимаем позиционные отношения между гранями в подготовке к складыванию
+        Log.i("TAG", "Понимаем позиционные отношения между гранями в подготовке к складыванию");
         facePosition[startingFaceId] = 1;
 
         int depth = 1;
         int remaining_facesTotal = pointSet.getNumFaces() - 1;
 
-        // Tsai: I'm not sure if ordering matters, so I just play safe here.
+        // Tsai: Я не уверен, имеет ли значение порядок, поэтому просто подстраховываюсь здесь.
         SortedSet<Integer> currentRound = new TreeSet<>();
         currentRound.add(startingFaceId);
 
@@ -171,50 +222,81 @@ public class WireFrame_Worker {
         return cn;
     }
 
-    private Point lineSymmetry_point_determine(int lineId, Point point) {//Given the id of the bar and any point, returns the point that is axisymmetric of the given point with respect to the corresponding bar.
+    /**
+     * Учитывая id линии и любую точку, возвращает точку, которая является осесимметричной данной точке относительно соответствующей линии
+     * @param lineId id линии
+     * @param point точка для отражения
+     * @return отраженная точка
+     */
+    private Point lineSymmetry_point_determine(int lineId, Point point) {
         return OritaCalc.findLineSymmetryPoint(pointSet.getBeginPointFromLineId(lineId), pointSet.getEndPointFromLineId(lineId), point);
     }
 
+    /**
+     * Получает общее количество точек
+     * @return количество точек
+     */
     public int getPointsTotal() {
         return pointSet.getNumPoints();
     }
 
+    /**
+     * Устанавливает набор точек
+     * @param ts набор точек для установки
+     */
     public void set(PointSet ts) {
         configure(ts.getNumPoints(), ts.getNumLines(), ts.getNumFaces());
         pointSet.configure(ts.getNumPoints(), ts.getNumLines(), ts.getNumFaces());
         pointSet.set(ts);
     }
 
+    /**
+     * Получает набор точек
+     * @return текущий набор точек
+     */
     public PointSet get() {
         return pointSet;
     }
 
+    /**
+     * Получает хранилище линий
+     * @return экземпляр базовой структуры ветвления
+     */
     public LineSegmentSet getLineStore() {
-        //Instantiation of basic branch structure
         return new LineSegmentSet(pointSet);
     }
 
+    /**
+     * Устанавливает набор сегментов линий без генерации граней
+     * @param lineSegmentSet набор сегментов линий
+     * @throws InterruptedException если поток прерван
+     */
     public void setLineSegmentSetWithoutFaceOccurence(LineSegmentSet lineSegmentSet) throws InterruptedException {
         reset();
         definePointSet(lineSegmentSet);
         defineLines(lineSegmentSet);
     }
 
+    /**
+     * Устанавливает набор сегментов линий с генерацией граней
+     * @param lineSegmentSet набор сегментов линий
+     * @throws InterruptedException если поток прерван
+     */
     public void setLineSegmentSet(LineSegmentSet lineSegmentSet) throws InterruptedException {
         reset();
 
-        //First, define the points in PointSet.
+        // Сначала определяем точки в PointSet
         definePointSet(lineSegmentSet);
 
-        //Next, define the lines in PointSet.
+        // Затем определяем линии в PointSet
         defineLines(lineSegmentSet);
 
-        //Then generate a surface within PointSet.
+        // Затем генерируем поверхности в PointSet
         pointSet.calculateFaces();
     }
 
     private void definePointSet(LineSegmentSet lineSegmentSet) throws InterruptedException {
-        Log.i("TAG","Line set->Point set: Define points in point set");
+        Log.i("TAG","Набор линий -> Набор точек: Определяем точки в наборе точек");
         boolean found;
         Point ti;
 
@@ -246,18 +328,18 @@ public class WireFrame_Worker {
         }
 
         int numPoints = adapter.getCount();
-        Log.i("TAG","点の全数　addPointNum＝　");
-        Log.i("TAG", numPoints);
+        Log.i("TAG","Общее количество точек addPointNum = ");
+        Log.i("TAG", String.valueOf(numPoints));
 
         int numLines = lineSegmentSet.getNumLineSegments();
 
-        // Euler's formula says F - E + V = 1 (for bounded faces)
+        // Формула Эйлера говорит F - E + V = 1 (для ограниченных граней)
         int supposedNumFaces = numLines - numPoints + 1;
         /*
-         * However the numbers could be off due to rounding errors (see comments in
-         * PointSet), so we add a bit more just in case that happens. The "max" thing
-         * here is partly for compatibility with the old tests, but also for ensuring
-         * that the extra room is enough.
+         * Однако числа могут быть неточными из-за ошибок округления (см. комментарии в
+         * PointSet), поэтому мы добавляем немного больше на всякий случай. Функция "max"
+         * здесь частично для совместимости со старыми тестами, но также для обеспечения
+         * того, что дополнительного места достаточно.
          */
         int estimatedNumFaces = supposedNumFaces + Math.max(supposedNumFaces / 100, 99);
 
@@ -270,7 +352,7 @@ public class WireFrame_Worker {
     }
 
     private void defineLines(LineSegmentSet lineSegmentSet) throws InterruptedException {
-        Log.i("TAG","Line set->Point set: Defining a line in the point set");
+        Log.i("TAG","Набор линий -> Набор точек: Определяем линию в наборе точек");
 
         QuadTree qt = new QuadTree(new PointSetPointAdapter(pointSet));
         for (int n = 0; n < lineSegmentSet.getNumLineSegments(); n++) {
@@ -292,18 +374,18 @@ public class WireFrame_Worker {
             if (Thread.interrupted()) throw new InterruptedException();
         }
 
-        Log.i("TAG","棒の全数　＝ {}", pointSet.getNumLines());
+        Log.i("TAG", "Общее количество линий = " + pointSet.getNumLines());
     }
 
     /**
-     * Returns the faceId with the smaller faceId of the faces containing the line lineId as the boundary (there are up to two faces). Returns 0 if there is no face containing the line as the boundary
+     * Возвращает faceId с меньшим faceId среди граней, содержащих линию lineId как границу (максимум две грани). Возвращает 0, если нет грани, содержащей линию как границу
      */
     public int lineInFaceBorder_min_request(int lineId) {
         return pointSet.lineInFaceBorder_min_lookup(lineId);
     }
 
     /**
-     * Returns the faceId with the larger faceId among the faces containing the line lineId as the boundary (there are two faces at the maximum). Returns 0 if there is no face containing the line as the boundary
+     * Возвращает faceId с большим faceId среди граней, содержащих линию lineId как границу (максимум две грани). Возвращает 0, если нет грани, содержащей линию как границу
      */
     public int lineInFaceBorder_max_request(int lineId) {
         return pointSet.lineInFaceBorder_max_lookup(lineId);
@@ -327,7 +409,7 @@ public class WireFrame_Worker {
     }
 
     /**
-     * Get whether the i-th point is selected as 0 or 1.
+     * Получает, выбрана ли i-я точка как 0 или 1.
      */
     public boolean getPointState(int i) {
         return pointSet.getPointState(i);

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Oriedita</string>
+    
+    <!-- Common -->
+    <string name="back">Назад</string>
+    <string name="close">Закрыть</string>
+    <string name="cancel">Отмена</string>
+    <string name="ok">ОК</string>
+    <string name="save">Сохранить</string>
+    <string name="delete">Удалить</string>
+    
+    <!-- Tools -->
+    <string name="tool_draw_crease_free">Свободное рисование</string>
+    <string name="tool_move_crease_pattern">Перемещение</string>
+    <string name="tool_line_segment_delete">Удаление линий</string>
+    <string name="tool_change_crease_type">Изменение типа</string>
+    <string name="tool_lengthen_crease">Удлинение линии</string>
+    <string name="tool_draw_point">Рисование точек</string>
+    <string name="tool_delete_point">Удаление точек</string>
+    <string name="tool_circle_draw">Рисование окружности</string>
+    <string name="tool_circle_draw_three_point">Окружность по трем точкам</string>
+    <string name="tool_circle_draw_free">Свободная окружность</string>
+    <string name="tool_parallel_draw">Параллельные линии</string>
+    <string name="tool_perpendicular_draw">Перпендикулярные линии</string>
+    <string name="tool_symmetric_draw">Симметричные линии</string>
+    <string name="tool_draw_crease_restricted">Ограниченное рисование</string>
+    <string name="tool_draw_crease_symmetric">Симметричное рисование</string>
+    <string name="tool_draw_crease_angle_restricted">Рисование под углом</string>
+    <string name="tool_angle_system">Система углов</string>
+    <string name="tool_crease_select">Выбор линий</string>
+    <string name="tool_crease_unselect">Отмена выбора</string>
+    <string name="tool_crease_move">Перемещение линий</string>
+    <string name="tool_crease_copy">Копирование линий</string>
+    <string name="tool_crease_make_mountain">Сделать горной</string>
+    <string name="tool_crease_make_valley">Сделать долинной</string>
+    <string name="tool_crease_make_edge">Сделать краевой</string>
+    <string name="tool_crease_make_aux">Сделать вспомогательной</string>
+    <string name="tool_crease_toggle_mv">Переключить М/Д</string>
+    <string name="tool_crease_delete_overlapping">Удалить перекрывающиеся</string>
+    <string name="tool_crease_delete_intersecting">Удалить пересекающиеся</string>
+    <string name="tool_select_polygon">Выбор многоугольника</string>
+    <string name="tool_unselect_polygon">Отмена выбора многоугольника</string>
+    <string name="tool_select_lasso">Выбор лассо</string>
+    <string name="tool_unselect_lasso">Отмена выбора лассо</string>
+    <string name="tool_text">Текст</string>
+    <string name="tool_add_folding_constraint">Добавить ограничение</string>
+    <string name="tool_axiom5">Аксиома 5</string>
+    <string name="tool_axiom7">Аксиома 7</string>
+    
+    <!-- Line Types -->
+    <string name="line_type_edge">Краевая линия</string>
+    <string name="line_type_mountain">Горная линия</string>
+    <string name="line_type_valley">Долинная линия</string>
+    <string name="line_type_aux">Вспомогательная линия</string>
+    
+    <!-- Menu -->
+    <string name="menu_tools">Инструменты</string>
+    <string name="menu_line_type">Тип линии</string>
+    <string name="menu_undo">Отменить</string>
+    <string name="menu_redo">Повторить</string>
+    <string name="menu_new">Новый</string>
+    <string name="menu_open">Открыть</string>
+    <string name="menu_save">Сохранить</string>
+    <string name="menu_settings">Настройки</string>
+    
+    <!-- Settings -->
+    <string name="settings_grid">Сетка</string>
+    <string name="settings_grid_show">Показать сетку</string>
+    <string name="settings_grid_snap">Привязка к сетке</string>
+    <string name="settings_grid_size">Размер сетки</string>
+    <string name="settings_angle_snap">Привязка по углу</string>
+    <string name="settings_angle_snap_enabled">Включить привязку по углу</string>
+    <string name="settings_angle_snap_value">Значение угла</string>
+    <string name="settings_line_width">Ширина линии</string>
+    <string name="settings_point_size">Размер точки</string>
+    <string name="settings_zoom">Масштаб</string>
+    <string name="settings_zoom_in">Увеличить</string>
+    <string name="settings_zoom_out">Уменьшить</string>
+    <string name="settings_zoom_reset">Сброс масштаба</string>
+    
+    <!-- Project Grid -->
+    <string name="new_project">Новый проект</string>
+    <string name="create_new_project">Создать новый проект</string>
+    <string name="project_name">Название проекта</string>
+    <string name="last_modified">Изменен</string>
+    
+    <!-- Editor -->
+    <string name="editor_title">Редактор</string>
+    <string name="canvas_tools">Инструменты холста</string>
+    <string name="drawing_area">Область рисования</string>
+</resources> 

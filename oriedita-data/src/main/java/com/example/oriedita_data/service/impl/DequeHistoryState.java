@@ -4,8 +4,7 @@ import android.util.Log;
 import com.example.oriedita_data.save.Save;
 import com.example.oriedita_data.save.SaveProvider;
 import com.example.oriedita_data.service.HistoryState;
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
+// Jakarta CDI removed for Android compatibility
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -19,7 +18,6 @@ import java.util.Deque;
 import java.util.zip.DeflaterOutputStream;
 import java.util.zip.InflaterInputStream;
 
-@ApplicationScoped
 public class DequeHistoryState implements HistoryState {
     private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
 
@@ -35,7 +33,6 @@ public class DequeHistoryState implements HistoryState {
         this.pcs.addPropertyChangeListener(propertyChangeListener);
     }
 
-    @Inject
     public DequeHistoryState() {
     }
 
@@ -60,7 +57,7 @@ public class DequeHistoryState implements HistoryState {
         try {
             current = convertToBytes(s0);
         } catch (IOException e) {
-            Logger.error(e, "Saving current state failed");
+            Log.e("DequeHistoryState", "Saving current state failed");
         }
 
         // Future becomes irrelevant
@@ -80,8 +77,10 @@ public class DequeHistoryState implements HistoryState {
         }
         entrySize = Math.max(entrySize, 100000);
         long freeMemory = Runtime.getRuntime().freeMemory();
-        Logger.info("Free Memory: {}, Last undo entry size: {}, max undo entries: {}, current undo entries: {}",
-                freeMemory, entrySize, undoTotal, history.size());
+        Log.i("DequeHistoryState", "Free Memory: " + freeMemory +
+                        ", Last undo entry size: " + entrySize +
+                        ", max undo entries: " + undoTotal +
+                        ", current undo entries: " + history.size());
         if (freeMemory < entrySize*30) {
             undoTotal = (int) (undoTotal * 0.9) + 2; // never goes below 20
         } else if ( undoTotal < UNDO_TOTAL_MAX && freeMemory > entrySize*80) {
@@ -124,7 +123,7 @@ public class DequeHistoryState implements HistoryState {
         try {
             return (Save) convertFromBytes(current);
         } catch (IOException | ClassNotFoundException e) {
-            Logger.error(e, "Restoring current save failed");
+            Log.e("DequeHistoryState", "Restoring current save failed");
         }
 
         return SaveProvider.createInstance();

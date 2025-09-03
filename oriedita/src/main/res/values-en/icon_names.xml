@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Main application icons -->
+    <string name="icon_oriedita">Oriedita</string>
+    <string name="icon_fishbase">Fish Base</string>
+    <string name="icon_zahyou">Coordinate Grid</string>
+    
+    <!-- Tool icons -->
+    <string name="icon_line_input">Line Input</string>
+    <string name="icon_circle_input">Circle Input</string>
+    <string name="icon_select">Select</string>
+    <string name="icon_delete">Delete</string>
+    <string name="icon_undo">Undo</string>
+    <string name="icon_redo">Redo</string>
+    <string name="icon_zoom_in">Zoom In</string>
+    <string name="icon_zoom_out">Zoom Out</string>
+    <string name="icon_pan">Pan</string>
+    <string name="icon_rotate">Rotate</string>
+    
+    <!-- Line type icons -->
+    <string name="icon_mountain">Mountain Fold</string>
+    <string name="icon_valley">Valley Fold</string>
+    <string name="icon_edge">Edge</string>
+    <string name="icon_aux">Auxiliary Line</string>
+    <string name="icon_black">Black Line</string>
+    <string name="icon_red">Red Line</string>
+    
+    <!-- Geometric construction icons -->
+    <string name="icon_parallel">Parallel Lines</string>
+    <string name="icon_perpendicular">Perpendicular Lines</string>
+    <string name="icon_angle_bisector">Angle Bisector</string>
+    <string name="icon_square_bisector">Square Bisector</string>
+    <string name="icon_fish_bone">Fish Bone</string>
+    <string name="icon_voronoi">Voronoi Diagram</string>
+    
+    <!-- Check icons -->
+    <string name="icon_check1">Check 1</string>
+    <string name="icon_check2">Check 2</string>
+    <string name="icon_check3">Check 3</string>
+    <string name="icon_check4">Check 4</string>
+    
+    <!-- Settings icons -->
+    <string name="icon_settings">Settings</string>
+    <string name="icon_mouse_settings">Mouse Settings</string>
+    <string name="icon_line_width">Line Width</string>
+    <string name="icon_point_size">Point Size</string>
+</resources> 

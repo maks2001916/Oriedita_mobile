@@ -11,42 +11,69 @@ import com.example.oriedita_core.origami.folding.util.SortingBox;
 
 
 /**
- * Responsible for calculating the correct order of subfaces in a folded figure.
+ * Отвечает за вычисление правильного порядка подграней в сложенной фигуре.
+ * Класс для работы с иерархией граней при складывании оригами.
  */
 public class FoldedFigure_Worker {
+    /** Список иерархии граней */
     public final HierarchyList hierarchyList = new HierarchyList();
+    /** Рейтинг граней */
     public double[] face_rating;
-    public SortingBox<Integer> nbox = new SortingBox<>();//20180227 In the nbox, the id of men is paired with men_rating and sorted in ascending order of men_rating.
-    public int SubFaceTotal;//SubFaceの数
-    //paint 用のint格納用VVVVVVVVVVVVVVVVVVVVVV
+    /** Коробка сортировки для пар id грани и рейтинга, отсортированных по возрастанию рейтинга */
+    public SortingBox<Integer> nbox = new SortingBox<>();
+    /** Общее количество подграней */
+    public int SubFaceTotal;
+    /** Позиция ошибки для отрисовки */
     public EquivalenceCondition errorPos = null;
+    /** Целочисленный рейтинг граней */
     private int[] i_face_rating;
-    //  hierarchyList[][]は折る前の展開図のすべての面同士の上下関係を1つの表にまとめたものとして扱う
-    //　hierarchyList[i][j]が1なら面iは面jの上側。0なら下側。
-    //  hierarchyList[i][j]が-50なら、面iとjは重なが、上下関係は決められていない。
-    //hierarchyList[i][j]が-100なら、面iとjは重なるところがない。
-    int SubFace_valid_number;//The hierarchy of Faces can be covered without examining all SubFaces. Find the number of SubFaces required to cover the hierarchical relationship of Faces up to the priority order.
-    public int FaceIdCount_max;//各SubFaceの持つMenidsuuの最大値。すなわち、最も紙に重なりが多いところの枚数。
-    //paint 用のint格納用VVVVVVVVVVVVVVVVVVVVVV
-    public SubFace[] s0;//SubFace obtained from SubFace_figure
-    SubFace[] s1;//Reduced SubFace list, for AEA processing
-    public SubFace[] s;//s is s1 sorted in descending order of priority.
+    
+    // hierarchyList[][] обрабатывается как таблица, объединяющая все отношения верх-низ между гранями
+    // в развертке перед складыванием в одну таблицу
+    // hierarchyList[i][j] = 1 означает, что грань i находится выше грани j. 0 означает ниже.
+    // hierarchyList[i][j] = -50 означает, что грани i и j перекрываются, но отношение верх-низ не определено.
+    // hierarchyList[i][j] = -100 означает, что грани i и j не перекрываются.
+    
+    /** Количество подграней, необходимое для покрытия иерархических отношений граней до приоритетного порядка */
+    int SubFace_valid_number;
+    /** Максимальное значение количества id граней, которое имеет каждая подгрань. То есть количество слоев в месте с наибольшим перекрытием бумаги */
+    public int FaceIdCount_max;
+    /** Подграни, полученные из SubFace_figure */
+    public SubFace[] s0;
+    /** Уменьшенный список подграней для обработки AEA */
+    SubFace[] s1;
+    /** s - это s1, отсортированный в порядке убывания приоритета */
+    public SubFace[] s;
+    /** Доска объявлений для логирования */
     private final IBulletinBoard bb;
-    //　ここは  class Jyougehyou_Syokunin  の中です。
-    //上下表の初期設定。展開図に1頂点から奇数の折線がでる誤りがある場合0を返す。それが無ければ1000を返す。
-    //展開図に山谷折線の拡張による誤りがある場合2を返す。
-    int makesuu0no_menno_amount = 0;//Number of faces that can be ranked without any other faces on top
-    int makesuu1ijyouno_menno_amount = 0;//Number of faces that can only be ranked if there is one or more other faces on top
+    
+    // Инициализация таблицы верх-низ. Возвращает 0, если в развертке есть ошибка с нечетным количеством линий сгиба из одной вершины.
+    // Возвращает 1000, если такой ошибки нет. Возвращает 2, если есть ошибка расширения линий сгиба горы-долины.
+    
+    /** Количество граней, которые можно ранжировать без других граней сверху */
+    int makesuu0no_menno_amount = 0;
+    /** Количество граней, которые можно ранжировать только при наличии одной или более других граней сверху */
+    int makesuu1ijyouno_menno_amount = 0;
+    /** Суммарное количество граней сверху без ранжированных граней */
     private int top_face_id_ga_maketa_kazu_goukei_without_rated_face = 0;
 
+    /** Алгоритм перестановки подграней */
     private SubFaceSwappingAlgorithm swapper;
+    /** Режим дополнительного алгоритма оценки */
     private boolean aeaMode;
 
+    /**
+     * Конструктор рабочего класса сложенной фигуры
+     * @param bb0 доска объявлений для логирования
+     */
     public FoldedFigure_Worker(IBulletinBoard bb0) {
         bb = bb0;
         reset();
     }
 
+    /**
+     * Сбрасывает состояние рабочего класса
+     */
     public void reset() {
         hierarchyList.reset();
         SubFaceTotal = 0;
@@ -55,27 +82,33 @@ public class FoldedFigure_Worker {
     }
 
 
-    //　ここは  class Jyougehyou_Syokunin  の中です。
-
-
-    //SubFaceの面の重なり状態を次の状態にする。
-    //もし現在の面の重なり状態が、最後のものだったら0をreturnして、面の重なり状態は最初のものに戻る。
-    //zzzzzzzz
-
+    /**
+     * Получает количество валидных подграней
+     * @return количество валидных подграней
+     */
     public int getSubFace_valid_number() {
         return SubFace_valid_number;
     }
 
+    /**
+     * Переводит состояние перекрытия подграней в следующее состояние.
+     * Если текущее состояние перекрытия граней является последним, возвращает 0
+     * и состояние перекрытия граней возвращается к начальному.
+     * 
+     * @param ss индекс подграни
+     * @return id подграни, которая изменилась, или 0 если достигнут конец
+     * @throws InterruptedException если поток прерван
+     */
     public int next(int ss) throws InterruptedException {
-        int isusumu;//When = 0, SubFace changes (image that digits change).
-        int subfaceId;//SubFace id number that has changed
+        int isusumu; // Когда = 0, SubFace изменяется (образ изменения цифр)
+        int subfaceId; // Номер id SubFace, который изменился
         isusumu = 0;
-        //All SubFaces above ss + 1 are set to the initial values. An error occurs when the number of faces included in SubFace is 0.
+        // Все SubFaces выше ss + 1 устанавливаются в начальные значения. Ошибка возникает, когда количество граней, включенных в SubFace, равно 0.
 
         for (int i = ss + 1; i <= SubFace_valid_number; i++) {
             s[i].resetPermutationGenerator();
         }
-        //The overlapping state of the surfaces is changed in order from the one with the largest id number of the SubFace.
+        // Состояние перекрытия поверхностей изменяется по порядку от того, у которого наибольший номер id SubFace.
         subfaceId = ss;
         for (int i = ss; i >= 1 && isusumu == 0; i--) {
             isusumu = s[i].next(s[i].getFaceIdCount());
@@ -88,7 +121,11 @@ public class FoldedFigure_Worker {
         return subfaceId;
     }
 
-    //---------------------------------------------------------------------------------------------------------------------------------------------
+    /**
+     * Возвращает строку с количеством перестановок для каждой подграни
+     * @param imax максимальный индекс подграни
+     * @return строка с количеством перестановок
+     */
     public String Permutation_count(int imax) {
         StringBuilder s0 = new StringBuilder();
 
@@ -98,8 +135,15 @@ public class FoldedFigure_Worker {
         return s0.toString();
     }
 
-    //Start with the current permutation state and look for possible overlapping states. There is room for speeding up here.
-    public int possible_overlapping_search(boolean swap) throws InterruptedException {      //This should not change the hierarchyList.
+    /**
+     * Начинает с текущего состояния перестановки и ищет возможные состояния перекрытия.
+     * Есть возможности для ускорения здесь.
+     * 
+     * @param swap использовать ли алгоритм перестановки
+     * @return 1000 если найдено решение, 0 если нет возможных состояний перекрытия
+     * @throws InterruptedException если поток прерван
+     */
+    public int possible_overlapping_search(boolean swap) throws InterruptedException {
         bb.write("Initializing search...");
         bb.write(" ");
         bb.write(" ");
@@ -111,40 +155,45 @@ public class FoldedFigure_Worker {
         if (swap) {
             swapper = new SubFaceSwappingAlgorithm();
 
-            // Create a smaller "realtime AEA" to assist the search. Since AEA is now a very
-            // fast algorithm, we have the luxury of using it every step of the search to
-            // infer more stacking relations from our current set of permutation choices,
-            // and this will greatly speed up the permutation generating (because of the
-            // temporary guide mechanism) of later SubFaces.
+            // Создаем меньший "реалтайм AEA" для помощи в поиске. Поскольку AEA теперь очень
+            // быстрый алгоритм, у нас есть возможность использовать его на каждом шаге поиска для
+            // вывода дополнительных отношений стекирования из нашего текущего набора выборов перестановок,
+            // и это значительно ускорит генерацию перестановок (из-за механизма временного руководства) более поздних SubFaces.
             AEA = new AdditionalEstimationAlgorithm(hierarchyList, s, SubFace_valid_number, 1000);
             AEA.initialize();
         }
 
-        Sid = 1;//The initial value of Sid can be anything other than 0.
-        while (Sid != 0) { //If Sid == 0, it means that even the smallest number of SubFace has been searched.
+        Sid = 1; // Начальное значение Sid может быть любым, кроме 0.
+        while (Sid != 0) { // Если Sid == 0, это означает, что даже наименьший номер SubFace был просмотрен.
 
             ms = inconsistent_subFace_request(AEA);
             if (ms == 1000) {
                 return 1000;
-            }//There is no contradiction in all SubFaces.
+            } // Нет противоречий во всех SubFaces.
             Sid = next(ms - 1);
 
             if (swap) swapper.process(s, SubFace_valid_number);
 
             if (Thread.interrupted()) throw new InterruptedException();
         }
-        return 0;//There is no possible overlapping state
+        return 0; // Нет возможных состояний перекрытия
     }
 
-    //-----------------------------------------------------------------------------------------------------------------
-    //Search for SubFaces that fold inconsistently in ascending order of number. There is room for speeding up here as well.
-    private int inconsistent_subFace_request(AdditionalEstimationAlgorithm AEA) throws InterruptedException { //hierarchyList changes.
+    /**
+     * Ищет подграни, которые складываются несовместимо, в порядке возрастания номера.
+     * Есть возможности для ускорения здесь тоже.
+     * 
+     * @param AEA алгоритм дополнительной оценки
+     * @return 1000 если найдено решение, номер подграни если найдено противоречие
+     * @throws InterruptedException если поток прерван
+     */
+    private int inconsistent_subFace_request(AdditionalEstimationAlgorithm AEA) throws InterruptedException {
         int kks;
         boolean swap = AEA != null;
-        hierarchyList.restore();// <<<<<<<<<<<<<<<<<<<<<<<<<<<,,
+        hierarchyList.restore(); // Восстанавливаем состояние иерархии
         if (aeaMode) AEA.restore();
 
-        for (int ss = 1; ss <= SubFace_valid_number; ss++) { // <<<<<<<<<<<<<<高速化のため変更。070417
+        for (int ss = 1; ss <= SubFace_valid_number; ss++) { // Изменено для ускорения. 070417
             if (swap) swapper.visit(s[ss]);
 
             int count = s[ss].getFaceIdCount(), pair = count * (count - 1) / 2;
@@ -154,7 +203,7 @@ public class FoldedFigure_Worker {
             bb.rewrite(8, "Search progress " + Permutation_count(ss));
 
             kks = s[ss].possible_overlapping_search(hierarchyList);
-            if (kks == 0) {// kks == 0 means that there is no permutation that can overlap
+            if (kks == 0) { // kks == 0 означает, что нет перестановки, которая может перекрываться
                 swapper.record(ss);
                 if (ss > SubFace_valid_number / 2 || s[ss].swapCounter > 0) s[ss].swapCounter++;
                 return ss;
@@ -162,87 +211,88 @@ public class FoldedFigure_Worker {
 
             s[ss].swapCounter = 0;
             if (aeaMode) {
-                // Enter the stacking information of the ss th SubFace in hierarchyList.
+                // Вводим информацию о стекировании ss-й подграни в hierarchyList.
                 s[ss].enterStackingOfSubFace(AEA);
 
                 boolean success = true;
-                boolean se = swapper.shouldEstimate(ss); // side effect
+                boolean se = swapper.shouldEstimate(ss); // побочный эффект
                 if (se && ss <= Math.sqrt(SubFace_valid_number)) {
                     success = AEA.run(0) == HierarchyListStatus.SUCCESSFUL_1000;
                 } else if (ss % (3 + ss * ss / 6400) == 0) {
-                    // There's no need to execute run() even fastRun() in every step (that will be
-                    // too slow), so we use the formula above to decide when to run it.
+                    // Нет необходимости выполнять run() или даже fastRun() на каждом шаге (это будет
+                    // слишком медленно), поэтому мы используем формулу выше, чтобы решить, когда запускать его.
                     success = AEA.fastRun();
                 }
                 if (!success) {
                     /*
-                     * For some CPs, realtime AEA could return a result other than success (even as
-                     * we ran AEA in each step and the current permutation doesn't have any
-                     * immediate contradiction, since something might still go wrong in the
-                     * inference process), and in this case it is very difficult to make sense out
-                     * of the inference error, and the error could even stay all the way until the
-                     * final solution (which would then make the solution invalid). The best we can
-                     * do is to disable realtime AEA if this happens.
+                     * Для некоторых CP, реалтайм AEA может вернуть результат, отличный от успеха (даже если
+                     * мы запускали AEA на каждом шаге и текущая перестановка не имеет никаких
+                     * немедленных противоречий, поскольку что-то все еще может пойти не так в процессе
+                     * вывода), и в этом случае очень трудно понять ошибку вывода, и ошибка может
+                     * остаться до самого финального решения (что сделает решение недействительным).
+                     * Лучшее, что мы можем сделать - это отключить реалтайм AEA, если это происходит.
                      */
-                    Log.i("TAG","Disable realtime AEA");
+                    Log.i("TAG", "Disable realtime AEA");
                     aeaMode = false;
                     hierarchyList.restore();
-                    ss = 0; // restart the search
+                    ss = 0; // перезапускаем поиск
                 }
             } else {
                 s[ss].enterStackingOfSubFace(hierarchyList);
             }
         }
 
-        // Solution found, perform final checking
+        // Решение найдено, выполняем финальную проверку
         bb.rewrite(10, " ");
         bb.rewrite(9, "Possible solution found...");
-        AEA = new AdditionalEstimationAlgorithm(hierarchyList, s1, 1000); // we don't need much for this
+        AEA = new AdditionalEstimationAlgorithm(hierarchyList, s1, 1000); // нам не нужно много для этого
         if (AEA.run(SubFace_valid_number) != HierarchyListStatus.SUCCESSFUL_1000) {
             bb.rewrite(9, " ");
-            // This rarely happens, but typically it means the solution contradicts some of
-            // the SubFace not counted as "valid" previously. In that case, adding it to the
-            // valid set will solve the problem.
+            // Это редко происходит, но обычно означает, что решение противоречит некоторым
+            // подграням, не считавшимся "валидными" ранее. В этом случае добавление их в
+            // валидный набор решит проблему.
             if (AEA.errorIndex != 0) {
-                // Add additional SubFace to the valid list and continue the search
+                // Добавляем дополнительную подгрань в валидный список и продолжаем поиск
                 int v = ++SubFace_valid_number, e = AEA.errorIndex;
-                Log.i("TAG","Adding SubFace " + e + " to the valid set index " + v);
+                Log.i("TAG", "Adding SubFace " + e + " to the valid set index " + v);
                 SubFace temp = s[v];
                 s[v] = s[e];
                 s[e] = temp;
 
-                // The new SubFace doesn't have guidebook yet.
+                // Новая подгрань еще не имеет руководства.
                 hierarchyList.restore();
                 s[v].setGuideMap(hierarchyList);
 
-                // record dead-end here since this SubFace is having a contradiction already
+                // записываем тупик здесь, поскольку эта подгрань уже имеет противоречие
                 swapper.record(v);
             }
             return SubFace_valid_number;
         }
 
-        // Solution is confirmed
+        // Решение подтверждено
         return 1000;
     }
 
+    /**
+     * Выполняет рейтинг граней и возвращает коробку сортировки
+     * @return коробка сортировки с рейтингами граней
+     */
     public SortingBox<Integer> rating2() {
-        int hierarchyListFacesTotal = hierarchyList.getFacesTotal();//面の総数を求める。
+        int hierarchyListFacesTotal = hierarchyList.getFacesTotal(); // Находим общее количество граней
         face_rating = new double[hierarchyListFacesTotal + 1];
 
         i_face_rating = new int[hierarchyListFacesTotal + 1];
 
-
-        makesuu0no_menno_amount = 0;//Number of faces that can be ranked without any other faces on top
-        makesuu1ijyouno_menno_amount = 0;//Number of faces that can only be ranked if there is one or more other faces on top
-
+        makesuu0no_menno_amount = 0; // Количество граней, которые можно ранжировать без других граней сверху
+        makesuu1ijyouno_menno_amount = 0; // Количество граней, которые можно ранжировать только при наличии одной или более других граней сверху
 
         for (int i = 0; i <= hierarchyListFacesTotal; i++) {
             i_face_rating[i] = 0;
         }
 
-        // Find the topmost surface in order from 1 on the s surface (excluding the rated surface).
-        // Find the number of faces (excluding the rated faces) on the s plane in order from 1 and find the total.
-        // Find the surface with the smallest number of surfaces on that surface (excluding the surface with a rate) and give a rate
+        // Находим самую верхнюю поверхность по порядку от 1 на s поверхности (исключая ранжированную поверхность).
+        // Находим количество граней (исключая ранжированные грани) на s плоскости по порядку от 1 и находим общее.
+        // Находим поверхность с наименьшим количеством поверхностей на этой поверхности (исключая поверхность с рейтингом) и даем рейтинг
         for (int i = 1; i <= hierarchyListFacesTotal; i++) {
             int i_rate = 1 + hierarchyListFacesTotal - i;
 
@@ -252,8 +302,8 @@ public class FoldedFigure_Worker {
             face_rating[top_men_id] = i_rate;
         }
 
-        Log.i("TAG","上に他の面がない状態で順位付けできた面の数 = " + makesuu0no_menno_amount);
-        Log.i("TAG","上に他の面が1以上ある状態で順位付けした面の数 = " + makesuu1ijyouno_menno_amount);
+        Log.i("TAG", "Количество граней, которые можно ранжировать без других граней сверху = " + makesuu0no_menno_amount);
+        Log.i("TAG", "Количество граней, которые можно ранжировать только при наличии одной или более других граней сверху = " + makesuu1ijyouno_menno_amount);
 
         nbox.reset();
         for (int i = 1; i <= hierarchyList.getFacesTotal(); i++) {
@@ -262,21 +312,25 @@ public class FoldedFigure_Worker {
 
         return nbox;
     }
-    //Each of the following functions uses s0 [] as FaceStack 20180305
+    // Каждая из следующих функций использует s0[] как FaceStack 20180305
 
+    /**
+     * Получает id самой верхней грани без рейтинга
+     * @return id самой верхней грани
+     */
     private int get_top_face_id_without_rated_face() {
         int top_men_id = 0;
         top_face_id_ga_maketa_kazu_goukei_without_rated_face = hierarchyList.getFacesTotal() + 100;
 
-        int hierarchyListFacesTotal = hierarchyList.getFacesTotal();//Find the total number of faces.
+        int hierarchyListFacesTotal = hierarchyList.getFacesTotal(); // Находим общее количество граней
 
-        boolean[] i_kentouzumi = new boolean[hierarchyListFacesTotal + 1];//検討済みの面IDは１にする
+        boolean[] i_kentouzumi = new boolean[hierarchyListFacesTotal + 1]; // Рассмотренные id граней помечаем как true
         for (int i = 0; i <= hierarchyListFacesTotal; i++) {
             i_kentouzumi[i] = false;
         }
 
         for (int i = 1; i <= SubFaceTotal; i++) {
-            int s_top_id = get_s_top_id_without_rated_face(i);//各s面の（レートがついた面は除く）一番上の面。s_top_id=0ならそのs面にはレートが未定の面はない
+            int s_top_id = get_s_top_id_without_rated_face(i); // Самая верхняя грань каждой s-грани (исключая грани с рейтингом). s_top_id=0 означает, что в этой s-грани нет граней с неопределенным рейтингом
 
             if (s_top_id != 0) {
                 if (!i_kentouzumi[s_top_id]) {
@@ -284,7 +338,7 @@ public class FoldedFigure_Worker {
                     if (mkg == 0) {
                         makesuu0no_menno_amount++;
                         return s_top_id;
-                    }//ここは、これでよいか要検討20180306
+                    } // Здесь нужно проверить, правильно ли это 20180306
                     if (top_face_id_ga_maketa_kazu_goukei_without_rated_face > mkg) {
                         top_face_id_ga_maketa_kazu_goukei_without_rated_face = mkg;
                         top_men_id = s_top_id;
@@ -295,8 +349,8 @@ public class FoldedFigure_Worker {
             i_kentouzumi[s_top_id] = true;
         }
 
-        //makesuu0no_menno_amount=0;//上に他の面がない状態で順位付けできる面の数
-        //makesuu1ijyouno_menno_amount=0;//上に他の面が1以上ある状態でないと順位付けできない面の数
+        // makesuu0no_menno_amount=0; // Количество граней, которые можно ранжировать без других граней сверху
+        // makesuu1ijyouno_menno_amount=0; // Количество граней, которые можно ранжировать только при наличии одной или более других граней сверху
         if (top_face_id_ga_maketa_kazu_goukei_without_rated_face == 0) {
             makesuu0no_menno_amount++;
         } else if (top_face_id_ga_maketa_kazu_goukei_without_rated_face > 0) {
@@ -306,8 +360,13 @@ public class FoldedFigure_Worker {
         return top_men_id;
     }
 
-    private int get_s_top_id_without_rated_face(int ism) {//ismはs面のid
-        int Mensuu = s0[ism].getFaceIdCount();//FaceStackでの面数//FaceStack s0[];//FaceStack_figureから得られるFaceStack
+    /**
+     * Получает id самой верхней грани без рейтинга в s-грани
+     * @param ism id s-грани
+     * @return id самой верхней грани или 0 если нет граней без рейтинга
+     */
+    private int get_s_top_id_without_rated_face(int ism) { // ism - это id s-грани
+        int Mensuu = s0[ism].getFaceIdCount(); // Количество граней в FaceStack // FaceStack s0[]; // FaceStack, полученный из FaceStack_figure
         for (int jyunban = 1; jyunban <= Mensuu; jyunban++) {
             int im = s0[ism].fromTop_count_FaceId(jyunban);
             if (i_face_rating[im] == 0) {
@@ -317,20 +376,30 @@ public class FoldedFigure_Worker {
         return 0;
     }
 
+    /**
+     * Получает общее количество граней сверху без рейтинга для указанной грани
+     * @param men_id id грани
+     * @return общее количество граней сверху
+     */
     private int get_maketa_kazu_goukei_without_rated_face(int men_id) {
         int i_make = 0;
         for (int ism = 1; ism <= SubFaceTotal; ism++) {
             i_make = i_make + get_subFace_de_maketa_kazu_without_rated_Face(ism, men_id);
             if (i_make >= top_face_id_ga_maketa_kazu_goukei_without_rated_face) {
                 return i_make;
-            }//20180306高速化のためこの１行を入れているが、本当に効果があるかは不明。この行だけコメントアウトしても正常には動くはず。
-
+            } // 20180306 Добавлена эта строка для ускорения, но неясно, действительно ли она эффективна. Даже если закомментировать только эту строку, должно работать нормально.
         }
         return i_make;
     }
 
-    private int get_subFace_de_maketa_kazu_without_rated_Face(int ism, int men_id) {//ismはFaceStackのid
-        int FaceCount = s0[ism].getFaceIdCount();//FaceStackでの面数//FaceStack s0[];//FaceStack_figureから得られるFaceStack
+    /**
+     * Получает количество граней сверху без рейтинга в подграни
+     * @param ism id FaceStack
+     * @param men_id id грани
+     * @return количество граней сверху
+     */
+    private int get_subFace_de_maketa_kazu_without_rated_Face(int ism, int men_id) { // ism - это id FaceStack
+        int FaceCount = s0[ism].getFaceIdCount(); // Количество граней в FaceStack // FaceStack s0[]; // FaceStack, полученный из FaceStack_figure
         int maketa_kazu = 0;
 
         for (int i = 1; i <= FaceCount; i++) {
@@ -346,14 +415,25 @@ public class FoldedFigure_Worker {
     }
 
 
+    /**
+     * Статусы иерархического списка граней
+     */
     public enum HierarchyListStatus {
+        /** Неизвестно (-1) */
         UNKNOWN_N1,
+        /** Неизвестно (0) */
         UNKNOWN_0,
+        /** Неизвестно (1) */
         UNKNOWN_1,
+        /** Противоречие (2) */
         CONTRADICTED_2,
+        /** Противоречие (3) */
         CONTRADICTED_3,
+        /** Противоречие (4) */
         CONTRADICTED_4,
+        /** Ограничение (5) */
         CONSTRAINT_5,
+        /** Успешно (1000) */
         SUCCESSFUL_1000,
     }
 }

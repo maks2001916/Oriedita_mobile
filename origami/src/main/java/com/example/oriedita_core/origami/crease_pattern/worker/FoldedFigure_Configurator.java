@@ -324,8 +324,8 @@ public class FoldedFigure_Configurator {
 
         worker.hierarchyList.sortEquivalenceConditions();
         // Here we can compare and see the huge difference before and after AEA
-        Log.i("TAG","３面が関与する突き抜け条件の数　＝　{}", worker.hierarchyList.getEquivalenceConditionTotal());
-        Log.i("TAG","４面が関与する突き抜け条件の数　＝　{}", worker.hierarchyList.getUEquivalenceConditionTotal());
+        Log.i("TAG","３面が関与する突き抜け条件の数　＝　" + worker.hierarchyList.getEquivalenceConditionTotal());
+        Log.i("TAG","４面が関与する突き抜け条件の数　＝　" + worker.hierarchyList.getUEquivalenceConditionTotal());
 
         Log.i("TAG","追加推定 終了し、上下表を保存------------------------＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊");
 
@@ -350,7 +350,7 @@ public class FoldedFigure_Configurator {
 
         //SubFaceは優先順の何番目までやるかを決める
 
-        Log.i("TAG", String.format("Smen有効数は　{} ／ {}", worker.SubFace_valid_number, worker.SubFaceTotal));
+        Log.i("TAG", "Smen有効数は　" + worker.SubFace_valid_number + " ／ " + worker.SubFaceTotal);
         Log.i("TAG","上下表初期設定終了");
         return HierarchyListStatus.SUCCESSFUL_1000;
     }
@@ -431,7 +431,7 @@ public class FoldedFigure_Configurator {
         shutdownAndWait(service);
         if (worker.errorPos != null) return HierarchyListStatus.CONTRADICTED_3;
 
-        Log.i("TAG","３面が関与する突き抜け条件の数　＝　{}", worker.hierarchyList.getEquivalenceConditionTotal());
+        Log.i("TAG","３面が関与する突き抜け条件の数　＝　" + worker.hierarchyList.getEquivalenceConditionTotal());
 
         qt = null; // no longer needed
         return HierarchyListStatus.SUCCESSFUL_1000;
@@ -482,7 +482,7 @@ public class FoldedFigure_Configurator {
         shutdownAndWait(service);
         if (worker.errorPos != null) return HierarchyListStatus.CONTRADICTED_4;
 
-        Log.i("TAG","４面が関与する突き抜け条件の数　＝　{}", worker.hierarchyList.getUEquivalenceConditionTotal());
+        Log.i("TAG","４面が関与する突き抜け条件の数　＝　" + worker.hierarchyList.getUEquivalenceConditionTotal());
         return HierarchyListStatus.SUCCESSFUL_1000;
     }
 

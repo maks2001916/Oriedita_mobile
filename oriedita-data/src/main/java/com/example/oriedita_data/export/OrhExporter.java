@@ -1,15 +1,15 @@
 package com.example.oriedita_data.export;
 
-import jakarta.enterprise.context.ApplicationScoped;
-import org.tinylog.Logger;
-import oriedita.editor.databinding.ApplicationModel;
-import oriedita.editor.databinding.FoldedFigureModel;
-import oriedita.editor.databinding.GridModel;
-import oriedita.editor.drawing.tools.Camera;
-import oriedita.editor.export.api.FileExporter;
-import oriedita.editor.save.Save;
-import origami.crease_pattern.elements.Circle;
-import origami.crease_pattern.elements.LineSegment;
+import android.graphics.Color;
+import android.util.Log;
+import com.example.oriedita_data.databinding.ApplicationModel;
+import com.example.oriedita_data.databinding.FoldedFigureModel;
+import com.example.oriedita_data.databinding.GridModel;
+import com.example.oriedita_common.editor.drawing.tools.Camera;
+import com.example.oriedita_data.export.api.FileExporter;
+import com.example.oriedita_data.save.Save;
+import com.example.oriedita_core.origami.crease_pattern.elements.Circle;
+import com.example.oriedita_core.origami.crease_pattern.elements.LineSegment;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -18,31 +18,52 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 /**
- * Import and Export Orihime files.
+ * OrhExporter - экспортер файлов .orh (Orihime) для Android
+ * 
+ * Этот класс отвечает за экспорт файлов оригами в формате .orh (Orihime).
+ * Сохраняет настройки камеры, сетки, цветов, линий и окружностей
+ * в файлы, совместимые с программой Orihime.
  */
-@ApplicationScoped
 public class OrhExporter implements FileExporter {
+    
+    private static final String TAG = "OrhExporter";
+
+    /**
+     * Экспортирует объект Save в файл .orh
+     * 
+     * @param save объект Save с данными оригами
+     * @param file файл для экспорта
+     * @throws IOException при ошибках записи файла
+     */
     @Override
     public void doExport(Save save, File file) throws IOException {
-        try (FileWriter fw = new FileWriter(file); BufferedWriter bw = new BufferedWriter(fw); PrintWriter pw = new PrintWriter(bw)) {
+        try (FileWriter fw = new FileWriter(file); 
+             BufferedWriter bw = new BufferedWriter(fw); 
+             PrintWriter pw = new PrintWriter(bw)) {
+            
+            // Записываем заголовок
             pw.println("<タイトル>");
             pw.println("タイトル," + save.getTitle());
 
+            // Записываем сегменты линий
             pw.println("<線分集合>");
-
             int index = 1;
             for (LineSegment s : save.getLineSegments()) {
                 pw.println("番号," + index++);
                 pw.println("色," + s.getColor());
 
                 pw.println("<tpp>" + s.getCustomized() + "</tpp>");
-                pw.println("<tpp_color_R>" + s.getCustomizedColor().getRed() + "</tpp_color_R>");
-                pw.println("<tpp_color_G>" + s.getCustomizedColor().getGreen() + "</tpp_color_G>");
-                pw.println("<tpp_color_B>" + s.getCustomizedColor().getBlue() + "</tpp_color_B>");
+                
+                // Извлекаем RGB компоненты из Android Color (int)
+                int customizedColor = s.getCustomizedColor();
+                pw.println("<tpp_color_R>" + Color.red(customizedColor) + "</tpp_color_R>");
+                pw.println("<tpp_color_G>" + Color.green(customizedColor) + "</tpp_color_G>");
+                pw.println("<tpp_color_B>" + Color.blue(customizedColor) + "</tpp_color_B>");
 
                 pw.println("座標," + s.determineAX() + "," + s.determineAY() + "," + s.determineBX() + "," + s.determineBY());
             }
 
+            // Записываем окружности
             pw.println("<円集合>");
             index = 1;
             for (Circle circle : save.getCircles()) {
@@ -52,26 +73,33 @@ public class OrhExporter implements FileExporter {
                 pw.println("中心と半径と色," + e_temp.getX() + "," + e_temp.getY() + "," + e_temp.getR() + "," + e_temp.getColor());
 
                 pw.println("<tpp>" + e_temp.getCustomized() + "</tpp>");
-                pw.println("<tpp_color_R>" + e_temp.getCustomizedColor().getRed() + "</tpp_color_R>");
-                pw.println("<tpp_color_G>" + e_temp.getCustomizedColor().getGreen() + "</tpp_color_G>");
-                pw.println("<tpp_color_B>" + e_temp.getCustomizedColor().getBlue() + "</tpp_color_B>");
+                
+                // Извлекаем RGB компоненты из Android Color (int)
+                int customizedColor = e_temp.getCustomizedColor();
+                pw.println("<tpp_color_R>" + Color.red(customizedColor) + "</tpp_color_R>");
+                pw.println("<tpp_color_G>" + Color.green(customizedColor) + "</tpp_color_G>");
+                pw.println("<tpp_color_B>" + Color.blue(customizedColor) + "</tpp_color_B>");
             }
 
+            // Записываем вспомогательные сегменты линий
             pw.println("<補助線分集合>");
-
             index = 1;
             for (LineSegment s : save.getAuxLineSegments()) {
                 pw.println("補助番号," + index++);
                 pw.println("補助色," + s.getColor());
 
                 pw.println("<tpp>" + s.getCustomized() + "</tpp>");
-                pw.println("<tpp_color_R>" + s.getCustomizedColor().getRed() + "</tpp_color_R>");
-                pw.println("<tpp_color_G>" + s.getCustomizedColor().getGreen() + "</tpp_color_G>");
-                pw.println("<tpp_color_B>" + s.getCustomizedColor().getBlue() + "</tpp_color_B>");
+                
+                // Извлекаем RGB компоненты из Android Color (int)
+                int customizedColor = s.getCustomizedColor();
+                pw.println("<tpp_color_R>" + Color.red(customizedColor) + "</tpp_color_R>");
+                pw.println("<tpp_color_G>" + Color.green(customizedColor) + "</tpp_color_G>");
+                pw.println("<tpp_color_B>" + Color.blue(customizedColor) + "</tpp_color_B>");
 
                 pw.println("補助座標," + s.determineAX() + "," + s.determineAY() + "," + s.determineBX() + "," + s.determineBY());
             }
 
+            // Записываем настройки камеры
             Camera camera = save.getCreasePatternCamera() != null ? save.getCreasePatternCamera() : new Camera();
             pw.println("<camera_of_orisen_nyuuryokuzu>");
             pw.println("<camera_ichi_x>" + camera.getCameraPositionX() + "</camera_ichi_x>");
@@ -84,6 +112,7 @@ public class OrhExporter implements FileExporter {
             pw.println("<hyouji_ichi_y>" + camera.getDisplayPositionY() + "</hyouji_ichi_y>");
             pw.println("</camera_of_orisen_nyuuryokuzu>");
 
+            // Записываем настройки приложения
             pw.println("<settei>");
             ApplicationModel applicationModel = save.getApplicationModel() != null ? save.getApplicationModel() : new ApplicationModel();
             pw.println("<ckbox_mouse_settei>" + applicationModel.getMouseWheelMovesCreasePattern() + "</ckbox_mouse_settei>");
@@ -97,15 +126,17 @@ public class OrhExporter implements FileExporter {
             pw.println("<ckbox_mejirusi>" + applicationModel.getDisplayMarkings() + "</ckbox_mejirusi>");
             pw.println("<ckbox_cp_ue>" + applicationModel.getDisplayCreasePatternOnTop() + "</ckbox_cp_ue>");
             pw.println("<ckbox_oritatami_keika>" + applicationModel.getDisplayFoldingProgress() + "</ckbox_oritatami_keika>");
-            //The thickness of the line in the development view.
+            
+            // Толщина линии в виде разработки
             pw.println("<iTenkaizuSenhaba>" + applicationModel.getLineWidth() + "</iTenkaizuSenhaba>");
-            //Width of vertex sign
+            // Ширина знака вершины
             pw.println("<ir_ten>" + applicationModel.getPointSize() + "</ir_ten>");
-            //Express the polygonal line expression with color
+            // Выражение полигональной линии с цветом
             pw.println("<i_orisen_hyougen>" + applicationModel.getLineStyle() + "</i_orisen_hyougen>");
             pw.println("<i_anti_alias>" + applicationModel.getAntiAlias() + "</i_anti_alias>");
             pw.println("</settei>");
 
+            // Записываем настройки сетки
             GridModel gridModel = save.getGridModel() != null ? save.getGridModel() : new GridModel();
             pw.println("<Kousi>");
             pw.println("<i_kitei_jyoutai>" + gridModel.getBaseState() + "</i_kitei_jyoutai>");
@@ -125,47 +156,71 @@ public class OrhExporter implements FileExporter {
             pw.println("<d_kousi_kakudo>" + gridModel.getGridAngle() + "</d_kousi_kakudo>");
             pw.println("</Kousi>");
 
+            // Записываем цвета сетки
             pw.println("<Kousi_iro>");
-            pw.println("<kousi_color_R>" + applicationModel.getGridColor().getRed() + "</kousi_color_R>");
-            pw.println("<kousi_color_G>" + applicationModel.getGridColor().getGreen() + "</kousi_color_G>");
-            pw.println("<kousi_color_B>" + applicationModel.getGridColor().getBlue() + "</kousi_color_B>");
+            int gridColor = applicationModel.getGridColor();
+            pw.println("<kousi_color_R>" + Color.red(gridColor) + "</kousi_color_R>");
+            pw.println("<kousi_color_G>" + Color.green(gridColor) + "</kousi_color_G>");
+            pw.println("<kousi_color_B>" + Color.blue(gridColor) + "</kousi_color_B>");
 
-            pw.println("<kousi_memori_color_R>" + applicationModel.getGridScaleColor().getRed() + "</kousi_memori_color_R>");
-            pw.println("<kousi_memori_color_G>" + applicationModel.getGridScaleColor().getGreen() + "</kousi_memori_color_G>");
-            pw.println("<kousi_memori_color_B>" + applicationModel.getGridScaleColor().getBlue() + "</kousi_memori_color_B>");
+            int gridScaleColor = applicationModel.getGridScaleColor();
+            pw.println("<kousi_memori_color_R>" + Color.red(gridScaleColor) + "</kousi_memori_color_R>");
+            pw.println("<kousi_memori_color_G>" + Color.green(gridScaleColor) + "</kousi_memori_color_G>");
+            pw.println("<kousi_memori_color_B>" + Color.blue(gridScaleColor) + "</kousi_memori_color_B>");
             pw.println("</Kousi_iro>");
 
+            // Записываем настройки сложенной фигуры
             pw.println("<oriagarizu>");
-
             FoldedFigureModel foldedFigureModel = save.getFoldedFigureModel() != null ? save.getFoldedFigureModel() : new FoldedFigureModel();
-            pw.println("<oriagarizu_F_color_R>" + foldedFigureModel.getFrontColor().getRed() + "</oriagarizu_F_color_R>");
-            pw.println("<oriagarizu_F_color_G>" + foldedFigureModel.getFrontColor().getGreen() + "</oriagarizu_F_color_G>");
-            pw.println("<oriagarizu_F_color_B>" + foldedFigureModel.getFrontColor().getBlue() + "</oriagarizu_F_color_B>");
+            
+            int frontColor = foldedFigureModel.getFrontColor();
+            pw.println("<oriagarizu_F_color_R>" + Color.red(frontColor) + "</oriagarizu_F_color_R>");
+            pw.println("<oriagarizu_F_color_G>" + Color.green(frontColor) + "</oriagarizu_F_color_G>");
+            pw.println("<oriagarizu_F_color_B>" + Color.blue(frontColor) + "</oriagarizu_F_color_B>");
 
-            pw.println("<oriagarizu_B_color_R>" + foldedFigureModel.getBackColor().getRed() + "</oriagarizu_B_color_R>");
-            pw.println("<oriagarizu_B_color_G>" + foldedFigureModel.getBackColor().getGreen() + "</oriagarizu_B_color_G>");
-            pw.println("<oriagarizu_B_color_B>" + foldedFigureModel.getBackColor().getBlue() + "</oriagarizu_B_color_B>");
+            int backColor = foldedFigureModel.getBackColor();
+            pw.println("<oriagarizu_B_color_R>" + Color.red(backColor) + "</oriagarizu_B_color_R>");
+            pw.println("<oriagarizu_B_color_G>" + Color.green(backColor) + "</oriagarizu_B_color_G>");
+            pw.println("<oriagarizu_B_color_B>" + Color.blue(backColor) + "</oriagarizu_B_color_B>");
 
-            pw.println("<oriagarizu_L_color_R>" + foldedFigureModel.getLineColor().getRed() + "</oriagarizu_L_color_R>");
-            pw.println("<oriagarizu_L_color_G>" + foldedFigureModel.getLineColor().getGreen() + "</oriagarizu_L_color_G>");
-            pw.println("<oriagarizu_L_color_B>" + foldedFigureModel.getLineColor().getBlue() + "</oriagarizu_L_color_B>");
+            int lineColor = foldedFigureModel.getLineColor();
+            pw.println("<oriagarizu_L_color_R>" + Color.red(lineColor) + "</oriagarizu_L_color_R>");
+            pw.println("<oriagarizu_L_color_G>" + Color.green(lineColor) + "</oriagarizu_L_color_G>");
+            pw.println("<oriagarizu_L_color_B>" + Color.blue(lineColor) + "</oriagarizu_L_color_B>");
 
             pw.println("</oriagarizu>");
+            
+            Log.i(TAG, "Файл .orh успешно экспортирован: " + file.getAbsolutePath());
+            
         } catch (IOException e) {
-            Logger.error(e, "Error during Orh export");
+            Log.e(TAG, "Ошибка при экспорте .orh файла", e);
+            throw e;
         }
     }
 
+    /**
+     * Проверяет, поддерживается ли файл для экспорта
+     * @param filename файл для проверки
+     * @return true если файл имеет расширение .orh
+     */
     @Override
     public boolean supports(File filename) {
         return filename.getName().endsWith(".orh");
     }
 
+    /**
+     * Возвращает название формата экспорта
+     * @return название формата
+     */
     @Override
     public String getName() {
         return "Orihime save";
     }
 
+    /**
+     * Возвращает расширение файла
+     * @return расширение файла
+     */
     @Override
     public String getExtension() {
         return ".orh";

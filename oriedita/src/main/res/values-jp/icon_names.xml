@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- メインアプリケーションアイコン -->
+    <string name="icon_oriedita">オリエディタ</string>
+    <string name="icon_fishbase">フィッシュベース</string>
+    <string name="icon_zahyou">座標グリッド</string>
+    
+    <!-- ツールアイコン -->
+    <string name="icon_line_input">線分入力</string>
+    <string name="icon_circle_input">円入力</string>
+    <string name="icon_select">選択</string>
+    <string name="icon_delete">削除</string>
+    <string name="icon_undo">元に戻す</string>
+    <string name="icon_redo">やり直し</string>
+    <string name="icon_zoom_in">拡大</string>
+    <string name="icon_zoom_out">縮小</string>
+    <string name="icon_pan">パン</string>
+    <string name="icon_rotate">回転</string>
+    
+    <!-- 線の種類アイコン -->
+    <string name="icon_mountain">山折り</string>
+    <string name="icon_valley">谷折り</string>
+    <string name="icon_edge">エッジ</string>
+    <string name="icon_aux">補助線</string>
+    <string name="icon_black">黒線</string>
+    <string name="icon_red">赤線</string>
+    
+    <!-- 幾何学的構築アイコン -->
+    <string name="icon_parallel">平行線</string>
+    <string name="icon_perpendicular">垂線</string>
+    <string name="icon_angle_bisector">角の二等分線</string>
+    <string name="icon_square_bisector">正方形の二等分線</string>
+    <string name="icon_fish_bone">魚の骨</string>
+    <string name="icon_voronoi">ボロノイ図</string>
+    
+    <!-- チェックアイコン -->
+    <string name="icon_check1">チェック1</string>
+    <string name="icon_check2">チェック2</string>
+    <string name="icon_check3">チェック3</string>
+    <string name="icon_check4">チェック4</string>
+    
+    <!-- 設定アイコン -->
+    <string name="icon_settings">設定</string>
+    <string name="icon_mouse_settings">マウス設定</string>
+    <string name="icon_line_width">線幅</string>
+    <string name="icon_point_size">点のサイズ</string>
+</resources> 

@@ -29,7 +29,6 @@ public class AngleSystemModel {
 
     private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
 
-    @Inject
     public AngleSystemModel() {
         reset();
     }

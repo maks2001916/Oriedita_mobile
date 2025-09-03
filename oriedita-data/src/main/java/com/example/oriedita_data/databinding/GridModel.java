@@ -27,7 +27,6 @@ public class GridModel implements Serializable {
 
     private boolean drawDiagonalGridlines;
 
-    @Inject
     public GridModel() {
         reset();
     }

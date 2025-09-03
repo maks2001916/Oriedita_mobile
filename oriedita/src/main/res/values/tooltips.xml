@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Подсказки для инструментов -->
+    <string name="tooltip_line_input">Нарисовать линию между двумя точками</string>
+    <string name="tooltip_circle_input">Нарисовать круг с указанным центром и радиусом</string>
+    <string name="tooltip_select">Выбрать элемент для редактирования</string>
+    <string name="tooltip_delete">Удалить выбранный элемент</string>
+    <string name="tooltip_undo">Отменить последнее действие</string>
+    <string name="tooltip_redo">Повторить отмененное действие</string>
+    
+    <!-- Подсказки для типов линий -->
+    <string name="tooltip_mountain">Создать горную складку (выпуклую)</string>
+    <string name="tooltip_valley">Создать долинную складку (вогнутую)</string>
+    <string name="tooltip_edge">Создать край модели</string>
+    <string name="tooltip_aux">Создать вспомогательную линию</string>
+    
+    <!-- Подсказки для геометрических построений -->
+    <string name="tooltip_parallel">Нарисовать линию, параллельную существующей</string>
+    <string name="tooltip_perpendicular">Нарисовать линию, перпендикулярную существующей</string>
+    <string name="tooltip_angle_bisector">Построить биссектрису угла</string>
+    <string name="tooltip_square_bisector">Построить биссектрису квадрата</string>
+    
+    <!-- Подсказки для проверок -->
+    <string name="tooltip_check1">Проверить основные условия складывания</string>
+    <string name="tooltip_check2">Проверить геометрические ограничения</string>
+    <string name="tooltip_check3">Проверить топологические условия</string>
+    <string name="tooltip_check4">Проверить возможность плоского складывания</string>
+</resources> 

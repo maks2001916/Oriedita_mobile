@@ -3,19 +3,17 @@ package com.example.oriedita_data.export;
 import fold.io.CreasePatternReader;
 import fold.model.Edge;
 import fold.model.FoldFile;
-import jakarta.enterprise.context.ApplicationScoped;
-import oriedita.editor.export.api.FileImporter;
-import oriedita.editor.save.Save;
-import oriedita.editor.save.SaveProvider;
-import origami.crease_pattern.elements.LineSegment;
-import origami.crease_pattern.elements.Point;
+import com.example.oriedita_data.export.api.FileImporter;
+import com.example.oriedita_data.save.Save;
+import com.example.oriedita_data.save.SaveProvider;
+import com.example.oriedita_core.origami.crease_pattern.elements.LineSegment;
+import com.example.oriedita_core.origami.crease_pattern.elements.Point;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-@ApplicationScoped
 public class CpImporter implements FileImporter {
     @Override
     public boolean supports(File filename) {
@@ -30,7 +28,21 @@ public class CpImporter implements FileImporter {
         FoldFile foldFile = creasePatternReader.read();
 
         for (Edge edge : foldFile.getRootFrame().getEdges()) {
-            save.addLineSegment(new LineSegment(new Point(edge.getStart().getX(), edge.getStart().getY()), new Point(edge.getEnd().getX(), edge.getEnd().getY()), FoldImporter.getColor(edge.getAssignment())));
+            save.addLineSegment(
+                    new LineSegment(
+                            new Point(
+                                    edge.getStart().getX(),
+                                    edge.getStart().getY()
+                            ),
+                            new Point(
+                                    edge.getEnd().getX(),
+                                    edge.getEnd().getY()
+                            ),
+                            FoldImporter.getColor(
+                                    edge.getAssignment()
+                            )
+                    )
+            );
         }
 
         return save;

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- メインヘルプ -->
+    <string name="help_welcome">オリエディタへようこそ！</string>
+    <string name="help_quick_start">クイックスタート：ツールを選択して線の描画を開始</string>
+    <string name="help_tool_selection">ツールバーからツールを選択して作業を開始</string>
+    
+    <!-- ツールのヘルプ -->
+    <string name="help_line_tool">線ツール：ダブルクリックで点間に線を作成</string>
+    <string name="help_circle_tool">円ツール：中心と半径を指定して円を作成</string>
+    <string name="help_select_tool">選択ツール：要素をクリックして選択</string>
+    <string name="help_delete_tool">削除ツール：選択された要素を削除</string>
+    
+    <!-- 線の種類のヘルプ -->
+    <string name="help_mountain_fold">山折り：外側に折り畳まれる線（凸）</string>
+    <string name="help_valley_fold">谷折り：内側に折り畳まれる線（凹）</string>
+    <string name="help_edge_line">エッジ線：折り紙モデルの境界を定義</string>
+    <string name="help_auxiliary_line">補助線：構築を助けるが折り目ではない</string>
+    
+    <!-- 幾何学的構築のヘルプ -->
+    <string name="help_parallel_lines">平行線：既存の線に平行な線を作成</string>
+    <string name="help_perpendicular_lines">垂線：既存の線に垂直な線を作成</string>
+    <string name="help_angle_bisector">角の二等分線：角を二等分</string>
+    <string name="help_square_bisector">正方形の二等分線：正方形を対角線で二等分</string>
+    
+    <!-- チェックのヘルプ -->
+    <string name="help_check1">チェック1：基本的な折り畳み条件を検証</string>
+    <string name="help_check2">チェック2：幾何学的制約を検証</string>
+    <string name="help_check3">チェック3：位相的条件を検証</string>
+    <string name="help_check4">チェック4：平面折り畳み可能性を検証</string>
+    
+    <!-- ナビゲーションのヘルプ -->
+    <string name="help_zoom">ズーム：ジェスチャーまたは+/-ボタンでスケール変更</string>
+    <string name="help_pan">パン：ホールド＆ドラッグでキャンバス移動</string>
+    <string name="help_rotate">回転：ジェスチャーでモデル回転</string>
+    
+    <!-- ファイルのヘルプ -->
+    <string name="help_save">保存：ORH、DXF、FOLD形式で作業を保存</string>
+    <string name="help_load">読み込み：既存ファイルを開いて作業継続</string>
+    <string name="help_export">エクスポート：モデルを様々な形式でエクスポート</string>
+</resources> 
