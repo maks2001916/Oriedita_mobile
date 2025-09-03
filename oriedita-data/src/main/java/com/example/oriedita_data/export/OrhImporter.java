@@ -340,7 +340,11 @@ public class OrhImporter implements FileImporter {
 
         if (i_Grid_iro_yomikomi) {
             // Создаем Android Color из RGB компонентов
-            int gridColor = Color.rgb(i_grid_color_R, i_grid_color_G, i_grid_color_B);
+            int gridColor = Color.rgb(
+                    i_grid_color_R,
+                    i_grid_color_G,
+                    i_grid_color_B
+            );
             applicationModel.setGridColor(gridColor);
 
             Log.i(TAG, "i_kousi_memori_color_R= " + i_grid_memori_color_R);
@@ -417,9 +421,21 @@ public class OrhImporter implements FileImporter {
         save.setFoldedFigureModel(foldedFigureModel);
         if (i_oriagarizu_yomikomi) {
             // Создаем Android Color из RGB компонентов
-            int frontColor = Color.rgb(i_oriagarizu_F_color_R, i_oriagarizu_F_color_G, i_oriagarizu_F_color_B);
-            int backColor = Color.rgb(i_oriagarizu_B_color_R, i_oriagarizu_B_color_G, i_oriagarizu_B_color_B);
-            int lineColor = Color.rgb(i_oriagarizu_L_color_R, i_oriagarizu_L_color_G, i_oriagarizu_L_color_B);
+            int frontColor = Color.rgb(
+                    i_oriagarizu_F_color_R,
+                    i_oriagarizu_F_color_G,
+                    i_oriagarizu_F_color_B
+            );
+            int backColor = Color.rgb(
+                    i_oriagarizu_B_color_R,
+                    i_oriagarizu_B_color_G,
+                    i_oriagarizu_B_color_B
+            );
+            int lineColor = Color.rgb(
+                    i_oriagarizu_L_color_R,
+                    i_oriagarizu_L_color_G,
+                    i_oriagarizu_L_color_B
+            );
             
             foldedFigureModel.setFrontColor(frontColor);
             foldedFigureModel.setBackColor(backColor);
@@ -587,20 +603,32 @@ public class OrhImporter implements FileImporter {
                 if (st_new[0].equals("<tpp_color_R")) {
                     String[] s_new = st_new[1].split("<", 2);
                     i_customized_color_R = (Integer.parseInt(s_new[0]));
-                    int customizedColor = Color.rgb(i_customized_color_R, i_customized_color_G, i_customized_color_B);
+                    int customizedColor = Color.rgb(
+                            i_customized_color_R,
+                            i_customized_color_G,
+                            i_customized_color_B
+                    );
                     circles.get(number).setCustomizedColor(customizedColor);
                 }
 
                 if (st_new[0].equals("<tpp_color_G")) {
                     String[] s_new = st_new[1].split("<", 2);
                     i_customized_color_G = (Integer.parseInt(s_new[0]));
-                    int customizedColor = Color.rgb(i_customized_color_R, i_customized_color_G, i_customized_color_B);
+                    int customizedColor = Color.rgb(
+                            i_customized_color_R,
+                            i_customized_color_G,
+                            i_customized_color_B
+                    );
                     circles.get(number).setCustomizedColor(customizedColor);
                 }
                 if (st_new[0].equals("<tpp_color_B")) {
                     String[] s_new = st_new[1].split("<", 2);
                     i_customized_color_B = (Integer.parseInt(s_new[0]));
-                    int customizedColor = Color.rgb(i_customized_color_R, i_customized_color_G, i_customized_color_B);
+                    int customizedColor = Color.rgb(
+                            i_customized_color_R,
+                            i_customized_color_G,
+                            i_customized_color_B
+                    );
                     circles.get(number).setCustomizedColor(customizedColor);
                 }
             }

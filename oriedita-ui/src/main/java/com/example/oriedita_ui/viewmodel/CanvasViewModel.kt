@@ -1,12 +1,12 @@
 package com.example.oriedita_ui.viewmodel
 
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
+import android.content.Context
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
 import androidx.lifecycle.ViewModel
+import com.example.oriedita_ui.service.Project
+import com.example.oriedita_ui.service.ProjectRenderer
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -106,6 +106,12 @@ class CanvasViewModel : ViewModel() {
     }
 
     fun getCurrentTool(): CanvasTool = currentTool
+
+    /** Загружает проект и конвертирует его элементы в объекты канваса */
+    suspend fun loadProject(context: Context, project: Project) {
+        val objects = ProjectRenderer.loadProjectObjects(context, project)
+        _objects.value = objects
+    }
 
     fun onDown(offset: Offset) {
         when (currentTool) {
@@ -497,6 +503,14 @@ class CanvasViewModel : ViewModel() {
         if (_objects.value.isNotEmpty()) {
             _objects.value = _objects.value.dropLast(1)
         }
+    }
+    
+    /**
+     * Устанавливает объекты для предпросмотра
+     * Используется только в Preview методах
+     */
+    fun setObjectsForPreview(objects: List<CanvasObject>) {
+        _objects.value = objects
     }
 }
 

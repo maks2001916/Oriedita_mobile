@@ -6,10 +6,10 @@ import com.example.oriedita.editor.export.ExportManager
 import java.io.File
 import java.io.FileOutputStream
 import java.io.ObjectOutputStream
+import java.io.Serializable
 
 /**
  * Сервис сохранения файлов для Android
- * Адаптированная версия FileSaveService для Android
  */
 class FileSaveService(private val context: Context) {
     
@@ -104,7 +104,7 @@ data class ProjectData(
     val texts: List<TextData>,
     val settings: Map<String, Any>,
     val timestamp: Long = System.currentTimeMillis()
-) : java.io.Serializable
+) : Serializable
 
 data class LineData(
     val x1: Double,
@@ -113,23 +113,23 @@ data class LineData(
     val y2: Double,
     val color: String,
     val lineStyle: String
-) : java.io.Serializable
+) : Serializable
 
 data class PointData(
     val x: Double,
     val y: Double,
     val size: Int
-) : java.io.Serializable
+) : Serializable
 
 data class CircleData(
     val centerX: Double,
     val centerY: Double,
     val radius: Double
-) : java.io.Serializable
+) : Serializable
 
 data class TextData(
     val x: Double,
     val y: Double,
     val text: String,
     val fontSize: Int
-) : java.io.Serializable 
+) : Serializable

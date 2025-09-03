@@ -1,109 +1,92 @@
 package com.example.oriedita_ui
 
 import android.os.Bundle
-import androidx.activity.ComponentActivity
+import androidx.fragment.app.FragmentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
-import androidx.navigation.NavHostController
-import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.oriedita_ui.ui.ProjectGridScreen
-import com.example.oriedita_ui.ui.EditorScreen
-import com.example.oriedita_ui.ui.SettingsScreen
-import com.example.oriedita_ui.ui.theme.OrieditaTheme
-import com.example.oriedita_ui.viewmodel.MainViewModel
-import com.example.oriedita_ui.viewmodel.SettingsViewModel
+import androidx.compose.runtime.*
+import androidx.compose.ui.platform.LocalContext
+import com.example.oriedita_ui.service.PermissionManager
+import com.example.oriedita_ui.service.PermissionStatus
+import com.example.oriedita_ui.ui.MainScreen
+import com.example.oriedita_ui.ui.PermissionScreen
+import android.util.Log
+import com.example.oriedita_ui.ui.HomeScreen
 
 /**
- * Главная активность приложения Oriedita
- * Содержит навигацию между тремя основными экранами:
- * 1. Экран с сеткой файлов
- * 2. Экран графического редактора
- * 3. Экран настроек
+ * Главная Activity приложения Oriedita
  */
-class MainActivity : ComponentActivity() {
+class MainActivity : FragmentActivity() {
+    
+    companion object {
+        private const val TAG = "MainActivity"
+    }
     
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
+        Log.d(TAG, "onCreate вызван")
         setContent {
-            OrieditaTheme {
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    OrieditaApp()
-                }
-            }
+            MainActivityContent()
         }
     }
 }
 
+/**
+ * Основной контент MainActivity с логикой разрешений
+ */
 @Composable
-fun OrieditaApp() {
-    val mainViewModel: MainViewModel = viewModel()
-    val navController = rememberNavController()
-    OrieditaApp(navController, mainViewModel)
-}
-
-@Composable
-fun OrieditaApp(navController: NavHostController, mainViewModel: MainViewModel) {
-    NavHost(
-        navController = navController,
-        startDestination = "project_grid"
-    ) {
-        // Экран с сеткой файлов (главный экран)
-        composable("project_grid") {
-            ProjectGridScreen(
-                projects = mainViewModel.getProjects(),
-                onProjectClick = { project ->
-                    mainViewModel.setCurrentProject(project)
-                    navController.navigate("editor")
-                },
-                onSettingsClick = {
-                    navController.navigate("settings")
-                }
-            )
-        }
+private fun MainActivityContent() {
+    val context = LocalContext.current
+    val permissionManager = remember { PermissionManager(context) }
+    
+    var showPermissions by remember { mutableStateOf(false) }
+    var permissionsGranted by remember { mutableStateOf(false) }
+    
+    // Проверяем статус при запуске
+    LaunchedEffect(Unit) {
+        Log.d("MainActivity", "LaunchedEffect запущен")
         
-        // Экран графического редактора
-        composable("editor") {
-            EditorScreen(
-                onNavigateBack = {
-                    navController.navigateUp()
-                },
-                onSettingsClick = {
-                    navController.navigate("settings")
-                },
-                canvasViewModel = mainViewModel.getCanvasViewModel()
-            )
-        }
+        val isFirstLaunch = permissionManager.isFirstLaunch()
+        Log.d("MainActivity", "isFirstLaunch: $isFirstLaunch")
         
-        // Экран настроек
-        composable("settings") {
-            val settingsViewModel: SettingsViewModel = viewModel()
-            SettingsScreen(
-                onNavigateBack = {
-                    navController.navigateUp()
-                },
-                viewModel = settingsViewModel
-            )
+        val permissionStatus = permissionManager.checkFilePermissions()
+        Log.d("MainActivity", "permissionStatus: $permissionStatus")
+        
+        if (isFirstLaunch || permissionStatus == PermissionStatus.NOT_GRANTED) {
+            Log.d("MainActivity", "Показываем экран разрешений")
+            showPermissions = true
+        } else {
+            Log.d("MainActivity", "Разрешения уже предоставлены, показываем основной экран")
+            permissionsGranted = true
+            permissionManager.markFirstLaunchComplete()
         }
     }
-}
-
-@Preview(showBackground = true)
-@Composable()
-fun OrieditaAppPreview() {
-    val navController = rememberNavController()
-    val mainViewModel: MainViewModel = viewModel()
-    OrieditaApp(navController, mainViewModel)
+    
+    // Обработчик предоставления разрешений
+    val onPermissionsGranted = {
+        Log.d("MainActivity", "Разрешения предоставлены пользователем")
+        permissionsGranted = true
+        showPermissions = false
+        permissionManager.markFirstLaunchComplete()
+        permissionManager.markPermissionsGranted()
+    }
+    
+    // Обработчик пропуска разрешений
+    val onSkipPermissions = {
+        Log.d("MainActivity", "Пользователь пропустил разрешения")
+        permissionsGranted = true
+        showPermissions = false
+        permissionManager.markFirstLaunchComplete()
+    }
+    
+    // Показываем экран разрешений или основной экран
+    if (showPermissions) {
+        Log.d("MainActivity", "Отображаем PermissionScreen")
+        //PermissionScreen(onPermissionsGranted = onPermissionsGranted, onSkipPermissions = onSkipPermissions)
+        //ProjectCard() { }
+    } else if (permissionsGranted) {
+        Log.d("MainActivity", "Отображаем MainScreen")
+        MainScreen()
+    } else {
+        Log.d("MainActivity", "Состояние не определено: showPermissions=$showPermissions, permissionsGranted=$permissionsGranted")
+    }
 }

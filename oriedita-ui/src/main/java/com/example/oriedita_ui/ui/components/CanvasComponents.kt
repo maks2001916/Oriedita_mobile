@@ -14,7 +14,6 @@ import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import com.example.oriedita_ui.ui.constants.UiConstants
-import com.example.oriedita_ui.viewmodel.MainViewModel
 
 /**
  * Состояние холста
@@ -29,7 +28,7 @@ data class CanvasState(
  * Обрабатывает касания и отображает базовые элементы
  */
 @Composable
-fun DrawCanvas(viewModel: MainViewModel) {
+fun DrawCanvas() {
     var canvasState by remember { mutableStateOf(CanvasState()) }
     
     Canvas(

@@ -1,7 +1,5 @@
 package com.example.oriedita_ui.ui
 
-import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
@@ -16,7 +14,8 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.material3.darkColorScheme
 
 @Composable
 fun ToolMenu(
@@ -100,6 +99,100 @@ fun ToolMenu(
                     }
                 }
             }
+        }
+    }
+} 
+
+// Preview методы для разработки и тестирования UI
+
+@Preview(showBackground = true, name = "ToolMenu - Основное меню")
+@Composable
+private fun ToolMenuPreviewTwo() {
+    MaterialTheme {
+        ToolMenu(
+            show = true,
+            onDismiss = {},
+            onToolSelected = {},
+            onToolPinRequest = {},
+            selectedTool = CanvasTool.DrawCreaseFree
+        )
+    }
+}
+
+@Preview(showBackground = true, name = "ToolMenu - Без выбранного инструмента")
+@Composable
+private fun ToolMenuNoSelectionPreview() {
+    MaterialTheme {
+        ToolMenu(
+            show = true,
+            onDismiss = {},
+            onToolSelected = {},
+            onToolPinRequest = {},
+            selectedTool = null
+        )
+    }
+}
+
+@Preview(showBackground = true, name = "ToolMenu - С выбранным инструментом")
+@Composable
+private fun ToolMenuWithSelectionPreview() {
+    MaterialTheme {
+        ToolMenu(
+            show = true,
+            onDismiss = {},
+            onToolSelected = {},
+            onToolPinRequest = {},
+            selectedTool = CanvasTool.AngleSystem
+        )
+    }
+}
+
+@Preview(showBackground = true, name = "ToolMenu - Темная тема")
+@Composable
+private fun ToolMenuDarkThemePreview() {
+    MaterialTheme(
+        colorScheme = darkColorScheme()
+    ) {
+        ToolMenu(
+            show = true,
+            onDismiss = {},
+            onToolSelected = {},
+            onToolPinRequest = {},
+            selectedTool = CanvasTool.Axiom7
+        )
+    }
+}
+
+@Preview(showBackground = true, name = "ToolMenu - Скрытое меню")
+@Composable
+private fun ToolMenuHiddenPreview() {
+    MaterialTheme {
+        ToolMenu(
+            show = false,
+            onDismiss = {},
+            onToolSelected = {},
+            onToolPinRequest = {},
+            selectedTool = null
+        )
+    }
+}
+
+@Preview(showBackground = true, name = "ToolMenu - Компактный вид")
+@Composable
+private fun ToolMenuCompactPreview() {
+    MaterialTheme {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp)
+        ) {
+            ToolMenu(
+                show = true,
+                onDismiss = {},
+                onToolSelected = {},
+                onToolPinRequest = {},
+                selectedTool = CanvasTool.DrawCreaseFree
+            )
         }
     }
 } 

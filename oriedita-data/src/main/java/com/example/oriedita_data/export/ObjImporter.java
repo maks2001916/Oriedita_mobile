@@ -188,7 +188,11 @@ public class ObjImporter implements FileImporter {
             }
 
             // Создаем сегмент линии из двух точек
-            LineSegment s = new LineSegment(tL.get(line.getBegin()), tL.get(line.getEnd()), line.getColor());
+            LineSegment s = new LineSegment(
+                    tL.get(line.getBegin()),
+                    tL.get(line.getEnd()),
+                    line.getColor()
+            );
 
             save.addLineSegment(s.clone());
         }

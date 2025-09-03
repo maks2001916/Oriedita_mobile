@@ -7,10 +7,10 @@ import androidx.compose.ui.geometry.Offset
 import androidx.lifecycle.ViewModel
 import com.example.oriedita_ui.ui.CanvasTool
 
-class DockBarViewModel : ViewModel() {
-    var position by mutableStateOf(Offset(100f, 100f))
-    var isVertical by mutableStateOf(false)
-    var pinnedTools by mutableStateOf(List(5) { CanvasTool.DrawCreaseFree as CanvasTool? })
+open class DockBarViewModel : ViewModel() {
+    open var position by mutableStateOf(Offset(100f, 100f))
+    open var isVertical by mutableStateOf(false)
+    open var pinnedTools by mutableStateOf(List(5) { CanvasTool.DrawCreaseFree as CanvasTool? })
 
     fun setToolAt(index: Int, tool: CanvasTool) {
         pinnedTools = pinnedTools.toMutableList().also { it[index] = tool }

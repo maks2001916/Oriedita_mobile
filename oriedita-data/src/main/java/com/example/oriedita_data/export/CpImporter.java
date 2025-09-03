@@ -28,7 +28,21 @@ public class CpImporter implements FileImporter {
         FoldFile foldFile = creasePatternReader.read();
 
         for (Edge edge : foldFile.getRootFrame().getEdges()) {
-            save.addLineSegment(new LineSegment(new Point(edge.getStart().getX(), edge.getStart().getY()), new Point(edge.getEnd().getX(), edge.getEnd().getY()), FoldImporter.getColor(edge.getAssignment())));
+            save.addLineSegment(
+                    new LineSegment(
+                            new Point(
+                                    edge.getStart().getX(),
+                                    edge.getStart().getY()
+                            ),
+                            new Point(
+                                    edge.getEnd().getX(),
+                                    edge.getEnd().getY()
+                            ),
+                            FoldImporter.getColor(
+                                    edge.getAssignment()
+                            )
+                    )
+            );
         }
 
         return save;

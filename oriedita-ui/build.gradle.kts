@@ -55,6 +55,7 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
     implementation(libs.androidx.navigation.compose)
+    implementation(libs.androidx.fragment.ktx)
     testImplementation(libs.junit)
     testImplementation(libs.junit.jupiter.api)
     androidTestImplementation(libs.androidx.junit)
@@ -74,4 +75,12 @@ dependencies {
     // Hilt for dependency injection (replaces CDI)
     implementation("com.google.dagger:hilt-core:2.48")
     kapt("com.google.dagger:hilt-compiler:2.48")
+    
+    // Room for database
+    implementation("androidx.room:room-runtime:2.6.1")
+    implementation("androidx.room:room-ktx:2.6.1")
+    kapt("androidx.room:room-compiler:2.6.1")
+    
+    // Coil for image loading
+    implementation("io.coil-kt:coil-compose:2.5.0")
 }

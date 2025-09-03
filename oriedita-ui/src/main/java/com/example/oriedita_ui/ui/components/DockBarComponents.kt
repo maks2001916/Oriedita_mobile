@@ -38,6 +38,8 @@ data class DockBarState(
  * Динамическая панель инструментов
  * Адаптивная панель, которая может менять ориентацию в зависимости от положения
  */
+// Deprecated: DynamicDockBar заменён на DockBar в ui/DockBar.kt
+// Deprecated: DynamicDockBar заменён на DockBar в ui/DockBar.kt. Файл оставлен временно для совместимости.
 @Composable
 fun DynamicDockBar(viewModel: CanvasViewModel) {
     val configuration = LocalConfiguration.current

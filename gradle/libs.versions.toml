@@ -1,5 +1,5 @@
 [versions]
-agp = "8.11.1"
+agp = "8.12.2"
 hiltAndroid = "2.48"
 kotlin = "2.0.0"
 jackson = "2.17.0"
@@ -24,6 +24,7 @@ material = "1.12.0"
 uiTextAndroid = "1.8.3"
 runtimeAndroid = "1.8.3"
 navigationCompose = "2.9.3"
+fragmentKtx = "1.8.9"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -64,6 +65,7 @@ opencsv = { group = "com.opencsv", name = "opencsv", version.ref = "opencsv" }
 jsonassert = { group = "org.skyscreamer", name = "jsonassert", version.ref = "jsonassert" }
 snapshot-testing = { group = "io.github.origin-energy", name = "java-snapshot-testing-junit5", version.ref = "snapshotTesting" }
 androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigationCompose" }
+androidx-fragment-ktx = { group = "androidx.fragment", name = "fragment-ktx", version.ref = "fragmentKtx" }
 
 
 [plugins]

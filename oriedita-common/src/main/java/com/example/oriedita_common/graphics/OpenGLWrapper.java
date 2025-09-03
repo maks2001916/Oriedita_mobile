@@ -2,7 +2,6 @@ package com.example.oriedita_common.graphics;
 
 /**
  * Интерфейс для OpenGL операций, совместимый с Android OpenGL ES
- * Заменяет LWJGL для Android платформы
  */
 public interface OpenGLWrapper {
     

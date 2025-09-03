@@ -65,6 +65,12 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
     implementation(libs.identity.doctypes.jvm)
+    
+    // Дополнительные зависимости для работы с разрешениями
+    implementation("androidx.activity:activity-ktx:1.8.2")
+    implementation("androidx.fragment:fragment-ktx:1.6.2")
+    implementation("androidx.core:core-ktx:1.12.0")
+    
     testImplementation(libs.junit)
     testImplementation(libs.junit.jupiter.api)
     androidTestImplementation(libs.androidx.junit)
